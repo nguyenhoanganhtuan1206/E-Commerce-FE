@@ -1,0 +1,135 @@
+.auth {
+  padding: 10rem 0;
+  background-color: var(--color-grey-light-1);
+}
+
+.auth-form {
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 5px;
+  padding: 5rem;
+  margin: 0 auto;
+  max-width: 65rem;
+
+  &__header {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  &__btn {
+    width: 100%;
+    height: 5.5rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}
+
+/* SOCIAL PLATFORMS */
+.auth-form__social {
+  display: flex;
+  align-items: center;
+
+  & > * {
+    flex: 1;
+    background-color: #fff;
+    border: 1px solid var(--color-grey-light-3);
+    color: var(--color-grey-dark-2);
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: all 0.2s ease-in;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    & > .icon {
+      font-size: 1.8rem;
+      margin-right: 1.2rem;
+    }
+  }
+
+  &-facebook {
+    color: var(--color-grey-dark-2);
+
+    & > .icon {
+      color: var(--color-facebook);
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-facebook);
+
+      & > .icon {
+        color: #fff !important;
+      }
+    }
+  }
+
+  &-google {
+    color: var(--color-grey-dark-2);
+
+    & > .icon {
+      color: var(--color-google);
+    }
+
+    &:hover {
+      color: #fff;
+      background-color: var(--color-google);
+
+      & > .icon {
+        color: #fff !important;
+      }
+    }
+  }
+}
+/* SOCIAL PLATFORMS */
+
+.alt-option {
+  position: relative;
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--color-grey-dark-2);
+  margin-top: 2rem;
+
+  span {
+    padding: 0 2rem;
+    background-color: #fff;
+    position: relative;
+  }
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: var(--color-grey-light-3);
+  }
+}
+
+.outer__link {
+  display: block;
+  margin-top: 3rem;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: "Jost", sans-serif;
+  color: var(--color-grey-dark-2);
+  font-weight: 500;
+
+  a {
+    display: inline-block;
+    margin-left: 0.7rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

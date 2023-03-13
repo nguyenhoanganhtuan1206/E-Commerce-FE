@@ -1,0 +1,82 @@
+@import "../../../shared/sass/abstracts/mixins";
+
+.cart__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 2.4rem;
+  position: relative;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &-group {
+    display: flex;
+    width: fit-content;
+  }
+
+  &-info {
+    margin-left: 1.2rem;
+  }
+
+  &-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    @include circle(1.5rem, 1.5rem, var(--color-border-1));
+    padding: 0.3rem;
+
+    &:hover {
+      background-color: var(--color-primary-2);
+      color: #fff;
+    }
+  }
+}
+
+.cart__item-box {
+  height: 11rem;
+  width: 15rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-border-1);
+  overflow: hidden;
+
+  &__img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.cart__item-edit-quantity {
+  border: 1px solid var(--color-border-dark);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  height: 3.2rem;
+
+  span {
+    margin: 0 1rem;
+  }
+
+  &__icon {
+    padding: 0.6rem 1rem;
+    font-size: 1.3rem;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &--disabled {
+      color: var(--color-disabled);
+      user-select: none;
+      cursor: default;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

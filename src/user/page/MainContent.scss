@@ -1,0 +1,23 @@
+.main-content--user {
+  border-radius: 7px;
+  border: 1px solid var(--color-grey-light-3);
+  background-color: #fff;
+  overflow: hidden;
+
+  &__header {
+    padding: 2rem 3rem;
+    border-bottom: 1px solid var(--color-grey-light-3);
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+
+  &__body {
+    padding: 3rem;
+  }
+}
+
+/* CHAT PAGE */
+.chat-page {
+  padding: 0;
+}
+/* CHAT PAGE */

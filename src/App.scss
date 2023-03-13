@@ -1,0 +1,34 @@
+@import "./shared/sass/abstracts/mixins";
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  @include scrollbarWithColorPrimary(0.8em);
+
+  font-family: -apple-system, "system-ui", "Segoe UI", Roboto, Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--font-color);
+}
+
+#root {
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+}

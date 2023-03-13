@@ -1,0 +1,61 @@
+@import "../sass/abstracts/mixins";
+
+.room-chat__detail {
+  @include scrollbarWithColorPrimary;
+
+  padding: 1.5rem;
+  max-height: 500px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.room-chat__message {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-child) {
+    margin-bottom: 1.8rem;
+  }
+
+  &-name {
+    font-size: 1.5rem;
+    color: var(--color-grey-dark-2);
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+  }
+
+  &-time {
+    display: block;
+    font-size: 1.3rem;
+    margin-top: 0.6rem;
+  }
+
+  &-text {
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+    padding: 1.25rem;
+    max-width: 500px;
+    width: fit-content;
+    font-size: 1.5rem;
+  }
+
+  &--other {
+    align-items: flex-start;
+
+    & .room-chat__message-text {
+      color: var(--color-grey-dark-2);
+      border-bottom-right-radius: 7px;
+      background-color: #f4f7ff;
+    }
+  }
+
+  &--own {
+    align-items: flex-end;
+
+    & .room-chat__message-text {
+      border-top-left-radius: 7px;
+      background-color: var(--color-primary);
+      color: #fff;
+    }
+  }
+}

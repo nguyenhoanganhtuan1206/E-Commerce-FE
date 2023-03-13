@@ -1,0 +1,34 @@
+@import "../../sass/abstracts/mixins";
+
+.upload-image {
+  display: flex;
+  justify-content: center;
+}
+
+.upload-image__box {
+  height: 13rem;
+  width: 13rem;
+
+  transition: transform ease-in-out 0.3s;
+  position: relative;
+  overflow: hidden;
+
+  &-image {
+    width: 100% !important;
+    height: 100% !important;
+    box-shadow: none;
+  }
+
+  &-icon {
+    @include circle(1.3rem, 1.3rem, #000, var(--color-primary-2));
+    position: absolute;
+    bottom: 3px;
+    right: 12px;
+    padding: 0.6rem;
+    color: #fff;
+  }
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

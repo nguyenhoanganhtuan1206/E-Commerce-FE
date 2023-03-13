@@ -1,0 +1,27 @@
+@import "../../sass/base/animations";
+
+.alert {
+  height: 4rem;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 1.4rem;
+  margin-top: -2px;
+
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.4rem;
+
+  animation: fadeIn 0.2s ease-in, fadeInDown 0.4s ease-in-out;
+  @include fadeInDown(-4rem, 0);
+  transform: all 0.25s;
+
+  &--error {
+    background-color: var(--color-red-light);
+    color: var(--color-red);
+    border: 1px solid var(--color-red-light-1);
+  }
+
+  &--success {
+  }
+}

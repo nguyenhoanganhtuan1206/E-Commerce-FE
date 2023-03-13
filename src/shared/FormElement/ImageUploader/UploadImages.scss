@@ -1,0 +1,111 @@
+@import "../../sass/abstracts/mixins";
+
+.form-upload {
+  margin: 2.4rem 0;
+}
+
+.upload-images {
+  width: 100%;
+  height: fit-content;
+  padding: 3rem;
+  border-radius: 3px;
+  border: 2px dashed rgba(124, 134, 154, 0.25);
+  font-size: 1.4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  p {
+    color: var(--color-grey-dark-2);
+  }
+
+  &__icon {
+    height: 2.55rem;
+    width: 2.5rem;
+    color: var(--color-grey-dark-1);
+  }
+
+  &__icon-box {
+    background-color: var(--color-grey-light-3);
+    height: 8rem;
+    width: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    margin: 1.4rem 0;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: var(--color-primary);
+      box-shadow: 0 0.5rem 1rem rgba(#000000, 0.05);
+      cursor: pointer;
+    }
+  }
+
+  &__icon-box:hover &__icon {
+    color: #fff;
+  }
+}
+
+.display-images {
+  &__list {
+    padding: 0 1.2rem 1.2rem 1rem;
+  }
+
+  &__item {
+    list-style: none;
+    display: flex;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--color-grey-light-3);
+    position: relative;
+    cursor: pointer;
+
+    &:not(:last-child) {
+      margin-bottom: 1.2rem;
+    }
+  }
+
+  &__item:hover &__img {
+    transform: scale(1.1);
+  }
+
+  &__name {
+    @include limitWidthFont(65%);
+    display: inline-block;
+    margin-left: 1.2rem;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    font-weight: 500;
+  }
+
+  &__img-box {
+    height: 10rem;
+    width: 11.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  &__img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease-in;
+  }
+
+  &__close-icon {
+    @include circle(1.2rem, 1.2rem, #f0eeee, #fff);
+    padding: 0.3rem;
+    position: absolute;
+    top: 0px;
+    right: 1rem;
+
+    &:hover {
+      background-color: var(--color-primary);
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1300px !important;
+  }
+}
+
+.row {
+  &.wide {
+    margin: 0;
+
+    [class^="col-"] {
+      padding: 0;
+      margin: 0 !important;
+    }
+
+    [class^="col-"] {
+      &:not(:last-child) {
+        margin-bottom: 3rem;
+      }
+    }
+  }
+}

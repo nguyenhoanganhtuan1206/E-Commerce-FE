@@ -1,0 +1,36 @@
+@import "../../../shared/sass/abstracts/mixins";
+
+/* TEXT COMMON */
+[class^="mycart-text"] {
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+.mycart-text {
+  &__name {
+    @include limitedLines(2, 25rem);
+    font-weight: 600;
+  }
+
+  &--bold {
+    font-weight: 500;
+  }
+
+  &--light {
+    color: var(--color-grey-dark-2);
+    font-weight: 300;
+  }
+
+  &--medium {
+    font-size: 1.4rem;
+  }
+
+  &--small {
+    font-size: 1.3rem;
+  }
+
+  &--italic {
+    font-style: italic;
+  }
+}
+/* TEXT COMMON */

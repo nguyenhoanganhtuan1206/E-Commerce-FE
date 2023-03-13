@@ -1,0 +1,24 @@
+.btn {
+  font-size: 1.4rem;
+  padding: 1.2rem 2rem;
+  display: inline-block;
+  border-radius: 3px;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+
+  &--primary {
+    background-color: var(--color-primary);
+    color: #fff;
+
+    &:hover {
+      background-color: var(--color-primary-2);
+    }
+  }
+
+  &--disabled {
+    user-select: none;
+    cursor: default;
+    background-color: var(--color-grey-dark-2) !important;
+  }
+}

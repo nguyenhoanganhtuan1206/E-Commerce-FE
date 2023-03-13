@@ -1,0 +1,38 @@
+@import "../sass/abstracts/mixins";
+
+.room-chat {
+  &__header {
+    border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  &__user {
+    padding: 1.5rem;
+    display: flex;
+
+    &--active {
+      position: relative;
+      font-size: 1.2rem;
+      color: var(--color-grey-dark-2);
+      display: flex;
+      align-items: center;
+
+      span {
+        @include circle(1rem, 1rem, none, var(--color-green-light));
+        margin-right: 0.5rem;
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  &__info {
+    margin-left: 1.4rem;
+  }
+
+  &__name {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}

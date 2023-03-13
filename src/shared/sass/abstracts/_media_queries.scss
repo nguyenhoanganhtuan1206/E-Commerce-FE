@@ -1,0 +1,54 @@
+// MEDIA QUERY MANAGER
+/*
+0 - 600px: Phone
+600 - 900px: Table portrait
+900 - 1200px: Table landscape
+1200 - 1800: is where out normal styles apply
+1800px + : big desktop
+break-point argument choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+1rem = 16px
+! Do order: BASE + typography > general layout + grid > page layout > components
+
+! Pay attention
+If you want to have full control over the size of the elements 
+on your website, and make it look consistent across different devices, then you can use "px".
+
+If you want to have a responsive website that adapts to different screen sizes
+, then using "rem" is a better option. "rem" units are relative to the root element (usually the HTML tag) and their size can be easily adjusted with CSS media queries.
+
+In general, it's recommended to use "rem" for font-sizes
+and "px" for other elements such as padding and margins. This allows for a good balance between control and responsiveness.
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media (min-width: 36rem) {
+      // 576 / 16
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-port {
+    @media (min-width: 48rem) {
+      // large than 768px
+      @content;
+    }
+  }
+
+  @if $breakpoint == small-desktop {
+    @media (min-width: 62rem) {
+      // larger than 992 px
+      @content;
+    }
+  }
+
+  @if $breakpoint == large-desktop {
+    @media (min-width: 75rem) {
+      // larger than 1200px
+      @content;
+    }
+  }
+}

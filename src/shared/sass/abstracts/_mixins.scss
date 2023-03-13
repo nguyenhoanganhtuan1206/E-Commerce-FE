@@ -1,0 +1,76 @@
+@mixin fitImage($height, $width) {
+  height: $height;
+  width: $width;
+  object-fit: cover;
+}
+
+@mixin circle($height-value, $width-value, $border-color: var(--color-border), $background-color: transparent) {
+  height: $height-value;
+  width: $width-value;
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+}
+
+@mixin button($backgroundColor, $color, $colorHover, $backgroundColorHover) {
+  background-color: $backgroundColor;
+  color: $color;
+
+  &:hover {
+    color: $colorHover;
+    background-color: $backgroundColorHover;
+  }
+}
+
+@mixin limitWidthFont($width) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: $width;
+}
+
+@mixin breakWord($maxWidth) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: $maxWidth;
+}
+
+@mixin limitedLines($line, $maxWidth) {
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: $maxWidth;
+}
+
+// SCROLL BAR
+@mixin scrollbarWithColorPrimary($widthValue: 0.3em) {
+  &::-webkit-scrollbar {
+    width: $widthValue;
+    background-color: var(--color-primary-2);
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: var(--color-primary-2);
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555555;
+  }
+}
+// SCROLL BAR
