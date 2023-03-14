@@ -1,0 +1,79 @@
+/* TEXT FONT */
+.product-info {
+  &__text-heading {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  &__text-normal {
+    font-size: 1.4rem;
+    color: var(--font-color-2);
+    font-weight: 400;
+
+    &--bold {
+      font-weight: 600;
+    }
+  }
+
+  &__btn {
+    margin-top: 1.2rem;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 1.5rem 0;
+
+    &:last-child {
+      width: fit-content;
+      padding: 0 2.4rem;
+      margin-left: 1.2rem;
+    }
+  }
+}
+/* TEXT FONT */
+
+.product-info {
+  margin-left: 3rem;
+
+  /* HEADER */
+  &__header {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 2.2rem;
+    margin-bottom: 2.2rem;
+  }
+
+  &__name,
+  &__price {
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  &__price {
+    color: var(--color-primary);
+  }
+
+  &__location {
+    font-size: 1.4rem;
+    color: var(--font-color-2);
+    margin: 0.8rem 0 0.4rem 0;
+
+    &-icon {
+      color: var(--color-primary);
+      margin-right: 0.8rem;
+    }
+  }
+  /* HEADER */
+
+  /* BODY */
+  &__body {
+    p {
+      display: flex;
+      align-items: center;
+    }
+
+    span {
+      display: block;
+      flex: 0 0 20%;
+    }
+  }
+  /* BODY */
+}

@@ -43,7 +43,7 @@ const SwiperSlider = ({ images = [] }) => {
           {images.map((item, index) => (
             <img
               key={index}
-              src={url || item}
+              src="https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
               alt={index}
               className={`${
                 numberSwiper === index

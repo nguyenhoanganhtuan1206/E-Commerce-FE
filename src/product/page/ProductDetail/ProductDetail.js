@@ -4,7 +4,15 @@ import { productImages } from "../../../assets/image/product";
 import { Breadcrumbs } from "../../../shared/components";
 import SwiperSlider from "../../../shared/components/SwiperSlider/SwiperSlider";
 import { Header } from "../../../shared/Layouts";
-import ProductDetailInfo from "../../components/product-detail/ProductDetailInfo";
+import ProductDetailInfo from "../../components/product-detail/ProductDetailInfo/ProductDetailInfo";
+
+const imagesLink = [
+  "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+];
 
 const ProductDetail = () => {
   return (
@@ -17,7 +25,7 @@ const ProductDetail = () => {
         <div className="container">
           <div className="row wide product-detail__container">
             <div className="col-6">
-              <SwiperSlider images={productImages} />
+              <SwiperSlider images={imagesLink} />
             </div>
 
             <div className="col-6">

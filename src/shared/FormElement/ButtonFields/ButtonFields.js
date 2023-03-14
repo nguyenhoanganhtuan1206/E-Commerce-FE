@@ -3,11 +3,23 @@ import "./ButtonFields.scss";
 import { Link } from "react-router-dom";
 
 const ButtonFields = (props) => {
-  const { to, type, primary, className, onClick, children, disabled } = props;
+  const {
+    to,
+    type,
+    primary,
+    borderOnly,
+    fullWidth,
+    className,
+    onClick,
+    children,
+    disabled,
+  } = props;
 
   const classes = `btn 
   ${className}
   ${primary && "btn--primary"}
+  ${fullWidth && "btn--fullWidth"}
+  ${borderOnly && "btn--borderOnly"}
   ${disabled && "btn--disabled"} 
 `;
 

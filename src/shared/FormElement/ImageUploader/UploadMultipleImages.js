@@ -39,8 +39,7 @@ const UploadMultipleImages = ({
           const input = Array.from(e.target.files);
 
           const inputSliced = input.slice(0, 5);
-
-          console.log(inputSliced);
+          value = [];
 
           inputSliced.forEach((url) => {
             if (!storedImagesMap.has(url.name)) {
