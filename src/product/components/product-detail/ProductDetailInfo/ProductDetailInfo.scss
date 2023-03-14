@@ -1,35 +1,3 @@
-/* TEXT FONT */
-.product-info {
-  &__text-heading {
-    font-size: 2rem;
-    font-weight: 600;
-  }
-
-  &__text-normal {
-    font-size: 1.4rem;
-    color: var(--font-color-2);
-    font-weight: 400;
-
-    &--bold {
-      font-weight: 600;
-    }
-  }
-
-  &__btn {
-    margin-top: 1.2rem;
-    font-weight: 600;
-    font-size: 1.6rem;
-    padding: 1.5rem 0;
-
-    &:last-child {
-      width: fit-content;
-      padding: 0 2.4rem;
-      margin-left: 1.2rem;
-    }
-  }
-}
-/* TEXT FONT */
-
 .product-info {
   margin-left: 3rem;
 
@@ -77,3 +45,50 @@
   }
   /* BODY */
 }
+
+/* PRODUCT AUTHOR */
+.product-info__author {
+  display: flex;
+  margin-top: 1.4rem;
+
+  &-img {
+    box-shadow: none;
+    height: 6rem !important;
+    width: 6rem !important;
+  }
+
+  &-rating {
+    font-size: 1.3rem;
+    margin: 1.2rem 0 1rem 0;
+    color: var(--color-light-4);
+    display: flex;
+    align-items: center;
+  }
+
+  &-icon {
+    margin-left: 0.6rem;
+  }
+
+  &-detail {
+    margin-left: 1rem;
+
+    h4 {
+      color: #000;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+
+    a {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      transition: color 0.2s ease-in;
+
+      &:hover {
+        color: var(--color-primary-2);
+        text-decoration: none;
+      }
+    }
+  }
+}
+/* PRODUCT AUTHOR */

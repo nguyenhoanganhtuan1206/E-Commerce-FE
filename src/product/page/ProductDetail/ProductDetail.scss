@@ -1,13 +1,13 @@
 .product-detail {
-    padding: 10rem 0;
-    background-color: var(--color-grey-light-2);
+  padding: 10rem 0;
+  background-color: var(--color-grey-light-2);
 
-    &__container {
-        padding: 3rem;
-        border: 1px solid var(--color-grey-light-3);
-        background-color: #fff;
-        border-radius: 5px;
-    }
+  &__container {
+    padding: 3rem;
+    border: 1px solid var(--color-grey-light-3);
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 
 .product-detail__images {

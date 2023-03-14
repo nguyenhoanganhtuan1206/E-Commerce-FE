@@ -1,0 +1,38 @@
+/* TEXT FONT */
+.product-info {
+  &__text-heading {
+    font-size: 2.2rem;
+    font-weight: 600;
+  }
+
+  &__text-normal {
+    font-size: 1.5rem;
+    color: var(--font-color-2);
+    font-weight: 400;
+
+    &--bold {
+      font-weight: 600;
+    }
+  }
+
+  &__btn {
+    margin-top: 1.2rem;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 1.5rem 0;
+
+    &:last-child {
+      width: fit-content;
+      padding: 0 2.4rem;
+      margin-left: 1.2rem;
+    }
+  }
+}
+/* TEXT FONT */
+
+.product-detail__card {
+  padding: 3rem;
+  border: 1px solid var(--color-border);
+  background-color: #fff;
+  border-radius: 5px;
+}

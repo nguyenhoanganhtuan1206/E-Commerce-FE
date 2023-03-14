@@ -1,12 +1,12 @@
 .main-content--user {
   border-radius: 7px;
-  border: 1px solid var(--color-grey-light-3);
+  border: 1px solid var(--color-border);
   background-color: #fff;
   overflow: hidden;
 
   &__header {
     padding: 2rem 3rem;
-    border-bottom: 1px solid var(--color-grey-light-3);
+    border-bottom: 1px solid var(--color-border);
     font-size: 1.8rem;
     font-weight: 500;
   }

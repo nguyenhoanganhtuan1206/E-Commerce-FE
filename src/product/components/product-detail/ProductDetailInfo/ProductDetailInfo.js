@@ -1,4 +1,5 @@
 import "./ProductDetailInfo.scss";
+import "../ProductDetail.scss";
 
 import { memo } from "react";
 import ButtonFields from "../../../../shared/FormElement/ButtonFields/ButtonFields";
@@ -12,7 +13,10 @@ const ProductDetailInfo = (props) => {
         <h3 className="product-info__name">Macbook Pro 13-inch</h3>
 
         <p className="product-info__location">
-          <FontAwesomeIcon className="product-info__location-icon" icon={faLocationDot} />
+          <FontAwesomeIcon
+            className="product-info__location-icon"
+            icon={faLocationDot}
+          />
           <span>VietNam, Da Nang</span>
         </p>
 
