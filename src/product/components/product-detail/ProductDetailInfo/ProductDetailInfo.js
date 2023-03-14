@@ -26,21 +26,21 @@ const ProductDetailInfo = (props) => {
       <div className="product-info__body">
         <h4 className="product-info__text-heading">Information</h4>
 
-        <p className="product-info__text-normal mt-4">
+        <p className="product-info__sub-info product-info__text-normal mt-4">
           <span className="product-info__text-normal--bold mr-4">
             Category:
           </span>
           Macbook Pro
         </p>
 
-        <p className="product-info__text-normal mt-2">
+        <p className="product-info__sub-info product-info__text-normal mt-2">
           <span className="product-info__text-normal--bold mr-4">
             Condition:
           </span>
           Macbook Pro
         </p>
 
-        <p className="product-info__text-normal mt-2">
+        <p className="product-info__sub-info product-info__text-normal mt-2">
           <span className="product-info__text-normal--bold mr-4">Brand:</span>
           Macbook Pro
         </p>

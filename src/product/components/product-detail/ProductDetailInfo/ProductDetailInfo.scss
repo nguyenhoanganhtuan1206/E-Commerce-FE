@@ -32,12 +32,12 @@
   /* HEADER */
 
   /* BODY */
-  &__body {
-    p {
-      display: flex;
-      align-items: center;
-    }
+  &__sub-info {
+    display: flex;
+    align-items: center;
+  }
 
+  &__sub-info {
     span {
       display: block;
       flex: 0 0 20%;

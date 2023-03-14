@@ -7,6 +7,7 @@ const ButtonFields = (props) => {
     to,
     type,
     primary,
+    loading,
     borderOnly,
     fullWidth,
     className,
@@ -39,6 +40,7 @@ const ButtonFields = (props) => {
       disabled={disabled}
     >
       {props.children}
+      <span className={`${loading && "btn--loading"}`}></span>
     </button>
   );
 };
