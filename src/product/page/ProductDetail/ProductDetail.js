@@ -3,7 +3,11 @@ import "./ProductDetail.scss";
 import { Breadcrumbs } from "../../../shared/components";
 import SwiperSlider from "../../../shared/components/SwiperSlider/SwiperSlider";
 import { Header } from "../../../shared/Layouts";
-import { ProductDetailInfo, ProductDetailsSection } from "../../components/";
+import {
+  ProductDetailInfo,
+  ProductDetailsSection,
+  CommentsProduct,
+} from "../../components/";
 
 const imagesLink = [
   "https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -34,7 +38,14 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+
+        {/* Product Detail Section */}
         <ProductDetailsSection />
+        {/* Product Detail Section */}
+
+        {/* Product Comments Section */}
+        <CommentsProduct />
+        {/* Product Comments Section */}
       </div>
     </>
   );
