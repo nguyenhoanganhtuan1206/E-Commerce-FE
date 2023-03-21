@@ -10,11 +10,12 @@ import {
   MyAdsPage,
   MyCartPage,
   ProfileUserPage,
+  SellerSignUpPage,
 } from "./user/page";
+import { DashboardAdmin } from "./admin/page";
 import { ProductDetail } from "./product/page";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
-import DashboardAdmin from "./admin/page/DashboardAdmin/DashboardAdmin";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/my-ads" element={<MyAdsPage />} />
         <Route path="/my-cart" element={<MyCartPage />} />
         <Route path="/profile-user" element={<ProfileUserPage />} />
+        <Route path="/seller-signUp" element={<SellerSignUpPage />} />
 
         <Route path="/admin" element={<DashboardAdmin />} />
       </Routes>

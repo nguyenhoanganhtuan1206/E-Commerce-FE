@@ -7,3 +7,4 @@ export { default as MyAdsUser } from "./MyAdsUser/MyAdsUser";
 export { default as MyCart } from "./MyCart/MyCart";
 export { default as SettingPassword } from "./ProfileUser/SettingPassword";
 export { default as UserInfoEditor } from "./ProfileUser/UserInfoEditor";
+export { default as SellerSignUp } from "./SellerSignUp/SellerSignUpConfirm";

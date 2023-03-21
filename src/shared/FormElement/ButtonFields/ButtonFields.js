@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const ButtonFields = (props) => {
   const {
     to,
+    href,
     type,
     primary,
     loading,
@@ -29,6 +30,14 @@ const ButtonFields = (props) => {
       <Link className={classes} to={to}>
         {children}
       </Link>
+    );
+  }
+
+  if (href) {
+    return (
+      <a href={href} className={classes}>
+        {children}
+      </a>
     );
   }
 
