@@ -43,13 +43,15 @@ const AuthProvider = (props) => {
     localStorage.removeItem("userData");
   }, []);
 
-  /* Check expiration time and auto logout if it expired */
+  /* Check expire time and auto logout */
   useEffect(() => {
     if (user.token && tokenExpirationDate) {
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();
 
       logoutTimer = setTimeout(handleLogout, remainingTime);
+    } else {
+      clearTimeout(logoutTimer);
     }
   }, [user.token, handleLogout, tokenExpirationDate]);
 
