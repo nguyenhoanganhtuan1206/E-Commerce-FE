@@ -18,17 +18,18 @@ const AuthProvider = (props) => {
     /* If we already stored expiration time ,
     => expiration date will not be create new time  */
     const tokenExpirationTime =
-      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+      expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60); // 1h
 
-    setTokenExpirationDate(tokenExpirationDate);
+    setTokenExpirationDate(tokenExpirationTime);
 
     localStorage.setItem(
       "userData",
       JSON.stringify({
         token: user.token,
-        userId: user.userId,
+        accountId: user.accountId,
         username: user.username,
         roles: user.roles,
+        email: user.email,
         expiration: tokenExpirationTime.toISOString(),
       })
     );
@@ -58,7 +59,6 @@ const AuthProvider = (props) => {
   /* Handle auto login when reload page */
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userData"));
-
     if (
       storedData &&
       storedData.token &&
@@ -66,8 +66,7 @@ const AuthProvider = (props) => {
     ) {
       handleLogin(storedData, new Date(storedData.expiration));
     }
-  });
-  /* Handle auto login when reload page */
+  }, [handleLogin]);
 
   /*  Check roles */
   useEffect(() => {
@@ -78,18 +77,19 @@ const AuthProvider = (props) => {
   }, [user.token, user.roles]);
 
   /* To send context */
-  const containsValue = {
+  const containValues = {
     isLoggedIn: !!user.token,
     token: user.token,
-    userId: user.userId,
+    accountId: user.accountId,
     username: user.username,
     roles: roles,
+    email: user.email,
     login: handleLogin,
     logout: handleLogout,
   };
 
   return (
-    <AuthContext.Provider value={containsValue}>
+    <AuthContext.Provider value={containValues}>
       {children}
     </AuthContext.Provider>
   );

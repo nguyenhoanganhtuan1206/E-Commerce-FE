@@ -27,7 +27,6 @@ const useApiClient = () => {
 
   apiClient.interceptors.response.use(
     (response) => {
-      console.log("response", response);
       setIsLoading(false);
       return response;
     },

@@ -88,7 +88,7 @@ const Header = () => {
               {authContext.isLoggedIn && (
                 <li className="header__action-item header__action-item--have-menu">
                   <AvatarUser circle />
-                  <span>Nguyen Hoang Anh Tuan</span>
+                  <span>{authContext.username}</span>
 
                   <div className="header__menu-user">
                     <PopperWrapper className="header__menu-user-popper">

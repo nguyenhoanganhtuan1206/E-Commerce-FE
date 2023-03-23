@@ -169,6 +169,7 @@ const Registration = () => {
             disabled={!methods.formState.isValid}
             primary
             className="auth-form__btn"
+            isLoading={isLoading}
           >
             Registration
           </ButtonFields>
