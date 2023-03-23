@@ -9,11 +9,11 @@ const Auth = ({ heading, children }) => {
       <Breadcrumbs title="Login" nextPages={["Home"]} />
 
       <div className="auth">
-        <form className="auth-form">
+        <div className="auth-form">
           <h3 className="auth-form__header">{heading}</h3>
 
           {children}
-        </form>
+        </div>
       </div>
     </>
   );

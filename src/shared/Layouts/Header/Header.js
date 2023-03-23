@@ -9,8 +9,12 @@ import {
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import { AvatarUser, PopperWrapper } from "../../components";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/auth-context";
 
 const Header = () => {
+  const authContext = useContext(AuthContext);
+
   return (
     <div className="header">
       <div className="container">
@@ -60,59 +64,58 @@ const Header = () => {
           </nav>
           <div className="header__action">
             <ul className="header__action-list">
-              {/* <li className="header__action-item">
-                <Link to="/login">
-                  <FontAwesomeIcon
-                    className="header__icon"
-                    icon={faArrowRightToBracket}
-                  />
-                  <span>Login</span>
-                </Link>
-              </li>
+              {!authContext.isLoggedIn && (
+                <>
+                  <li className="header__action-item">
+                    <Link to="/login">
+                      <FontAwesomeIcon
+                        className="header__icon"
+                        icon={faArrowRightToBracket}
+                      />
+                      <span>Login</span>
+                    </Link>
+                  </li>
 
-              <li className="header__action-item">
-                <Link to="/register">
-                  <FontAwesomeIcon className="header__icon" icon={faUser} />
-                  <span>Register</span>
-                </Link>
-              </li> */}
+                  <li className="header__action-item">
+                    <Link to="/register">
+                      <FontAwesomeIcon className="header__icon" icon={faUser} />
+                      <span>Register</span>
+                    </Link>
+                  </li>
+                </>
+              )}
 
-              <li className="header__action-item header__action-item--have-menu">
-                <AvatarUser circle />
-                <span>Nguyen Hoang Anh Tuan</span>
+              {authContext.isLoggedIn && (
+                <li className="header__action-item header__action-item--have-menu">
+                  <AvatarUser circle />
+                  <span>Nguyen Hoang Anh Tuan</span>
 
-                <div className="header__menu-user">
-                  <PopperWrapper className="header__menu-user-popper">
-                    <ul className="header__menu-user-list">
-                      <Link to="/dashboard-user" className="header__menu-user-item">
-                        <FontAwesomeIcon icon={faUser} />
+                  <div className="header__menu-user">
+                    <PopperWrapper className="header__menu-user-popper">
+                      <ul className="header__menu-user-list">
+                        <Link
+                          to="/dashboard-user"
+                          className="header__menu-user-item"
+                        >
+                          <FontAwesomeIcon icon={faUser} />
 
-                        <span>My Account</span>
-                      </Link>
+                          <span>My Account</span>
+                        </Link>
 
-                      <Link className="header__menu-user-item">
-                        <FontAwesomeIcon icon={faCartShopping} />
-                        <span>My Order</span>
-                      </Link>
+                        <Link className="header__menu-user-item">
+                          <FontAwesomeIcon icon={faCartShopping} />
+                          <span>My Order</span>
+                        </Link>
 
-                      <Link className="header__menu-user-item">
-                        <FontAwesomeIcon icon={faRightFromBracket} />
-                        <span>Log out</span>
-                      </Link>
-                    </ul>
-                  </PopperWrapper>
-                </div>
-              </li>
-
-              {/* <li className="header__action-item">
-                <ButtonFields
-                  to="/post-ad"
-                  primary
-                  className="header__action-btn"
-                >
-                  Post An Ad
-                </ButtonFields>
-              </li> */}
+                        <Link className="header__menu-user-item">
+                          <FontAwesomeIcon icon={faRightFromBracket} />
+                          <span>Log out</span>
+                        </Link>
+                      </ul>
+                    </PopperWrapper>
+                  </div>
+                </li>
+              )}
             </ul>
           </div>
         </div>

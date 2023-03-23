@@ -1,19 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
 
-const apiClient = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
-});
-
 const useApiClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const apiClient = axios.create({
+    baseURL: "http://localhost:8080/api/v1",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   apiClient.interceptors.request.use((config) => {
     setIsLoading(true);
 
     const userData = JSON.parse(localStorage.getItem("userData"));
-    const token = userData.token;
+    const token = userData?.token;
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
@@ -24,6 +27,7 @@ const useApiClient = () => {
 
   apiClient.interceptors.response.use(
     (response) => {
+      console.log("response", response);
       setIsLoading(false);
       return response;
     },
@@ -39,7 +43,7 @@ const useApiClient = () => {
     }
   );
 
-  return { error, isLoading };
+  return { error, isLoading, apiClient };
 };
 
 export default useApiClient;

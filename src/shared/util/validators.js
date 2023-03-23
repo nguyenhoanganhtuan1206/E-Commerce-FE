@@ -50,7 +50,7 @@ export const VALIDATOR_EMAIL = (message) => ({
 
 export const VALIDATOR_MATCHING = (val, message) => ({
   type: VALIDATOR_TYPE_MATCHING,
-  val: val,
+  val,
   message,
 });
 
@@ -88,7 +88,6 @@ export const validateForm = (value = "", validators) => {
     if (validator.type === VALIDATOR_TYPE_MIN) {
       isValid = isValid && +value >= validator.val;
       message = validator.message;
-      console.log(isValid);
     }
 
     if (validator.type === VALIDATOR_TYPE_MAX) {

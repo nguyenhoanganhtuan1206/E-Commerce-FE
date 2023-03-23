@@ -1,5 +1,6 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import { Home } from "./shared/components";
 import {
@@ -64,6 +65,13 @@ function App() {
         <Route path="/admin" element={<DashboardAdmin />} />
         {/* Routes required Admin */}
       </Routes>
+
+      <ToastContainer
+        position={toast.POSITION.TOP_RIGHT}
+        autoClose={3000}
+        icon
+        className="toast__modify"
+      />
     </Router>
   );
 }
