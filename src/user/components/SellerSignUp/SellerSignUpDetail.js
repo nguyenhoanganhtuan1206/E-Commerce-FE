@@ -1,5 +1,8 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+
+import useApiClient from "../../../shared/hooks/useAxios";
 import {
   ButtonFields,
   InputFields,
@@ -10,16 +13,28 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
+import { LoadingSpinner } from "../../../shared/components";
 
 const SellerSignUpDetail = (props) => {
   const methods = useForm({ mode: "all" });
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const { apiClient, error, isLoading } = useApiClient();
+
+  const onSubmit = useCallback(
+    async (data) => {
+      try {
+        const response = await apiClient.post("/seller", data);
+      } catch (err) {
+        toast.error(err?.response?.data?.message || error);
+      }
+    },
+    [apiClient, error]
+  );
 
   return (
     <>
+      <LoadingSpinner option2 />
+
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <InputFields
@@ -123,6 +138,7 @@ const SellerSignUpDetail = (props) => {
             disabled={!methods.formState.isValid}
             primary
             className="mt-4"
+            isLoading={isLoading}
           >
             Registration
           </ButtonFields>

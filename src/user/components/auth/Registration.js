@@ -19,8 +19,6 @@ import {
 
 import useApiClient from "../../../shared/hooks/useAxios";
 
-import { register } from "../../../apis/auth/auth.api";
-
 const Registration = () => {
   const methods = useForm({ mode: "onChange" });
 
@@ -32,7 +30,7 @@ const Registration = () => {
   const onSubmit = useCallback(
     async (data) => {
       try {
-        const response = await register({ data, apiClient });
+        const response = await apiClient.post("/auth/sign-up", data);
 
         toast.success("Registration Successfully!", {
           autoClose: 2000,

@@ -28,3 +28,14 @@
     }
   }
 }
+
+.outer__link {
+  a {
+    color: var(--color-primary-2);
+    font-weight: 500;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+}

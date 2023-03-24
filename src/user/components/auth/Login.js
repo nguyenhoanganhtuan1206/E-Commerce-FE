@@ -17,7 +17,6 @@ import {
 import useApiClient from "../../../shared/hooks/useAxios";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
-import { login } from "../../../apis/auth/auth.api";
 
 const Login = () => {
   const methods = useForm({ mode: "onSubmit" });
@@ -30,7 +29,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await login({ data, apiClient });
+      const response = await apiClient.post("/auth/login", data);
 
       authContext.login(response.data);
       toast.success("Login Successfully!");

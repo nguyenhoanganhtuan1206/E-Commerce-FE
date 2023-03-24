@@ -42,7 +42,7 @@ function App() {
           <Route path="/my-ads" element={<MyAdsPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/seller-signUp" element={<SellerSignUpPage />} />
+          <Route path="/registration-sell" element={<SellerSignUpPage />} />
           <Route path="/post-ad" element={<PostAd />} />
         </Route>
         {/* Routes logged in and all roles */}

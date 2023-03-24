@@ -4,7 +4,6 @@ import "../MainContent.scss";
 import { MainComponentUser } from "../../components";
 import { Header } from "../../../shared/Layouts";
 import { Breadcrumbs } from "../../../shared/components";
-import SellerSignUpConfirm from "../../components/SellerSignUp/SellerSignUpConfirm";
 import SellerSignUpDetail from "../../components/SellerSignUp/SellerSignUpDetail";
 
 const SellerSignUp = () => {
