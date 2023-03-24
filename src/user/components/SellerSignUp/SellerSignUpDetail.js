@@ -3,38 +3,36 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import useApiClient from "../../../shared/hooks/useAxios";
-import {
-  ButtonFields,
-  InputFields,
-  SelectFields,
-} from "../../../shared/FormElement";
+import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { LoadingSpinner } from "../../../shared/components";
+import RegionDropdown from "../../../shared/FormElement/RegionDropdown/RegionDropdown";
 
 const SellerSignUpDetail = (props) => {
   const methods = useForm({ mode: "all" });
 
   const { apiClient, error, isLoading } = useApiClient();
 
-  const onSubmit = useCallback(
-    async (data) => {
-      try {
-        const response = await apiClient.post("/seller", data);
-      } catch (err) {
-        toast.error(err?.response?.data?.message || error);
-      }
-    },
-    [apiClient, error]
-  );
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  // const onSubmit = useCallback(
+  //   async (data) => {
+  //     try {
+  //       const response = await apiClient.post("/seller", data);
+  //     } catch (err) {
+  //       toast.error(err?.response?.data?.message || error);
+  //     }
+  //   },
+  //   [apiClient, error]
+  // );
 
   return (
     <>
-      <LoadingSpinner option2 />
-
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <InputFields
@@ -87,51 +85,8 @@ const SellerSignUpDetail = (props) => {
             </div>
           </div>
 
-          <div className="row mt-5">
-            <div className="col-4">
-              <SelectFields
-                fieldName="categories"
-                initialValue="Mobiles"
-                label="Categories*"
-                validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
-              >
-                <option value="Electronics">Electronics</option>
-                <option value="Vehicle">Vehicle</option>
-                <option value="Mobiles">Mobiles</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Fashion">Fashion</option>
-              </SelectFields>
-            </div>
-
-            <div className="col-4">
-              <SelectFields
-                fieldName="categories"
-                initialValue="Mobiles"
-                label="Categories*"
-                validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
-              >
-                <option value="Electronics">Electronics</option>
-                <option value="Vehicle">Vehicle</option>
-                <option value="Mobiles">Mobiles</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Fashion">Fashion</option>
-              </SelectFields>
-            </div>
-
-            <div className="col-4">
-              <SelectFields
-                fieldName="categories"
-                initialValue="Mobiles"
-                label="Categories*"
-                validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
-              >
-                <option value="Electronics">Electronics</option>
-                <option value="Vehicle">Vehicle</option>
-                <option value="Mobiles">Mobiles</option>
-                <option value="Furniture">Furniture</option>
-                <option value="Fashion">Fashion</option>
-              </SelectFields>
-            </div>
+          <div className="mt-5">
+            <RegionDropdown control={methods.control} />
           </div>
 
           <ButtonFields
