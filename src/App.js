@@ -24,8 +24,6 @@ import { AuthContext } from "./context/auth-context";
 function App() {
   const authContext = useContext(AuthContext);
 
-  console.log(authContext.roles);
-
   return (
     <Router>
       <Routes>
@@ -45,14 +43,9 @@ function App() {
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/seller-signUp" element={<SellerSignUpPage />} />
-        </Route>
-        {/* Routes logged in and all roles */}
-
-        {/* Routes logged in and just role SELLER */}
-        <Route element={<ProtectRoutes isAllowed={!!authContext.isLoggedIn} />}>
           <Route path="/post-ad" element={<PostAd />} />
         </Route>
-        {/* Routes logged in and just role SELLER */}
+        {/* Routes logged in and all roles */}
 
         {/* Routes required Admin */}
         <Route path="/admin" element={<DashboardAdmin />} />

@@ -1,9 +1,10 @@
 import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 import Auth from "../../page/auth/Auth";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
@@ -14,12 +15,14 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 import useApiClient from "../../../shared/hooks/useAxios";
-import { useCallback, useContext } from "react";
-import { toast } from "react-toastify";
+import { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
+import { login } from "../../../apis/auth/auth.api";
 
 const Login = () => {
   const methods = useForm({ mode: "onSubmit" });
+
+  const navigate = useNavigate();
 
   const authContext = useContext(AuthContext);
 
@@ -27,12 +30,13 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      const response = await apiClient.post("/auth/login", data);
-      
+      const response = await login({ data, apiClient });
+
       authContext.login(response.data);
       toast.success("Login Successfully!");
+      navigate("/");
     } catch (err) {
-      toast.error(error);
+      toast.error(err.response?.data?.message || error);
     }
   };
 

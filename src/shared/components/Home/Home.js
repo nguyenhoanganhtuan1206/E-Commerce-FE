@@ -138,7 +138,7 @@ const Home = () => {
                         <div className="latest-product__group">
                           <p className="latest__price">
                             <span>Start From: </span>
-                            <p>{product.price}</p>
+                            <span>{product.price}</span>
                           </p>
                         </div>
 

@@ -97,20 +97,32 @@ const Header = () => {
                           to="/dashboard-user"
                           className="header__menu-user-item"
                         >
-                          <FontAwesomeIcon icon={faUser} />
+                          <FontAwesomeIcon
+                            className="header__menu-user__icon"
+                            icon={faUser}
+                          />
 
                           <span>My Account</span>
                         </Link>
 
                         <Link className="header__menu-user-item">
-                          <FontAwesomeIcon icon={faCartShopping} />
+                          <FontAwesomeIcon
+                            className="header__menu-user__icon"
+                            icon={faCartShopping}
+                          />
                           <span>My Order</span>
                         </Link>
 
-                        <Link className="header__menu-user-item">
-                          <FontAwesomeIcon icon={faRightFromBracket} />
+                        <li
+                          onClick={authContext.logout}
+                          className="header__menu-user-item"
+                        >
+                          <FontAwesomeIcon
+                            className="header__menu-user__icon"
+                            icon={faRightFromBracket}
+                          />
                           <span>Log out</span>
-                        </Link>
+                        </li>
                       </ul>
                     </PopperWrapper>
                   </div>

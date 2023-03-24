@@ -6,9 +6,12 @@ import "./PostAd.scss";
 import { Header } from "../../../shared/Layouts";
 import { FormPostAd } from "../../components/PostAd";
 import { Breadcrumbs } from "../../../shared/components";
-import { memo } from "react";
+import { memo, useContext } from "react";
+import { AuthContext } from "../../../context/auth-context";
 
 const PostAd = () => {
+  const authContext = useContext(AuthContext);
+
   return (
     <>
       {/* Header */}

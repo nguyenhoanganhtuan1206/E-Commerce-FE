@@ -30,16 +30,16 @@ const SearchNavbar = () => {
         <label htmlFor="categories" className="search-navbar__label">
           <FontAwesomeIcon icon={faList} className="search-navbar__icon" />
         </label>
-        <select id="categories" className="search-navbar__input">
-          <option selected disabled>
-            Categories
-          </option>
-
-          <option value="none">Electronics</option>
-          <option value="none">Vehicle</option>
-          <option value="none">Mobiles</option>
-          <option value="none">Furniture</option>
-          <option value="none">Fashion</option>
+        <select
+          id="categories"
+          className="search-navbar__input"
+          defaultValue="Vehicle"
+        >
+          <option value="Electronics">Electronics</option>
+          <option value="Vehicle">Vehicle</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Fashion">Fashion</option>
         </select>
       </div>
 
@@ -50,14 +50,16 @@ const SearchNavbar = () => {
             className="search-navbar__icon"
           />
         </label>
-        <select id="location" className="search-navbar__input">
-          <option selected disabled>
-            Location
-          </option>
-          <option value="none">New York</option>
-          <option value="none">California</option>
-          <option value="none">Washington</option>
-          <option value="none">Birmingham</option>
+        <select
+          id="categories"
+          className="search-navbar__input"
+          defaultValue="Vehicle"
+        >
+          <option value="Electronics">Electronics</option>
+          <option value="Vehicle">Vehicle</option>
+          <option value="Mobiles">Mobiles</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Fashion">Fashion</option>
         </select>
       </div>
 

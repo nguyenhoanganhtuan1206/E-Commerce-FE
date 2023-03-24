@@ -27,11 +27,14 @@ const useApiClient = () => {
 
   apiClient.interceptors.response.use(
     (response) => {
+      console.log("response", response);
+
       setIsLoading(false);
       return response;
     },
     (error) => {
       setIsLoading(false);
+      console.log("error.response.status", error.response.status);
 
       if (error.response.status !== 200) {
         localStorage.clear();

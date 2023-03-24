@@ -75,6 +75,7 @@ const AuthProvider = (props) => {
       user.roles.map((role) => setRoles((prev) => [...prev, role.name]));
     }
   }, [user.token, user.roles]);
+  /*  Check roles */
 
   /* To send context */
   const containValues = {

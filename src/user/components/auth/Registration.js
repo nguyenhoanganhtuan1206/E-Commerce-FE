@@ -1,6 +1,7 @@
 import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
+import { toast } from "react-toastify";
 import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
@@ -15,11 +16,13 @@ import {
   VALIDATOR_NUMBER,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
+
 import useApiClient from "../../../shared/hooks/useAxios";
-import { toast } from "react-toastify";
+
+import { register } from "../../../apis/auth/auth.api";
 
 const Registration = () => {
-  const methods = useForm({ mode: "onSubmit" });
+  const methods = useForm({ mode: "onChange" });
 
   const { error, isLoading, apiClient } = useApiClient();
 
@@ -29,13 +32,13 @@ const Registration = () => {
   const onSubmit = useCallback(
     async (data) => {
       try {
-        const response = await apiClient.post("/auth/sign-up", data);
+        const response = await register({ data, apiClient });
 
         toast.success("Registration Successfully!", {
           autoClose: 2000,
         });
       } catch (err) {
-        toast.error(error);
+        toast.error(err.response?.data?.message || error);
       }
     },
     [apiClient, error]
