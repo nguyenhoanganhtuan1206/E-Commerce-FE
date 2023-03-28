@@ -6,6 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import { AuthContext } from "../../../context/auth-context";
+import { useAuthApis } from "../../../apis/auth/auth.api";
+
 import Auth from "../../page/auth/Auth";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
@@ -14,9 +17,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import useApiClient from "../../../shared/hooks/useAxios";
-import { useContext } from "react";
-import { AuthContext } from "../../../context/auth-context";
+import { useCallback, useContext, useState } from "react";
 
 const Login = () => {
   const methods = useForm({ mode: "onSubmit" });
@@ -25,19 +26,28 @@ const Login = () => {
 
   const authContext = useContext(AuthContext);
 
-  const { error, isLoading, apiClient } = useApiClient();
+  const { login } = useAuthApis();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data) => {
-    try {
-      const response = await apiClient.post("/auth/login", data);
+  const onSubmit = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      try {
+        const response = await login(data);
 
-      authContext.login(response.data);
-      toast.success("Login Successfully!");
-      navigate("/");
-    } catch (err) {
-      toast.error(err.response?.data?.message || error);
-    }
-  };
+        authContext.login(response);
+        toast.success("Login Successfully!");
+        navigate("/");
+      } catch (err) {
+        console.log(err);
+        toast.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [login]
+  );
 
   return (
     <FormProvider {...methods}>

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useState } from "react";
 
 const useApiClient = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const apiClient = axios.create({
@@ -13,8 +12,6 @@ const useApiClient = () => {
   });
 
   apiClient.interceptors.request.use((config) => {
-    setIsLoading(true);
-
     const userData = JSON.parse(localStorage.getItem("userData"));
     const token = userData?.token;
 
@@ -27,22 +24,20 @@ const useApiClient = () => {
 
   apiClient.interceptors.response.use(
     (response) => {
-      setIsLoading(false);
       return response;
     },
     (error) => {
-      setIsLoading(false);
-
-      if (error.response.status !== 200) {
+      if (error.response.status === 403 || error.response.status === 401) {
         localStorage.clear();
-        setError(error.response.data.message || "Some error occurred");
       }
+
+      setError(error.response.data.message || "Some error occurred");
 
       return Promise.reject(error);
     }
   );
 
-  return { error, isLoading, apiClient };
+  return { error, apiClient };
 };
 
 export default useApiClient;

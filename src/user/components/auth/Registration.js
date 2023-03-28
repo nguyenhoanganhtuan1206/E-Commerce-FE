@@ -2,8 +2,8 @@ import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
 import { toast } from "react-toastify";
-import { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 
 import Auth from "../../page/auth/Auth";
@@ -17,31 +17,36 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 
-import useApiClient from "../../../shared/hooks/useAxios";
+import { useAuthApis } from "../../../apis/auth/auth.api";
 
 const Registration = () => {
   const methods = useForm({ mode: "onChange" });
 
-  const { error, isLoading, apiClient } = useApiClient();
+  const navigate = useNavigate();
+
+  const { register } = useAuthApis();
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentPassword = methods.watch("password");
   const currentConfirmPassword = methods.watch("confirmPassword");
 
   const onSubmit = useCallback(
     async (data) => {
+      setIsLoading(true);
       try {
-        const response = await apiClient.post("/auth/sign-up", data);
+        await register(data);
 
-        toast.success("Registration Successfully!", {
-          autoClose: 2000,
-        });
+        toast.success("Register Successfully!");
+        navigate("/login");
       } catch (err) {
-        toast.error(err.response?.data?.message || error);
+        toast.error(err);
+      } finally {
+        setIsLoading(false);
       }
     },
-    [apiClient, error]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [register]
   );
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -106,6 +111,18 @@ const Registration = () => {
             type="text"
             label="Phone Number (*)"
             htmlFor="phoneNumber"
+          />
+
+          <InputFields
+            fieldName="address"
+            validators={[
+              VALIDATOR_REQUIRED("Address cannot be empty"),
+              VALIDATOR_MINLENGTH(3, "Address is invalid"),
+            ]}
+            placeholder="Enter Address"
+            type="text"
+            label="Address (*)"
+            htmlFor="address"
           />
 
           <InputFields

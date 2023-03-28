@@ -106,8 +106,8 @@ const InputFields = (props) => {
                 </label>
                 <div className="form-input__wrapper">
                   <input
-                    onChange={onChange}
                     value={value}
+                    onChange={onChange}
                     type={showInputType()}
                     className={`${classes} ${
                       error && "form-input__input--error"
