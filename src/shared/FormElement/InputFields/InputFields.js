@@ -32,6 +32,7 @@ const InputFields = (props) => {
     rows = 5,
     htmlFor,
     noBorder,
+    alertErrorMessage,
   } = props;
 
   const { control } = useFormContext();
@@ -134,7 +135,12 @@ const InputFields = (props) => {
                   )}
                 </div>
 
-                {error && <Alert alertMessage={error.message} error />}
+                {(alertErrorMessage || error) && (
+                  <Alert
+                    alertMessage={alertErrorMessage || error.message}
+                    error={alertErrorMessage || error}
+                  />
+                )}
               </div>
             )}
           </>

@@ -8,3 +8,5 @@ export { default as MyCart } from "./MyCart/MyCart";
 export { default as SettingPassword } from "./ProfileUser/SettingPassword";
 export { default as UserInfoEditor } from "./ProfileUser/UserInfoEditor";
 export { default as SellerSignUp } from "./SellerSignUp/SellerSignUpConfirm";
+export { default as FormConfirmEmail } from "./ForgetPassword/FormConfirmEmail";
+export { default as FormResetPassword } from "./ForgetPassword/FormResetPassword";

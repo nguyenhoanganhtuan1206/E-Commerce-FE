@@ -1,6 +1,8 @@
 import "./App.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useContext } from "react";
+import { AuthContext } from "./context/auth-context";
 
 import { Home } from "./shared/components";
 import {
@@ -12,14 +14,14 @@ import {
   MyCartPage,
   ProfileUserPage,
   SellerSignUpPage,
+  ConfirmEmailPage,
+  ResetPasswordPage,
 } from "./user/page";
 import { DashboardAdmin } from "./admin/page";
 import { ProductDetail } from "./product/page";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import ProtectRoutes from "./routes/ProtectRoutes";
-import { useContext } from "react";
-import { AuthContext } from "./context/auth-context";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -34,6 +36,13 @@ function App() {
         <Route path="/product" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
         {/* Routes permit all */}
+
+        <Route
+          path="/reset-password/confirm-email"
+          element={<ConfirmEmailPage />}
+        />
+
+        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={!!authContext.isLoggedIn} />}>

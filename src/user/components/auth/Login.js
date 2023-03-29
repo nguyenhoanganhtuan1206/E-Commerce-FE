@@ -39,7 +39,6 @@ const Login = () => {
         toast.success("Login Successfully!");
         navigate("/");
       } catch (err) {
-        console.log(err);
         toast.error(err);
       } finally {
         setIsLoading(false);
@@ -113,7 +112,12 @@ const Login = () => {
               </label>
             </div>
 
-            <Link className="auth-form__forget-link">Lost your password?</Link>
+            <Link
+              to="/reset-password/confirm-email"
+              className="auth-form__forget-link"
+            >
+              Lost your password?
+            </Link>
           </div>
 
           <ButtonFields

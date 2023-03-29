@@ -6,3 +6,5 @@ export { default as MyAdsPage } from "./MyAdsPage/MyAdsPage";
 export { default as MyCartPage } from "./MyCartPage/MyCartPage";
 export { default as ProfileUserPage } from "./ProfileUserPage/ProfileUserPage";
 export { default as SellerSignUpPage } from "./SellerSignUp/SellerSignUpPage";
+export { default as ConfirmEmailPage } from "./ForgetPasswordPage/ConfirmEmailPage";
+export { default as ResetPasswordPage } from "./ForgetPasswordPage/ResetPasswordPage";
