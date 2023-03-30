@@ -30,12 +30,10 @@ const UserInfoEditor = () => {
   const { fetchUserProfile, updateUserProfile } = useProfileApis();
 
   useEffect(() => {
-    console.log("loading upon", isLoading);
     const getUserProfile = async () => {
       setIsLoading(true);
       try {
         const fetchProfile = await fetchUserProfile();
-        console.log(fetchProfile);
 
         methods.reset(fetchProfile);
       } catch (err) {

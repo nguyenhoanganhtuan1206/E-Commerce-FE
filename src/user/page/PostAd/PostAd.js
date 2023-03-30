@@ -23,7 +23,8 @@ const PostAd = () => {
           <h3 className="main-content--user__header">Post An Ad</h3>
 
           <div className="main-content--user__body">
-            {authContext.roles.includes("ROLE_SELLER") && (
+            <FormPostAd />
+            {/* {authContext.roles.includes("ROLE_SELLER") && (
               <>
                 <FormPostAd />
               </>
@@ -46,7 +47,7 @@ const PostAd = () => {
                   </ButtonFields>
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </MainComponentUser>
