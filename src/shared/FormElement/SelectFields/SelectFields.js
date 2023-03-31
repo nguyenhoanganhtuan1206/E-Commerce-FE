@@ -4,6 +4,8 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import { validateForm } from "../../util/validators";
 import Alert from "../../components/Alert/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SelectFields = (props) => {
   const {
@@ -13,6 +15,7 @@ const SelectFields = (props) => {
     label,
     htmlFor,
     className,
+    isLoading,
     children,
   } = props;
 
@@ -37,21 +40,29 @@ const SelectFields = (props) => {
         fieldState: { error },
       }) => {
         return (
-          <div className="form-input">
+          <div className="form-input__group">
             <label
               className={`form-input__label  ${value ? "change-event" : null}`}
               htmlFor={htmlFor}
             >
               {label}
             </label>
-            <select
-              onChange={onChange}
-              name={fieldName}
-              className={`form-input__input ${className}`}
-              value={value}
-            >
-              {children}
-            </select>
+            <div className="form-input__wrapper">
+              <select
+                onChange={onChange}
+                name={fieldName}
+                className={`form-input__input ${className}`}
+                value={value}
+              >
+                {children}
+              </select>
+              {isLoading && (
+                <FontAwesomeIcon
+                  icon={faSpinner}
+                  className="form-input--loading"
+                />
+              )}
+            </div>
             {error && <Alert alertMessage={error.message} error />}
           </div>
         );

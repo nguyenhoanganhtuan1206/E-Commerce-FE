@@ -8,6 +8,7 @@ import { faEyeSlash, faEye } from "@fortawesome/free-regular-svg-icons";
 
 import Alert from "../../components/Alert/Alert";
 import { validateForm } from "../../util/validators";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 /* This function just need 2 parameters state ,action
 -> If will work fine if put external */
@@ -27,6 +28,7 @@ const InputFields = (props) => {
     required,
     className,
     type,
+    isLoading,
     placeholder,
     cols = 3,
     rows = 5,
@@ -81,18 +83,27 @@ const InputFields = (props) => {
                   >
                     {label}
                   </label>
-                  <textarea
-                    onChange={onChange}
-                    className={`${classes} ${
-                      error && "form-input__input--error"
-                    }`}
-                    value={value}
-                    cols={cols}
-                    rows={rows}
-                    placeholder={placeholder}
-                    name={fieldName}
-                  />
-                  {error && <Alert alertMessage={error.message} error />}
+                  <div className="form-input__wrapper">
+                    <textarea
+                      onChange={onChange}
+                      className={`${classes} ${
+                        error && "form-input__input--error"
+                      }`}
+                      value={value}
+                      cols={cols}
+                      rows={rows}
+                      placeholder={placeholder}
+                      name={fieldName}
+                    />
+                    {error && <Alert alertMessage={error.message} error />}
+
+                    {isLoading && (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        className="form-input--loading"
+                      />
+                    )}
+                  </div>
                 </div>
               </>
             ) : (
@@ -131,6 +142,13 @@ const InputFields = (props) => {
                       icon={faEyeSlash}
                       className="form-input__hidden-password"
                       onClick={() => setIsHiddenPassword(!isHiddenPassword)}
+                    />
+                  )}
+
+                  {isLoading && (
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      className="form-input--loading"
                     />
                   )}
                 </div>

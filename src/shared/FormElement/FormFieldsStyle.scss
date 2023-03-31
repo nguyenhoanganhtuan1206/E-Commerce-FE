@@ -2,6 +2,8 @@
   &__group {
     width: 100%;
 
+    position: relative;
+
     &:not(:last-child) {
       margin: 2rem 0 1.6rem 0;
     }
@@ -83,4 +85,13 @@
       opacity: 0.8;
     }
   }
+}
+
+.form-input--loading {
+  position: absolute;
+  right: 7%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+
+  animation: lds-dual-ring 1.2s linear infinite;
 }

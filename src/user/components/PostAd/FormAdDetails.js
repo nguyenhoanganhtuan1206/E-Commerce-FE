@@ -25,12 +25,12 @@ const FormAdDetails = () => {
             label="Quantity*"
             htmlFor="quantity"
             fullWidth
-            placeholder="Enter product's name"
+            placeholder="Enter quantity's product"
             validators={[
-              VALIDATOR_REQUIRED("Product price cannot be empty"),
+              VALIDATOR_REQUIRED("Quantity cannot be empty"),
               VALIDATOR_NUMBER("Quantity must be a number"),
-              VALIDATOR_MAX(1000, "Quantity must be less than 1000"),
-              VALIDATOR_MIN(5, "Quantity must be at least 5"),
+              VALIDATOR_MAX(10000, "Quantity must be less than 10000"),
+              VALIDATOR_MIN(1, "Quantity must be at least 1"),
             ]}
           />
         </div>

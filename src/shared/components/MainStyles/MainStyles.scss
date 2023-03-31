@@ -66,3 +66,14 @@ a {
     width: 35%;
   }
 }
+
+/* Animation */
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
