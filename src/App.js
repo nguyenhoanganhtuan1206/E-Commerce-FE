@@ -16,13 +16,14 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   SellerSignUpConfirmPage,
+  SellerSignUpDetailPage,
 } from "./user/page";
 import { DashboardAdmin } from "./admin/page";
 import { ProductDetail } from "./product/page";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import ProtectRoutes from "./routes/ProtectRoutes";
-import SellerSignUpDetailPage from "./user/page/SellerSignUp/SellerSignUpDetailPage";
+import { ErrorPage } from "./shared/pages";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -48,7 +49,7 @@ function App() {
         {/* Required token */}
 
         {/* Routes logged in and all roles */}
-        <Route element={<ProtectRoutes isAllowed={!!authContext.isLoggedIn} />}>
+        <Route element={<ProtectRoutes />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
           <Route path="/chat-user" element={<ChatPageUser />} />
           <Route path="/my-ads" element={<MyAdsPage />} />
@@ -59,16 +60,23 @@ function App() {
             path="/registration-seller/confirm-email"
             element={<SellerSignUpConfirmPage />}
           />
-          <Route
+          {/* <Route
             path="/registration-seller"
             element={<SellerSignUpDetailPage />}
-          />
+          /> */}
         </Route>
+
+        <Route
+          path="/registration-seller"
+          element={<SellerSignUpDetailPage />}
+        />
         {/* Routes logged in and all roles */}
 
         {/* Routes required Admin */}
         <Route path="/admin" element={<DashboardAdmin />} />
         {/* Routes required Admin */}
+
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
 
       <ToastContainer

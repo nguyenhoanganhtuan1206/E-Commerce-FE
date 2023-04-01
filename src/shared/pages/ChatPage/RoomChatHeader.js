@@ -1,4 +1,4 @@
-import AvatarUser from "../components/AvatarUser/AvatarUser";
+import { AvatarUser } from "../../components";
 import "./RoomChatHeader.scss";
 
 const RoomChatHeader = (props) => {

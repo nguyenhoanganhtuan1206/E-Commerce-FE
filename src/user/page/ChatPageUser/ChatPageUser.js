@@ -1,7 +1,7 @@
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
+import ChatPage from "../../../shared/pages/ChatPage/ChatPage";
 import { MainComponentUser } from "../../components";
-import { ChatPage } from "../../../shared/ChatPage";
 import { memo } from "react";
 
 const ChatPageUser = (props) => {

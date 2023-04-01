@@ -1,8 +1,9 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import "./SellerSignUp.scss";
 
+import { toast } from "react-toastify";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
@@ -10,43 +11,41 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 import { ModalWarning } from "../../../shared/components";
+import { useRegisterSellApis } from "../../../apis/seller/register-sell.api";
 
 const SellerSignUpConfirm = () => {
   const methods = useForm({ mode: "all" });
 
+  const { sendRequestConfirmEmail } = useRegisterSellApis();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [showConfirmEmail, setShowConfirmEmail] = useState(false);
 
   const handleTriggerConfirmEmail = () => {
     setShowConfirmEmail(!showConfirmEmail);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const onSubmit = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      try {
+        await sendRequestConfirmEmail(data);
+
+        toast.success(
+          "Your registration request has been sent! Please check your email for confirmation"
+        );
+        setShowConfirmEmail(false);
+      } catch (err) {
+        toast.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [sendRequestConfirmEmail]
+  );
 
   return (
     <>
-      <ModalWarning
-        show={showConfirmEmail}
-        headerWarning="Verify Email Address"
-        message="This email is to confirm your sale on our system. Please
-                confirm that your email address is correct"
-        footer={
-          <div className="d-flex align-items-center justify-content-between">
-            <ButtonFields
-              type="button"
-              onClick={handleTriggerConfirmEmail}
-              borderOnly
-            >
-              Close
-            </ButtonFields>
-            <ButtonFields type="submit" primary>
-              Confirm
-            </ButtonFields>
-          </div>
-        }
-      />
-
       <div className="seller__sign-up">
         <FormProvider {...methods}>
           <form
@@ -79,6 +78,33 @@ const SellerSignUpConfirm = () => {
             >
               Confirm Registration
             </ButtonFields>
+
+            <ModalWarning
+              show={showConfirmEmail}
+              headerWarning="Verify Email Address"
+              message="This email is to confirm your sale on our system. Please
+                confirm that your email address is correct"
+              footer={
+                <div className="d-flex align-items-center justify-content-between">
+                  <ButtonFields
+                    type="button"
+                    onClick={handleTriggerConfirmEmail}
+                    borderOnly
+                    className="seller-form__btn"
+                  >
+                    Close
+                  </ButtonFields>
+                  <ButtonFields
+                    type="submit"
+                    isLoading={isLoading}
+                    primary
+                    className="seller-form__btn"
+                  >
+                    Confirm Registration
+                  </ButtonFields>
+                </div>
+              }
+            />
           </form>
         </FormProvider>
       </div>

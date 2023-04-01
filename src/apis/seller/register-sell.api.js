@@ -7,7 +7,7 @@ export const useRegisterSellApis = () => {
   const sendRequestConfirmEmail = useCallback(
     async (data) => {
       try {
-        await apiClient("/seller/confirm", data);
+        await apiClient.post("/seller/confirm-register", data);
       } catch (err) {
         throw err?.response?.data?.message || error;
       }
