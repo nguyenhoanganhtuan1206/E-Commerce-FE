@@ -10,3 +10,4 @@ export { default as PopperWrapper } from "./PopperWrapper/PopperWrapper";
 export { default as AvatarUser } from "./AvatarUser/AvatarUser";
 export { default as Modal } from "./Modal/Modal";
 export { default as ModalError } from "./Modal/ModalError";
+export { default as ModalWarning } from "./Modal/ModalWarning";

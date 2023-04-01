@@ -3,11 +3,11 @@
   position: fixed;
   top: 22vh;
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translateX(-50%);
   width: 60rem;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 8px;
+  border-radius: 5px;
 
   &__header {
     width: 100%;
@@ -24,24 +24,24 @@
 }
 
 /* CSS for modal */
-.modal-enter {
-  transform: translateY(-10rem);
+.modal-alert-enter {
+  transform: translate(-50%, -10rem);
   opacity: 0;
 }
 
-.modal-enter-active {
-  transform: translateY(0);
+.modal-alert-enter-active {
+  transform: translate(-50%, 0);
   opacity: 1;
   transition: all 400ms;
 }
 
-.modal-exit {
-  transform: translateY(0);
+.modal-alert-exit {
+  transform: translate(-50%, 0rem);
   opacity: 1;
 }
 
-.modal-exit-active {
-  transform: translateY(-10rem);
+.modal-alert-exit-active {
+  transform: translate(-50%, -10rem);
   opacity: 0;
   transition: all 400ms;
 }

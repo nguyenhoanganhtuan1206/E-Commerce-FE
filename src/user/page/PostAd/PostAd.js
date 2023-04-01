@@ -38,7 +38,7 @@ const PostAd = () => {
                     <div className="d-flex align-items-center justify-content-end">
                       <ButtonFields
                         primary
-                        to="/registration-sell"
+                        to="/registration-seller/confirm-email"
                         className="post-ad__link"
                       >
                         Go To Register Sell

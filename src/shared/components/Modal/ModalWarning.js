@@ -2,31 +2,30 @@ import { memo } from "react";
 
 import "./ModalAlert.scss";
 import Modal from "./Modal";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFaceFrown } from "@fortawesome/free-regular-svg-icons";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const ModalError = ({ headerError, error, onCancel, footer }) => {
+const ModalWarning = ({ headerWarning, show, message, onCancel, footer }) => {
   return (
     <Modal
       className="modal-action"
       contentClass="modal-action__content"
-      show={!!error}
+      show={show}
       header={
         <div className="modal-action__header">
           <FontAwesomeIcon
-            icon={faFaceFrown}
-            className="modal-action__header-icon"
+            icon={faExclamation}
+            className="modal-action__header-icon modal-action__header-icon--warning"
           />
-          <span>{headerError}</span>
+          <span>{headerWarning}</span>
         </div>
       }
       footer={footer}
       onCancel={onCancel}
     >
-      {error}
+      {message}
     </Modal>
   );
 };
 
-export default memo(ModalError);
+export default memo(ModalWarning);

@@ -20,9 +20,7 @@ const ModalOverlay = (props) => {
 
   const content = (
     <div className={`modal-alert ${className}`}>
-      <header className={`modal-alert__header ${headerClass}`}>
-        <h2>{header}</h2>
-      </header>
+      <header className={`modal-alert__header ${headerClass}`}>{header}</header>
 
       <form onSubmit={onSubmit ? onSubmit : (e) => e.preventDefault()}>
         <div className={`modal-alert__content ${contentClass}`}>{children}</div>

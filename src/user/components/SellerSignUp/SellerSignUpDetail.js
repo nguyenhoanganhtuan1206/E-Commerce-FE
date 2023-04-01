@@ -1,10 +1,11 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import useApiClient from "../../../shared/hooks/useAxios";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
+  VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,

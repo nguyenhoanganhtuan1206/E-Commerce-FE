@@ -1,4 +1,6 @@
 import { memo, useCallback, useState } from "react";
+
+import { toast } from "react-toastify";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -11,7 +13,6 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 import { useForgetPasswordApis } from "../../../apis/user/password/password.api";
-import { toast } from "react-toastify";
 
 const FormConfirmEmail = () => {
   const methods = useForm();

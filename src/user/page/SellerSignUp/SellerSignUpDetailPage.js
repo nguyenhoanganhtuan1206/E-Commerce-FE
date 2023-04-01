@@ -1,12 +1,11 @@
 import { memo } from "react";
 import "../MainContent.scss";
 
-import { MainComponentUser } from "../../components";
+import { MainComponentUser, SellerSignUpDetail } from "../../components";
 import { Header } from "../../../shared/Layouts";
 import { Breadcrumbs } from "../../../shared/components";
-import SellerSignUpDetail from "../../components/SellerSignUp/SellerSignUpDetail";
 
-const SellerSignUp = () => {
+const SellerSignUpDetailPage = () => {
   return (
     <>
       {/* Header */}
@@ -19,11 +18,9 @@ const SellerSignUp = () => {
 
       <MainComponentUser>
         <div className="main-content--user">
-          <h3 className="main-content--user__header">Seller Registration</h3>
-
-          {/* <div className="main-content--user__body">
-            <SellerSignUpConfirm />
-          </div> */}
+          <h3 className="main-content--user__header">
+            Seller Profile Settings
+          </h3>
 
           <div className="main-content--user__body">
             <SellerSignUpDetail />
@@ -34,4 +31,4 @@ const SellerSignUp = () => {
   );
 };
 
-export default memo(SellerSignUp);
+export default memo(SellerSignUpDetailPage);

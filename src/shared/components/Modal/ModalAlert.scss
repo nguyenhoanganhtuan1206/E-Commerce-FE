@@ -1,4 +1,6 @@
-.modal-error {
+@import "../../sass/abstracts/mixins";
+
+.modal-action {
   &__header {
     display: flex;
     flex-direction: column;
@@ -8,6 +10,12 @@
     &-icon {
       color: var(--color-primary);
       font-size: 4.5rem;
+
+      &--warning {
+        @include circle(4.5rem, 4.5rem, var(--color-warning));
+        color: var(--color-warning);
+        padding: 1.2rem;
+      }
     }
 
     span {
@@ -15,7 +23,7 @@
       display: block;
       margin-top: 1.4rem;
       color: var(--font-color-1);
-      font-weight: 600;
+      font-weight: 400;
     }
   }
 

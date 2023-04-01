@@ -13,15 +13,16 @@ import {
   MyAdsPage,
   MyCartPage,
   ProfileUserPage,
-  SellerSignUpPage,
   ConfirmEmailPage,
   ResetPasswordPage,
+  SellerSignUpConfirmPage,
 } from "./user/page";
 import { DashboardAdmin } from "./admin/page";
 import { ProductDetail } from "./product/page";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import ProtectRoutes from "./routes/ProtectRoutes";
+import SellerSignUpDetailPage from "./user/page/SellerSignUp/SellerSignUpDetailPage";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -53,8 +54,15 @@ function App() {
           <Route path="/my-ads" element={<MyAdsPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/registration-sell" element={<SellerSignUpPage />} />
           <Route path="/post-ad" element={<PostAd />} />
+          <Route
+            path="/registration-seller/confirm-email"
+            element={<SellerSignUpConfirmPage />}
+          />
+          <Route
+            path="/registration-seller"
+            element={<SellerSignUpDetailPage />}
+          />
         </Route>
         {/* Routes logged in and all roles */}
 

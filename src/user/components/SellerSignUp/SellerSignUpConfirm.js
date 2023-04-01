@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import "./SellerSignUp.scss";
@@ -9,67 +9,80 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
+import { ModalWarning } from "../../../shared/components";
 
 const SellerSignUpConfirm = () => {
-  const methods = useForm();
+  const methods = useForm({ mode: "all" });
+
+  const [showConfirmEmail, setShowConfirmEmail] = useState(false);
+
+  const handleTriggerConfirmEmail = () => {
+    setShowConfirmEmail(!showConfirmEmail);
+  };
 
   const onSubmit = (data) => {
     console.log(data);
   };
 
   return (
-    <div className="seller__sign-up">
-      {!methods.formState.isSubmitted && (
+    <>
+      <ModalWarning
+        show={showConfirmEmail}
+        headerWarning="Verify Email Address"
+        message="This email is to confirm your sale on our system. Please
+                confirm that your email address is correct"
+        footer={
+          <div className="d-flex align-items-center justify-content-between">
+            <ButtonFields
+              type="button"
+              onClick={handleTriggerConfirmEmail}
+              borderOnly
+            >
+              Close
+            </ButtonFields>
+            <ButtonFields type="submit" primary>
+              Confirm
+            </ButtonFields>
+          </div>
+        }
+      />
+
+      <div className="seller__sign-up">
         <FormProvider {...methods}>
           <form
             className="seller-form"
             onSubmit={methods.handleSubmit(onSubmit)}
           >
             <InputFields
-              fieldName="sellerEmail"
+              fieldName="emailSeller"
               validators={[
                 VALIDATOR_REQUIRED("Email cannot be empty"),
+                VALIDATOR_MINLENGTH(9, "Email is invalid"),
                 VALIDATOR_EMAIL("Email is invalid"),
-                VALIDATOR_MINLENGTH(9, "Email must be at least 9 characters"),
               ]}
-              placeholder="Enter Email"
-              type="email"
+              placeholder="Enter Seller Name"
+              type="text"
               label="Email (*)"
               htmlFor="email"
             />
 
             <p className="seller-form__text">
-              Before proceeding to the next step, you will ned to confirm your
-              email address to sell on our platform.
+              (*) Before proceeding to the next step, you will ned to confirm
+              your email address to sell on our platform.
             </p>
 
-            <ButtonFields primary>Confirm Registration</ButtonFields>
+            <ButtonFields
+              type="button"
+              primary
+              onClick={handleTriggerConfirmEmail}
+              disabled={!methods.formState.isValid}
+            >
+              Confirm Registration
+            </ButtonFields>
           </form>
         </FormProvider>
-      )}
-
-      {methods.formState.isSubmitted && (
-        <div className="seller-notification">
-          <h3 className="seller-notification__title">
-            Your request has been sent successfully!
-          </h3>
-          <p className="seller-notification__text">
-            Please check your email and confirm it to proceed to the next step.
-          </p>
-
-          <div className="mt-5 d-flex justify-content-center">
-            {!methods.getValues("sellerName") && (
-              <ButtonFields
-                href={`mailto:${methods.getValues("sellerEmail")}`}
-                primary
-              >
-                Click here to open your email
-              </ButtonFields>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 };
 
