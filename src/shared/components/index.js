@@ -8,3 +8,5 @@ export { default as SwiperSlider } from "./SwiperSlider/SwiperSlider";
 export { default as Table } from "./Table/Table";
 export { default as PopperWrapper } from "./PopperWrapper/PopperWrapper";
 export { default as AvatarUser } from "./AvatarUser/AvatarUser";
+export { default as Modal } from "./Modal/Modal";
+export { default as ModalError } from "./Modal/ModalError";

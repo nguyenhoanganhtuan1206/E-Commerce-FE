@@ -42,9 +42,9 @@ function App() {
           element={<ConfirmEmailPage />}
         />
 
-        <Route path="/post-ad" element={<PostAd />} />
-
+        {/* Required token */}
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        {/* Required token */}
 
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={!!authContext.isLoggedIn} />}>
@@ -54,7 +54,7 @@ function App() {
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/registration-sell" element={<SellerSignUpPage />} />
-          {/* <Route path="/post-ad" element={<PostAd />} /> */}
+          <Route path="/post-ad" element={<PostAd />} />
         </Route>
         {/* Routes logged in and all roles */}
 

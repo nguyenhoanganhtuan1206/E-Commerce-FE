@@ -5,7 +5,7 @@ import "./PostAd.scss";
 
 import { Header } from "../../../shared/Layouts";
 import { FormPostAd } from "../../components/PostAd";
-import { Breadcrumbs } from "../../../shared/components";
+import { Breadcrumbs, ModalError } from "../../../shared/components";
 import { memo, useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
 import { ButtonFields } from "../../../shared/FormElement";
@@ -23,8 +23,7 @@ const PostAd = () => {
           <h3 className="main-content--user__header">Post An Ad</h3>
 
           <div className="main-content--user__body">
-            <FormPostAd />
-            {/* {authContext.roles.includes("ROLE_SELLER") && (
+            {authContext.roles.includes("ROLE_SELLER") && (
               <>
                 <FormPostAd />
               </>
@@ -32,22 +31,23 @@ const PostAd = () => {
 
             {!authContext.roles.includes("ROLE_SELLER") && (
               <>
-                <div className="d-flex justify-content-center align-items-center flex-column">
-                  <h3 className="post-ad__title">
-                    In order to a product for sale on our system, you first
-                    complete the registration process.
-                  </h3>
-
-                  <ButtonFields
-                    primary
-                    to="/registration-sell"
-                    className="post-ad__link"
-                  >
-                    Go To Register Sell
-                  </ButtonFields>
-                </div>
+                <ModalError
+                  error={`In order to list a product for sale on our system. You must first complete the registration process.`}
+                  headerError="SORRY"
+                  footer={
+                    <div className="d-flex align-items-center justify-content-end">
+                      <ButtonFields
+                        primary
+                        to="/registration-sell"
+                        className="post-ad__link"
+                      >
+                        Go To Register Sell
+                      </ButtonFields>
+                    </div>
+                  }
+                />
               </>
-            )} */}
+            )}
           </div>
         </div>
       </MainComponentUser>

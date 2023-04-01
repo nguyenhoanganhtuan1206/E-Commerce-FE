@@ -10,6 +10,7 @@ import { AuthContext } from "../../../context/auth-context";
 import { useAuthApis } from "../../../apis/auth/auth.api";
 
 import Auth from "../../page/auth/Auth";
+import { ModalError } from "../../../shared/components";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,

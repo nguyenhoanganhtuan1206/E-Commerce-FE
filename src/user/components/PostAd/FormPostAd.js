@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import HeaderPostAd from "./HeaderPostAd";
 import "./FormPostAd.scss";
@@ -7,25 +7,20 @@ import "../MainStylesUser.scss";
 
 import { FormProvider, useForm } from "react-hook-form";
 
+import { useProductApis } from "../../../apis/product/product.api";
+
 import { ButtonFields } from "../../../shared/FormElement";
 import FormAdInfo from "./FormAdInfo";
 import FormAdDetails from "./FormAdDetails";
 import FormUserInfo from "./FormUserInfo";
-import {
-  createError,
-  createStart,
-  createSuccess,
-} from "../../../redux/actions/adSlice";
 
 const FormPostAd = () => {
   const methods = useForm({ mode: "all" });
 
-  const [currentStep, setCurrentStep] = useState(1);
+  const { createProduct } = useProductApis();
 
-  // useSelector using get value from initialState and reducer in store
-  const pending = useSelector((state) => state.ad.pending);
-  const error = useSelector((state) => state.ad.error);
-  const dispatch = useDispatch();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClickNextStep = useCallback(() => {
     if (currentStep < 3 || methods.formState.formIsValid) {
@@ -42,9 +37,19 @@ const FormPostAd = () => {
     }
   }, [currentStep]);
 
-  const onSubmit = (e) => {
-    console.log(e);
-  };
+  const onSubmit = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      try {
+        await createProduct(data);
+      } catch (err) {
+        toast.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [createProduct]
+  );
 
   const renderForm = () => {
     switch (currentStep) {
@@ -93,6 +98,7 @@ const FormPostAd = () => {
 
           {currentStep === 3 && (
             <ButtonFields
+              isLoading={isLoading}
               type="submit"
               className="post-ad__btn next"
               disabled={!methods.formState.isValid}

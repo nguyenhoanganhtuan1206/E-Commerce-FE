@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { LoadingSpinner } from "../../components";
@@ -23,7 +23,7 @@ const RegionDropdown = ({ control }) => {
   const [districts, setDistricts] = useState([]);
   const [communes, setCommunes] = useState([]);
 
-  const fetchProvinces = async () => {
+  const fetchProvinces = useCallback(async () => {
     try {
       const response = await apiClient.get(
         "https://vapi.vnappmob.com/api/province/"
@@ -31,15 +31,11 @@ const RegionDropdown = ({ control }) => {
 
       setProvinces(response.data.results);
     } catch (err) {
-      toast.error(
-        err?.response?.data?.message ||
-          error ||
-          "Something went wrong. Please reload page!"
-      );
+      toast.error(err?.response?.data?.message || error);
     }
-  };
+  }, [apiClient, error]);
 
-  const fetchDistrict = async () => {
+  const fetchDistrict = useCallback(async () => {
     try {
       const response = await apiClient.get(
         `https://vapi.vnappmob.com/api/province/district/${
@@ -49,15 +45,11 @@ const RegionDropdown = ({ control }) => {
 
       setDistricts(response.data.results);
     } catch (err) {
-      toast.error(
-        err?.response?.data?.message ||
-          error ||
-          "Something went wrong. Please reload page!"
-      );
+      toast.error(err?.response?.data?.message || error);
     }
-  };
+  }, [apiClient, cityValue, error, provinces]);
 
-  const fetchCommunes = async () => {
+  const fetchCommunes = useCallback(async () => {
     try {
       const response = await apiClient.get(
         `https://vapi.vnappmob.com/api/province/ward/${districtValue}`
@@ -65,13 +57,9 @@ const RegionDropdown = ({ control }) => {
 
       setCommunes(response.data.results);
     } catch (err) {
-      toast.error(
-        err?.response?.data?.message ||
-          error ||
-          "Something went wrong. Please reload page!"
-      );
+      toast.error(err?.response?.data?.message || error);
     }
-  };
+  }, [apiClient, districtValue, error]);
 
   useEffect(() => {
     fetchCommunes();
@@ -97,7 +85,6 @@ const RegionDropdown = ({ control }) => {
           <div className="col-4">
             <SelectFields
               fieldName="city"
-              initialValue={provinces[0]}
               label="City *"
               validators={[VALIDATOR_REQUIRED("City cannot be empty")]}
             >
@@ -107,6 +94,9 @@ const RegionDropdown = ({ control }) => {
                     {province.province_name}
                   </option>
                 ))}
+              {districts.length === 0 && (
+                <option>Please choose your city</option>
+              )}
             </SelectFields>
           </div>
           <div className="col-4">
