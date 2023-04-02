@@ -15,5 +15,16 @@ export const useRegisterSellApis = () => {
     [apiClient, error]
   );
 
-  return { sendRequestConfirmEmail };
+  const registerNewSeller = useCallback(
+    async (param, data) => {
+      try {
+        await apiClient.put(`/seller?${param}`, data);
+      } catch (err) {
+        throw err?.response?.data?.message || error;
+      }
+    },
+    [apiClient, error]
+  );
+
+  return { sendRequestConfirmEmail, registerNewSeller };
 };

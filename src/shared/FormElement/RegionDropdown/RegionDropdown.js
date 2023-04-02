@@ -1,13 +1,18 @@
 import { memo, useCallback, useEffect, useState } from "react";
+
 import { useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
+
+import { useAddressApis } from "../../../apis/address/address.api";
 import { LoadingSpinner } from "../../components";
-import useApiClient from "../../hooks/useAxios";
-import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRED } from "../../util/validators";
+import { VALIDATOR_REQUIRED } from "../../util/validators";
 import SelectFields from "../SelectFields/SelectFields";
 
 const RegionDropdown = ({ control }) => {
-  const { apiClient, error, isLoading } = useApiClient();
+  const { getProvinces, getCommunesByDistrictId, getDistrictsByProvinceId } =
+    useAddressApis();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const cityValue = useWatch({
     control,
@@ -24,42 +29,42 @@ const RegionDropdown = ({ control }) => {
   const [communes, setCommunes] = useState([]);
 
   const fetchProvinces = useCallback(async () => {
+    setIsLoading(true);
     try {
-      const response = await apiClient.get(
-        "https://vapi.vnappmob.com/api/province/"
-      );
-
-      setProvinces(response.data.results);
+      const response = await getProvinces();
+      setProvinces(response);
     } catch (err) {
-      toast.error(err?.response?.data?.message || error);
+      toast.error(err);
+    } finally {
+      setIsLoading(false);
     }
-  }, [apiClient, error]);
+  }, [getProvinces]);
 
   const fetchDistrict = useCallback(async () => {
-    try {
-      const response = await apiClient.get(
-        `https://vapi.vnappmob.com/api/province/district/${
-          cityValue || provinces[0].id
-        }`
-      );
-
-      setDistricts(response.data.results);
-    } catch (err) {
-      toast.error(err?.response?.data?.message || error);
+    if (!cityValue) {
+      return;
     }
-  }, [apiClient, cityValue, error, provinces]);
+
+    try {
+      const response = await getDistrictsByProvinceId(cityValue);
+      setDistricts(response);
+    } catch (err) {
+      toast.error(err);
+    }
+  }, [cityValue, getDistrictsByProvinceId]);
 
   const fetchCommunes = useCallback(async () => {
-    try {
-      const response = await apiClient.get(
-        `https://vapi.vnappmob.com/api/province/ward/${districtValue}`
-      );
-
-      setCommunes(response.data.results);
-    } catch (err) {
-      toast.error(err?.response?.data?.message || error);
+    if (!districtValue) {
+      return;
     }
-  }, [apiClient, districtValue, error]);
+
+    try {
+      const response = await getCommunesByDistrictId(districtValue);
+      setCommunes(response);
+    } catch (err) {
+      toast.error(err);
+    }
+  }, [districtValue, getCommunesByDistrictId]);
 
   useEffect(() => {
     fetchCommunes();
@@ -90,8 +95,8 @@ const RegionDropdown = ({ control }) => {
             >
               {provinces.length > 0 &&
                 provinces.map((province, index) => (
-                  <option value={province.province_id} key={index}>
-                    {province.province_name}
+                  <option value={province.idProvince} key={index}>
+                    {province.name}
                   </option>
                 ))}
               {districts.length === 0 && (
@@ -107,8 +112,8 @@ const RegionDropdown = ({ control }) => {
             >
               {districts.length > 0 &&
                 districts.map((district, index) => (
-                  <option value={district.district_id} key={index}>
-                    {district.district_name}
+                  <option value={district.idDistrict} key={index}>
+                    {district.name}
                   </option>
                 ))}
               {districts.length === 0 && (
@@ -124,8 +129,8 @@ const RegionDropdown = ({ control }) => {
             >
               {communes.length > 0 &&
                 communes.map((commune, index) => (
-                  <option value={commune.ward_id} key={index}>
-                    {commune.ward_name}
+                  <option value={commune.idWard} key={index}>
+                    {commune.name}
                   </option>
                 ))}
               {communes.length === 0 && (

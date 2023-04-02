@@ -1,36 +1,45 @@
-import { memo } from "react";
+import { memo, useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import useApiClient from "../../../shared/hooks/useAxios";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
-  VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 import RegionDropdown from "../../../shared/FormElement/RegionDropdown/RegionDropdown";
+import { useRegisterSellApis } from "../../../apis/seller/register-sell.api";
+import { useParams } from "react-router-dom";
 
 const SellerSignUpDetail = (props) => {
   const methods = useForm({ mode: "all" });
 
-  const { apiClient, error, isLoading } = useApiClient();
+  const token = useParams().token;
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const { registerNewSeller } = useRegisterSellApis();
 
-  // const onSubmit = useCallback(
-  //   async (data) => {
-  //     try {
-  //       const response = await apiClient.post("/seller", data);
-  //     } catch (err) {
-  //       toast.error(err?.response?.data?.message || error);
-  //     }
-  //   },
-  //   [apiClient, error]
-  // );
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onSubmit = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      try {
+        await registerNewSeller(token, data);
+
+        toast.success(
+          "You have been successfully registered! You can now post your products.",
+          { autoClose: 2000 }
+        );
+      } catch (err) {
+        toast.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [registerNewSeller, token]
+  );
 
   return (
     <>

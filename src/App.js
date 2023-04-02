@@ -67,7 +67,7 @@ function App() {
         </Route>
 
         <Route
-          path="/registration-seller"
+          path="/registration-seller/:token"
           element={<SellerSignUpDetailPage />}
         />
         {/* Routes logged in and all roles */}
