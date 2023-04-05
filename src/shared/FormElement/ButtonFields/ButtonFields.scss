@@ -5,6 +5,8 @@
   font-weight: 500;
   transition: all 0.2s ease-in-out;
   border: none;
+
+  min-width: 8.5rem;
   cursor: pointer;
 
   display: flex;
@@ -17,6 +19,15 @@
 
     &:hover {
       background-color: var(--color-primary-2);
+    }
+  }
+
+  &--sub-primary {
+    background-color: var(--color-primary-2);
+    color: #fff !important;
+
+    &:hover {
+      background-color: var(--color-primary);
     }
   }
 

@@ -11,6 +11,7 @@ const ButtonFields = (props) => {
     isLoading,
     borderOnly,
     fullWidth,
+    subPrimary,
     className,
     onClick,
     children,
@@ -20,6 +21,7 @@ const ButtonFields = (props) => {
   const classes = `btn 
   ${className}
   ${primary && "btn--primary"}
+  ${subPrimary && "btn--sub-primary"}
   ${fullWidth && "btn--fullWidth"}
   ${borderOnly && "btn--borderOnly"}
   ${disabled && "btn--disabled"} 
