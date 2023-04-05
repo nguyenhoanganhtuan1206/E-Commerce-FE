@@ -11,10 +11,19 @@
       color: var(--color-primary);
       font-size: 4.5rem;
 
+      &__circle {
+        padding: 1.2rem;
+      }
+
       &--warning {
         @include circle(4.5rem, 4.5rem, var(--color-warning));
         color: var(--color-warning);
-        padding: 1.2rem;
+      }
+
+      &--success {
+        @include circle(4.5rem, 4.5rem, var(--color-green));
+        border: 2px solid var(--color-green);
+        color: var(--color-green) !important; 
       }
     }
 

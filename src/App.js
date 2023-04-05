@@ -15,7 +15,6 @@ import {
   ProfileUserPage,
   ConfirmEmailPage,
   ResetPasswordPage,
-  SellerSignUpConfirmPage,
   SellerSignUpDetailPage,
 } from "./user/page";
 import { DashboardAdmin } from "./admin/page";
@@ -49,7 +48,7 @@ function App() {
         {/* Required token */}
 
         {/* Routes logged in and all roles */}
-        <Route element={<ProtectRoutes />}>
+        <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
           <Route path="/chat-user" element={<ChatPageUser />} />
           <Route path="/my-ads" element={<MyAdsPage />} />
@@ -57,19 +56,10 @@ function App() {
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/post-ad" element={<PostAd />} />
           <Route
-            path="/registration-seller/confirm-email"
-            element={<SellerSignUpConfirmPage />}
-          />
-          {/* <Route
             path="/registration-seller"
             element={<SellerSignUpDetailPage />}
-          /> */}
+          />
         </Route>
-
-        <Route
-          path="/registration-seller/:token"
-          element={<SellerSignUpDetailPage />}
-        />
         {/* Routes logged in and all roles */}
 
         {/* Routes required Admin */}

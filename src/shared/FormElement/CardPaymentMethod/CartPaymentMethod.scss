@@ -1,0 +1,52 @@
+.card__payment-method {
+  padding: 2rem 2.5rem;
+  height: 8rem;
+  border-radius: 5px;
+  border: 1px solid var(--color-border-1);
+  color: var(--color-border-1);
+
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in;
+
+  &:hover,
+  &--active {
+    border: 1px solid var(--color-active);
+  }
+
+  &--active {
+    .card__payment-method__info {
+      color: #000;
+    }
+  }
+
+  &__img {
+    height: 3.5rem;
+    width: 3.5rem;
+    object-fit: contain;
+  }
+
+  &__icon {
+    font-size: 2.2rem;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 1.4rem;
+
+    transition: all 0.25s ease-in-out;
+
+    h4 {
+      font-size: 1.6rem;
+      font-weight: 400;
+    }
+
+    span {
+      font-size: 1.3rem;
+      font-style: italic;
+    }
+  }
+}

@@ -15,7 +15,7 @@ const ModalWarning = ({ headerWarning, show, message, onCancel, footer }) => {
         <div className="modal-action__header">
           <FontAwesomeIcon
             icon={faExclamation}
-            className="modal-action__header-icon modal-action__header-icon--warning"
+            className="modal-action__header-icon modal-action__header-icon__circle modal-action__header-icon--warning"
           />
           <span>{headerWarning}</span>
         </div>

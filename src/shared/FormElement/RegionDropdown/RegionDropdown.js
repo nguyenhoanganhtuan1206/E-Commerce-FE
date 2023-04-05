@@ -95,7 +95,7 @@ const RegionDropdown = ({ control }) => {
             >
               {provinces.length > 0 &&
                 provinces.map((province, index) => (
-                  <option value={province.idProvince} key={index}>
+                  <option value={province.name} key={index}>
                     {province.name}
                   </option>
                 ))}
@@ -112,7 +112,7 @@ const RegionDropdown = ({ control }) => {
             >
               {districts.length > 0 &&
                 districts.map((district, index) => (
-                  <option value={district.idDistrict} key={index}>
+                  <option value={district.name} key={index}>
                     {district.name}
                   </option>
                 ))}
@@ -129,7 +129,7 @@ const RegionDropdown = ({ control }) => {
             >
               {communes.length > 0 &&
                 communes.map((commune, index) => (
-                  <option value={commune.idWard} key={index}>
+                  <option value={commune.name} key={index}>
                     {commune.name}
                   </option>
                 ))}
