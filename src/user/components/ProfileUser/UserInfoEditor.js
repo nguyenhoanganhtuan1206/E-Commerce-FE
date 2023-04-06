@@ -5,6 +5,7 @@ import "./ProfileUser.scss";
 
 import { toast } from "react-toastify";
 
+import UserLocation from "../UserLocationEditor/UserLocation";
 import { LoadingSpinner } from "../../../shared/components";
 import { useProfileApis } from "../../../apis/user/profile/profile.api";
 import {
@@ -12,7 +13,6 @@ import {
   InputFields,
   UploadImage,
 } from "../../../shared/FormElement";
-import { UserLocationEditor } from "../";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
@@ -27,6 +27,7 @@ const UserInfoEditor = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [locations, setLocations] = useState([]);
 
   const { fetchUserProfile, updateUserProfile } = useProfileApis();
 
@@ -36,6 +37,9 @@ const UserInfoEditor = () => {
       try {
         const fetchProfile = await fetchUserProfile();
 
+        if (!!fetchProfile.locations) {
+          setLocations(fetchProfile.locations);
+        }
         methods.reset(fetchProfile);
       } catch (err) {
         toast.error(err);
@@ -146,9 +150,9 @@ const UserInfoEditor = () => {
                 />
               </div>
             </div>
-
-            <UserLocationEditor />
           </div>
+
+          <UserLocation locations={locations} />
 
           <ButtonFields
             disabled={!methods.formState.isValid || !methods.formState.isDirty}

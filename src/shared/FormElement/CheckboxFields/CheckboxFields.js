@@ -3,7 +3,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 import "../FormFieldsStyle.scss";
 
-const CheckboxFields = ({ fieldName, label, defaultChecked }) => {
+const CheckboxFields = ({ fieldName, label, defaultChecked = false }) => {
   const { control } = useFormContext();
 
   return (
@@ -17,7 +17,7 @@ const CheckboxFields = ({ fieldName, label, defaultChecked }) => {
               type="checkbox"
               id={fieldName}
               onChange={onChange}
-              checked={value}
+              defaultChecked={value}
             />
             <label
               className="form-input__text"

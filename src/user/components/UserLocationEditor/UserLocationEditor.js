@@ -110,7 +110,7 @@ const UserLocations = () => {
           <CheckboxFields
             fieldName="defaultLocation"
             label="Set as default location"
-            defaultChecked="false"
+            defaultChecked={false}
           />
         </Modal>
       </FormProvider>
