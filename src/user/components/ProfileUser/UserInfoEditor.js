@@ -5,11 +5,14 @@ import "./ProfileUser.scss";
 
 import { toast } from "react-toastify";
 
+import { LoadingSpinner } from "../../../shared/components";
+import { useProfileApis } from "../../../apis/user/profile/profile.api";
 import {
   ButtonFields,
   InputFields,
   UploadImage,
 } from "../../../shared/FormElement";
+import { UserLocationEditor } from "../";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
@@ -17,8 +20,6 @@ import {
   VALIDATOR_NUMBER,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { LoadingSpinner } from "../../../shared/components";
-import { useProfileApis } from "../../../apis/user/profile/profile.api";
 
 const UserInfoEditor = () => {
   const methods = useForm({
@@ -145,6 +146,8 @@ const UserInfoEditor = () => {
                 />
               </div>
             </div>
+
+            <UserLocationEditor />
           </div>
 
           <ButtonFields

@@ -5,3 +5,4 @@ export { default as UploadMultipleImages } from "./ImageUploader/UploadMultipleI
 export { default as UploadImage } from "./ImageUploader/UploadImage";
 export { default as RegionDropdown } from "./RegionDropdown/RegionDropdown";
 export { default as CardPaymentMethod } from "./CardPaymentMethod/CardPaymentMethod";
+export { default as CheckboxFields } from "./CheckboxFields/CheckboxFields";

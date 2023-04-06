@@ -10,3 +10,4 @@ export { default as UserInfoEditor } from "./ProfileUser/UserInfoEditor";
 export { default as SellerSignUpDetail } from "./SellerSignUp/SellerSignUpDetail";
 export { default as FormConfirmEmail } from "./ForgetPassword/FormConfirmEmail";
 export { default as FormResetPassword } from "./ForgetPassword/FormResetPassword";
+export { default as UserLocationEditor } from "./UserLocationEditor/UserLocationEditor";

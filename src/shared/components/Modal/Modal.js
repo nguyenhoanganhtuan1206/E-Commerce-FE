@@ -37,6 +37,7 @@ const Modal = (props) => {
   return (
     <>
       {props.show && <Backdrop onClick={props.onCancel} />}
+
       <CSSTransition
         in={props.show}
         timeout={400}

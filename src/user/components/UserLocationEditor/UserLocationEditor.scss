@@ -1,0 +1,42 @@
+.user-location {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2.4rem;
+
+  cursor: pointer;
+
+  &__icon {
+    font-size: 2rem;
+    color: var(--font-color-2);
+  }
+
+  &__group {
+    width: 90%;
+    padding: 1.2rem;
+    border-radius: 5px;
+    border: 2px solid var(--color-border);
+    border-style: dashed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: 1.6rem;
+    margin-left: 1.2rem;
+    font-weight: 500;
+    color: var(--font-color-2);
+  }
+
+  &:hover &__text,
+  &:hover &__icon {
+    opacity: 0.8;
+  }
+}
+
+.user-location__form-modal {
+    width: 70rem;
+}
