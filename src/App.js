@@ -17,7 +17,6 @@ import {
   ResetPasswordPage,
   SellerSignUpDetailPage,
 } from "./user/page";
-import { DashboardAdmin } from "./admin/page";
 import { ProductDetail } from "./product/page";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
@@ -63,7 +62,6 @@ function App() {
         {/* Routes logged in and all roles */}
 
         {/* Routes required Admin */}
-        <Route path="/admin" element={<DashboardAdmin />} />
         {/* Routes required Admin */}
 
         <Route path="*" element={<ErrorPage />} />
