@@ -155,8 +155,6 @@ const UserInfoEditor = () => {
             </div>
           </div>
 
-          <UserLocation locations={locations} />
-
           <ButtonFields
             disabled={!methods.formState.isValid || !methods.formState.isDirty}
             primary
@@ -164,6 +162,8 @@ const UserInfoEditor = () => {
           >
             Upload Profile
           </ButtonFields>
+
+          <UserLocation locations={locations} />
         </form>
       </FormProvider>
     </>

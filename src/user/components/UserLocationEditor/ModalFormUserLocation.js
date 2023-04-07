@@ -1,4 +1,9 @@
 import { memo, useCallback, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { FormProvider, useForm } from "react-hook-form";
+
+import { useLocationApis } from "../../../apis/user/location/user-location.api";
+
 import { Modal } from "../../../shared/components";
 import {
   ButtonFields,
@@ -10,9 +15,6 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { FormProvider, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import { useLocationApis } from "../../../apis/user/location/user-location.api";
 
 const ModalFormUserLocation = ({
   locationId,
@@ -26,6 +28,7 @@ const ModalFormUserLocation = ({
   const { getLocationById, addLocationForUser, updateLocationForUser } =
     useLocationApis();
 
+  const [defaultLocation, setDefaultLocation] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = useCallback(
@@ -39,6 +42,9 @@ const ModalFormUserLocation = ({
             autoClose: 2000,
           });
         } else {
+          const response = await updateLocationForUser(data, locationId);
+
+          toast.success("Updated address successfully!", { autoClose: 2000 });
         }
 
         handleHiddenModal();
@@ -55,69 +61,80 @@ const ModalFormUserLocation = ({
   useEffect(() => {
     if (locationId) {
       const fetchLocation = async () => {
+        setIsLoading(true);
         try {
           const response = await getLocationById(locationId);
 
-          console.log(response);
+          setDefaultLocation(response.defaultLocation);
+          methods.reset(response);
         } catch (err) {
           toast.error(err, { autoClose: 2000 });
+        } finally {
+          setIsLoading(false);
         }
       };
 
       fetchLocation();
     }
-  }, [getLocationById, locationId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <FormProvider {...methods}>
-      <Modal
-        onSubmit={methods.handleSubmit(onSubmit)}
-        onCancel={handleHiddenModal}
-        className="user-location__form-modal"
-        show={showFormModal}
-        header={
-          <h3 className="m-0">
-            {!locationId ? "New Address" : "Update Address"}
-          </h3>
-        }
-        footer={
-          <div className="d-flex justify-content-end">
-            <ButtonFields type="button" onClick={handleHiddenModal} borderOnly>
-              Cancel
-            </ButtonFields>
-            <ButtonFields
-              type="button"
-              onClick={methods.handleSubmit(onSubmit)}
-              isLoading={isLoading}
-              disabled={!methods.formState.isValid}
-              className="ml-5"
-              subPrimary
-            >
-              {!locationId ? "Add" : "Update"}
-            </ButtonFields>
-          </div>
-        }
-      >
-        <InputFields
-          fieldName="address"
-          validators={[
-            VALIDATOR_REQUIRED("Address cannot be empty"),
-            VALIDATOR_MINLENGTH(3, "Address is invalid"),
-          ]}
-          placeholder="Enter Address"
-          type="text"
-          label="Address (*)"
-          htmlFor="address"
-        />
+      {!isLoading && (
+        <Modal
+          onSubmit={methods.handleSubmit(onSubmit)}
+          onCancel={handleHiddenModal}
+          show={showFormModal}
+          className="user-location__form-modal"
+          header={
+            <h3 className="m-0">
+              {!locationId ? "New Address" : "Update Address"}
+            </h3>
+          }
+          footer={
+            <div className="d-flex justify-content-end">
+              <ButtonFields
+                type="button"
+                onClick={handleHiddenModal}
+                borderOnly
+              >
+                Cancel
+              </ButtonFields>
+              <ButtonFields
+                type="button"
+                onClick={methods.handleSubmit(onSubmit)}
+                isLoading={isLoading}
+                disabled={!methods.formState.isValid}
+                className="ml-5"
+                subPrimary
+              >
+                {!locationId ? "Add" : "Update"}
+              </ButtonFields>
+            </div>
+          }
+        >
+          <InputFields
+            fieldName="address"
+            validators={[
+              VALIDATOR_REQUIRED("Address cannot be empty"),
+              VALIDATOR_MINLENGTH(3, "Address is invalid"),
+            ]}
+            placeholder="Enter Address"
+            type="text"
+            label="Address (*)"
+            htmlFor="address"
+          />
 
-        <RegionDropdown control={methods.control} />
+          <RegionDropdown control={methods.control} />
 
-        <CheckboxFields
-          fieldName="defaultLocation"
-          label="Set as default location"
-          defaultChecked={false}
-        />
-      </Modal>
+          <CheckboxFields
+            fieldName="defaultLocation"
+            label="Set as default location"
+            defaultChecked={defaultLocation}
+          />
+        </Modal>
+      )}
     </FormProvider>
   );
 };

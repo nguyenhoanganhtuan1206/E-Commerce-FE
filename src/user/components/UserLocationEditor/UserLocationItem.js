@@ -15,14 +15,14 @@ const UserLocationItem = ({
   commune,
   defaultLocation,
 }) => {
-  const [showModal, setShowModal] = useState(false);
+  const [showFormModal, setShowFormModal] = useState(false);
 
   const handleHiddenModal = () => {
-    setShowModal(false);
+    setShowFormModal(false);
   };
 
   const handleShowModal = () => {
-    setShowModal(true);
+    setShowFormModal(true);
   };
 
   return (
@@ -48,8 +48,9 @@ const UserLocationItem = ({
               <FontAwesomeIcon
                 className="user-location__action-icon"
                 icon={faPenToSquare}
-                onClick={setShowModal}
+                onClick={handleShowModal}
               />
+              
               <FontAwesomeIcon
                 className="user-location__action-icon"
                 icon={faTrashAlt}
@@ -68,10 +69,10 @@ const UserLocationItem = ({
         </div>
       </div>
 
-      {showModal && (
+      {showFormModal && (
         <ModalFormUserLocation
           locationId={locationId}
-          showFormModal={showModal}
+          showFormModal={showFormModal}
           handleHiddenModal={handleHiddenModal}
           handleShowModal={handleShowModal}
         />

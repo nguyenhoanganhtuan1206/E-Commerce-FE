@@ -1,7 +1,9 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../context/auth-context";
 
 const useApiClient = () => {
+  const authContext = useContext(AuthContext);
   const [error, setError] = useState(null);
 
   const apiClient = axios.create({
@@ -28,6 +30,7 @@ const useApiClient = () => {
     },
     (error) => {
       if (error.response.status === 403 || error.response.status === 401) {
+        authContext.logout();
         localStorage.clear();
       }
 

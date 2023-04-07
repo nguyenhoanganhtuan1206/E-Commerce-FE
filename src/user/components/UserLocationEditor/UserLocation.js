@@ -5,9 +5,9 @@ import UserLocationsList from "./UserLocationsList";
 const UserLocation = ({ locations }) => {
   return (
     <>
-      <UserLocationsList locations={locations} />
-
       <UserLocationEditor />
+      
+      <UserLocationsList locations={locations} />
     </>
   );
 };
