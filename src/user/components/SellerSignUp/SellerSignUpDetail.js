@@ -78,7 +78,7 @@ const SellerSignUpDetail = () => {
         setIsLoading(false);
       }
     },
-    [checkboxValues, registerNewSeller]
+    [checkboxValues, registerNewSeller, updateSeller, userRegistered]
   );
 
   useEffect(() => {
@@ -102,32 +102,30 @@ const SellerSignUpDetail = () => {
 
   return (
     <>
-      {!isLoading && (
-        <ModalSuccess
-          show={!!messageSuccessful}
-          message={messageSuccessful}
-          footer={
-            <div className="d-flex align-items-center justify-content-between">
-              <ButtonFields
-                type="button"
-                onClick={handleHiddenMessageSuccess}
-                borderOnly
-                className="seller-form__btn"
-              >
-                Close
-              </ButtonFields>
-              <ButtonFields
-                type="button"
-                onClick={handleHiddenMessageSuccess}
-                primary
-                className="seller-form__btn"
-              >
-                OK
-              </ButtonFields>
-            </div>
-          }
-        />
-      )}
+      <ModalSuccess
+        show={!!messageSuccessful}
+        message={messageSuccessful}
+        footer={
+          <div className="d-flex align-items-center justify-content-between">
+            <ButtonFields
+              type="button"
+              onClick={handleHiddenMessageSuccess}
+              borderOnly
+              className="seller-form__btn"
+            >
+              Close
+            </ButtonFields>
+            <ButtonFields
+              type="button"
+              onClick={handleHiddenMessageSuccess}
+              primary
+              className="seller-form__btn"
+            >
+              OK
+            </ButtonFields>
+          </div>
+        }
+      />
 
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>

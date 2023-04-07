@@ -25,23 +25,24 @@ const PostAd = () => {
           <div className="main-content--user__body">
             {authContext.roles.includes("ROLE_SELLER") && <FormPostAd />}
 
-            {!authContext.roles.includes("ROLE_SELLER") && (
-              <ModalError
-                error={`In order to list a product for sale on our system. You must first complete the registration process.`}
-                headerError="SORRY"
-                footer={
-                  <div className="d-flex align-items-center justify-content-end">
-                    <ButtonFields
-                      primary
-                      to="/registration-seller"
-                      className="post-ad__link"
-                    >
-                      Go To Register Sell
-                    </ButtonFields>
-                  </div>
-                }
-              />
-            )}
+            <ModalError
+              show={!authContext.roles.includes("ROLE_SELLER")}
+              headerError="SORRY"
+              footer={
+                <div className="d-flex align-items-center justify-content-end">
+                  <ButtonFields
+                    primary
+                    to="/registration-seller"
+                    className="post-ad__link"
+                  >
+                    Go To Register Sell
+                  </ButtonFields>
+                </div>
+              }
+            >
+              In order to list a product for sale on our system. You must first
+              complete the registration process.
+            </ModalError>
           </div>
         </div>
       </MainComponentUser>

@@ -6,12 +6,12 @@ import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceFrown } from "@fortawesome/free-regular-svg-icons";
 
-const ModalError = ({ headerError, error, onCancel, footer }) => {
+const ModalError = ({ headerError, show, onCancel, footer, children }) => {
   return (
     <Modal
       className="modal-action"
       contentClass="modal-action__content"
-      show={!!error}
+      show={show}
       header={
         <div className="modal-action__header">
           <FontAwesomeIcon
@@ -24,7 +24,7 @@ const ModalError = ({ headerError, error, onCancel, footer }) => {
       footer={footer}
       onCancel={onCancel}
     >
-      {error}
+      {children}
     </Modal>
   );
 };
