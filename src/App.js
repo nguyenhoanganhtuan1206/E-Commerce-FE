@@ -17,11 +17,12 @@ import {
   ResetPasswordPage,
   SellerSignUpDetailPage,
 } from "./user/page";
+import { AdminHome } from "./admin/pages/";
 import { ProductDetail } from "./product/page";
+import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import ProtectRoutes from "./routes/ProtectRoutes";
-import { ErrorPage } from "./shared/pages";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -62,6 +63,7 @@ function App() {
         {/* Routes logged in and all roles */}
 
         {/* Routes required Admin */}
+        <Route path="/admin" element={<AdminHome />} />
         {/* Routes required Admin */}
 
         <Route path="*" element={<ErrorPage />} />
