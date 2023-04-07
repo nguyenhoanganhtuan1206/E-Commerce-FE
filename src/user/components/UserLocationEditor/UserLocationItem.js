@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 import "./UserLocationItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,9 @@ import { faPenToSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
 import ModalFormUserLocation from "./ModalFormUserLocation";
+import { ModalWarning } from "../../../shared/components";
+import { useLocationApis } from "../../../apis/user/location/user-location.api";
+import { toast } from "react-toastify";
 
 const UserLocationItem = ({
   locationId,
@@ -16,6 +19,14 @@ const UserLocationItem = ({
   defaultLocation,
 }) => {
   const [showFormModal, setShowFormModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { deleteLocationById } = useLocationApis();
+
+  const handleToggleDeleteModal = () => {
+    setShowDeleteModal(!showDeleteModal);
+  };
 
   const handleHiddenModal = () => {
     setShowFormModal(false);
@@ -24,6 +35,20 @@ const UserLocationItem = ({
   const handleShowModal = () => {
     setShowFormModal(true);
   };
+
+  const handleDeleteLocation = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await deleteLocationById(locationId);
+
+      toast.success("Deleted your location successful");
+      setShowDeleteModal(false);
+    } catch (err) {
+      toast.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [deleteLocationById, locationId]);
 
   return (
     <>
@@ -50,10 +75,11 @@ const UserLocationItem = ({
                 icon={faPenToSquare}
                 onClick={handleShowModal}
               />
-              
+
               <FontAwesomeIcon
                 className="user-location__action-icon"
                 icon={faTrashAlt}
+                onClick={handleToggleDeleteModal}
               />
             </div>
 
@@ -69,14 +95,41 @@ const UserLocationItem = ({
         </div>
       </div>
 
-      {showFormModal && (
-        <ModalFormUserLocation
-          locationId={locationId}
-          showFormModal={showFormModal}
-          handleHiddenModal={handleHiddenModal}
-          handleShowModal={handleShowModal}
-        />
-      )}
+      <ModalFormUserLocation
+        locationId={locationId}
+        showFormModal={showFormModal}
+        handleHiddenModal={handleHiddenModal}
+        handleShowModal={handleShowModal}
+      />
+
+      <ModalWarning
+        show={showDeleteModal}
+        onCancel={handleToggleDeleteModal}
+        headerWarning="Delete Your Location"
+        footer={
+          <div className="d-flex align-items-center justify-content-between">
+            <ButtonFields
+              type="button"
+              onClick={() => setShowDeleteModal(false)}
+              borderOnly
+              className="seller-form__btn"
+            >
+              Close
+            </ButtonFields>
+            <ButtonFields
+              onClick={handleDeleteLocation}
+              type="button"
+              isLoading={isLoading}
+              subPrimary
+              className="seller-form__btn"
+            >
+              Confirm Delete
+            </ButtonFields>
+          </div>
+        }
+      >
+        Are you sure you want to delete this location?
+      </ModalWarning>
     </>
   );
 };

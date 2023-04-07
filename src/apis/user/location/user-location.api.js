@@ -53,10 +53,23 @@ export const useLocationApis = () => {
     [apiClient, error]
   );
 
+  const deleteLocationById = useCallback(
+    async (locationId) => {
+      try {
+        const response = await apiClient.delete(`/locations/${locationId}`);
+
+        return response.data;
+      } catch (err) {
+        throw err?.response?.data?.message || error;
+      }
+    },
+    [apiClient, error]
+  );
   return {
     getLocationById,
     getLocationsByUserId,
     addLocationForUser,
     updateLocationForUser,
+    deleteLocationById,
   };
 };
