@@ -1,13 +1,28 @@
 .modal-alert {
   z-index: 100;
   position: fixed;
-  top: 22vh;
+  top: -200%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 60rem;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 5px;
+
+  /* Handle animation for Modal */
+  opacity: 0;
+  top: -200%;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: opacity 400ms ease-in-out, top 1000ms ease-in-out,
+    transform 2000ms ease-in-out;
+
+  &.active {
+    opacity: 1;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 300ms cubic-bezier(0.18, 0.89, 0.43, 1.19);
+  }
+  /* Handle animation for Modal */
 
   &__header {
     width: 100%;
@@ -21,27 +36,4 @@
   &__footer {
     padding: 0 2rem 2rem 2rem;
   }
-}
-
-/* CSS for modal */
-.modal-alert-enter {
-  transform: translate(-50%, -10rem);
-  opacity: 0;
-}
-
-.modal-alert-enter-active {
-  transform: translate(-50%, 0);
-  opacity: 1;
-  transition: all 400ms !important;
-}
-
-.modal-alert-exit {
-  transform: translate(-50%, 0rem);
-  opacity: 1;
-}
-
-.modal-alert-exit-active {
-  transform: translate(-50%, -10rem);
-  opacity: 0;
-  transition: all 400ms !important;
 }

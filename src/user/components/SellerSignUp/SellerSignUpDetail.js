@@ -241,8 +241,6 @@ const SellerSignUpDetail = () => {
           <ModalWarning
             show={showConfirmEmail}
             headerWarning="Verify Email Address"
-            message="This email is to confirm your sale on our system. Please
-                confirm that your email address is correct"
             footer={
               <div className="d-flex align-items-center justify-content-between">
                 <ButtonFields
@@ -263,7 +261,10 @@ const SellerSignUpDetail = () => {
                 </ButtonFields>
               </div>
             }
-          />
+          >
+            This email is to confirm your sale on our system. Please confirm
+            that your email address is correct
+          </ModalWarning>
         </form>
       </FormProvider>
     </>

@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const ModalWarning = ({ headerWarning, show, message, onCancel, footer }) => {
+const ModalWarning = ({ headerWarning, show, onCancel, footer, children }) => {
   return (
     <Modal
       className="modal-action"
@@ -23,7 +23,7 @@ const ModalWarning = ({ headerWarning, show, message, onCancel, footer }) => {
       footer={footer}
       onCancel={onCancel}
     >
-      {message}
+      {children}
     </Modal>
   );
 };
