@@ -2,12 +2,14 @@ import React, { memo } from "react";
 
 import UserLocationItem from "./UserLocationItem";
 
+import './UserLocationItem.scss';
+
 const UserLocationsList = ({ locations = [] }) => {
   return (
     <>
       {locations.map((location, index) => {
         return (
-          <React.Fragment key={index}>
+          <div className="user-location__list-item" key={index}>
             <UserLocationItem
               locationId={location.id}
               address={location.address}
@@ -16,7 +18,7 @@ const UserLocationsList = ({ locations = [] }) => {
               commune={location.commune}
               defaultLocation={location.defaultLocation}
             />
-          </React.Fragment>
+          </div>
         );
       })}
     </>

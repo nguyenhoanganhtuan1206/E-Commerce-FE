@@ -53,6 +53,21 @@ export const useLocationApis = () => {
     [apiClient, error]
   );
 
+  const updateDefaultLocation = useCallback(
+    async (locationId) => {
+      try {
+        const response = await apiClient.put(
+          `/locations/${locationId}/default`
+        );
+
+        return response.data;
+      } catch (err) {
+        throw err?.response?.data?.message || error;
+      }
+    },
+    [apiClient, error]
+  );
+
   const deleteLocationById = useCallback(
     async (locationId) => {
       try {
@@ -65,10 +80,12 @@ export const useLocationApis = () => {
     },
     [apiClient, error]
   );
+
   return {
     getLocationById,
     getLocationsByUserId,
     addLocationForUser,
+    updateDefaultLocation,
     updateLocationForUser,
     deleteLocationById,
   };
