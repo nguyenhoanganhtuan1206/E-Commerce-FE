@@ -1,0 +1,70 @@
+@import "../../../shared/sass/abstracts/mixins";
+
+.navbar-admin {
+  height: 5.5rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.4rem;
+  color: #555;
+
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    font-size: 2.4rem !important;
+  }
+
+  &__wrapper {
+    padding: 2rem;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__search {
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 0.3rem;
+
+    input {
+      border: none;
+      outline: none;
+      background-color: transparent;
+
+      &::placeholder {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+
+    position: relative;
+  }
+
+  &__avatar {
+    height: 3.5rem !important;
+    width: 3.5rem !important;
+  }
+
+  &__counter {
+    @include circle(2rem, 2rem, none, var(--color-red));
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+
+    position: absolute;
+    top: -6px;
+    right: -9px;
+  }
+}
