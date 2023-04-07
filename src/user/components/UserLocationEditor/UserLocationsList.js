@@ -9,6 +9,7 @@ const UserLocationsList = ({ locations = [] }) => {
         return (
           <React.Fragment key={index}>
             <UserLocationItem
+              locationId={location.id}
               address={location.address}
               city={location.city}
               district={location.district}

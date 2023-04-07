@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import UserLocation from "../UserLocationEditor/UserLocation";
 import { LoadingSpinner } from "../../../shared/components";
 import { useProfileApis } from "../../../apis/user/profile/profile.api";
+import { useLocationApis } from "../../../apis/user/location/user-location.api";
 import {
   ButtonFields,
   InputFields,
@@ -30,15 +31,17 @@ const UserInfoEditor = () => {
   const [locations, setLocations] = useState([]);
 
   const { fetchUserProfile, updateUserProfile } = useProfileApis();
+  const { getLocationsByUserId } = useLocationApis();
 
   useEffect(() => {
     const getUserProfile = async () => {
       setIsLoading(true);
       try {
         const fetchProfile = await fetchUserProfile();
+        const fetchLocations = await getLocationsByUserId();
 
-        if (!!fetchProfile.locations) {
-          setLocations(fetchProfile.locations);
+        if (fetchLocations) {
+          setLocations(fetchLocations);
         }
         methods.reset(fetchProfile);
       } catch (err) {

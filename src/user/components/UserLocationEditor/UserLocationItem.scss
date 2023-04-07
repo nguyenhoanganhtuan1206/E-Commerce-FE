@@ -14,6 +14,12 @@
 }
 
 .user-location__details {
+    &--active {
+        span {
+            color: #000;
+        }
+    }
+
   h4 {
     font-size: 1.4rem;
     font-weight: 400;
