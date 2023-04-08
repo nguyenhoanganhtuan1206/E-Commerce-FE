@@ -1,0 +1,11 @@
+.admin-chart {
+  flex: 4;
+  box-shadow: var(--shadow-light-2);
+  padding: 10px;
+  color: var(--font-color-2);
+
+  &__title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+}

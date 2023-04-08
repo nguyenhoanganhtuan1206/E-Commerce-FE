@@ -5,9 +5,14 @@
     flex: 6;
   }
 
-  &__widgets {
+  &__widgets,
+  &__charts {
     display: flex;
     padding: 2rem;
     gap: 20px;
+  }
+
+  &__charts {
+    padding: 5px 20px;
   }
 }
