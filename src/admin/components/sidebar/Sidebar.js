@@ -21,7 +21,6 @@ const Sidebar = () => {
       <div className="admin-sidebar__top">
         <span className="admin-sidebar__logo">Grid Admin</span>
       </div>
-      <hr className="admin-sidebar__top-separate" />
       <div className="admin-sidebar__center">
         <ul>
           <p className="admin-sidebar__center-title">MAIN</p>

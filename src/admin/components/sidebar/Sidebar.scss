@@ -5,15 +5,11 @@
   background-color: #fff;
 
   &__top {
-    height: 5rem;
+    height: var(--height-header-admin);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    &-separate {
-      height: 0;
-      border: 0.5px solid var(--color-border);
-    }
+    border: 0.5px solid var(--color-border);
   }
 
   &__logo {

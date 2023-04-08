@@ -17,7 +17,7 @@ import {
   ResetPasswordPage,
   SellerSignUpDetailPage,
 } from "./user/page";
-import { AdminHome } from "./admin/pages/";
+import { AdminHome, ManagementSellerPage } from "./admin/pages/";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
@@ -64,6 +64,7 @@ function App() {
 
         {/* Routes required Admin */}
         <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/management-seller" element={<ManagementSellerPage />} />
         {/* Routes required Admin */}
 
         <Route path="*" element={<ErrorPage />} />

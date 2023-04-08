@@ -1,10 +1,4 @@
 .admin-home {
-  display: flex;
-
-  &__container {
-    flex: 6;
-  }
-
   &__widgets,
   &__charts {
     display: flex;

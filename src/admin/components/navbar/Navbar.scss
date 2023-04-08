@@ -1,7 +1,7 @@
 @import "../../../shared/sass/abstracts/mixins";
 
 .navbar-admin {
-  height: 5.5rem;
+  height: var(--height-header-admin);
   border-bottom: 1px solid var(--color-border);
   font-size: 1.4rem;
   color: #555;

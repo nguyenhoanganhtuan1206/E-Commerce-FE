@@ -8,15 +8,18 @@
   --color-green: #03a70c;
   --color-green-light: #15c0b0;
   --color-green-dark: #3fdd90;
+  --color-green-background: rgba(0, 128, 0, 0.05);
 
   --color-active: #0167f3;
 
   --color-yellow: #fbaa26;
   --color-warning: #ffeb3b;
+  --color-yellow-background: rgba(255, 217, 0, 0.05);
 
   --color-red: #d83148;
   --color-red-light: #f8d7da;
   --color-red-light-1: #f5c6cb;
+  --color-red-background: rgba(255, 0, 0, 0.05);
 
   --font-color: #243238;
   --font-color-2: #888;
@@ -48,4 +51,5 @@
   --shadow-1: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   --height-header: 7.5rem;
+  --height-header-admin: 6rem;
 }
