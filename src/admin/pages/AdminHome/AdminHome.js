@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Navbar, Sidebar } from "../../components";
+import { Navbar, Sidebar, Widget } from "../../components";
 
 import "./AdminHome.scss";
 
@@ -9,7 +9,13 @@ const AdminHome = () => {
       <Sidebar />
       <div className="admin-home__container">
         <Navbar />
-        home container
+
+        <div className="admin-home__widgets">
+          <Widget type="user" />
+          <Widget type="order" />
+          <Widget type="income" />
+          <Widget type="balance" />
+        </div>
       </div>
     </div>
   );

@@ -4,4 +4,10 @@
   &__container {
     flex: 6;
   }
+
+  &__widgets {
+    display: flex;
+    padding: 2rem;
+    gap: 20px;
+  }
 }
