@@ -27,6 +27,10 @@ import ProtectRoutes from "./routes/ProtectRoutes";
 function App() {
   const authContext = useContext(AuthContext);
 
+  console.log(
+    authContext.isLoggedIn && authContext.roles.includes("ROLE_ADMIN")
+  );
+
   return (
     <Router>
       <Routes>
@@ -37,16 +41,13 @@ function App() {
         <Route path="/product" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
         {/* Routes permit all */}
-
         <Route
           path="/reset-password/confirm-email"
           element={<ConfirmEmailPage />}
         />
-
         {/* Required token */}
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         {/* Required token */}
-
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
@@ -61,12 +62,25 @@ function App() {
           />
         </Route>
         {/* Routes logged in and all roles */}
+        {/* Routes required Admin */}
+        <Route
+          element={
+            <ProtectRoutes
+              isAllowed={
+                authContext.isLoggedIn &&
+                authContext.roles.includes("ROLE_ADMIN")
+              }
+            />
+          }
+        >
+          <Route path="/admin" element={<AdminHome />} />
+          <Route
+            path="/admin/management-seller"
+            element={<ManagementSellerPage />}
+          />
+        </Route>
 
         {/* Routes required Admin */}
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/management-seller" element={<ManagementSellerPage />} />
-        {/* Routes required Admin */}
-
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 

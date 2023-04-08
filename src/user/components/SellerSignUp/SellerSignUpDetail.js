@@ -220,7 +220,7 @@ const SellerSignUpDetail = () => {
             </div>
           </div>
 
-          {!!userRegistered && !userRegistered.sellerApproval && (
+          {!!userRegistered && userRegistered.sellerApproval === "PENDING" && (
             <p className="form-seller__profile-text">
               (*) Your previous request has been successfully submitted and is
               being reviewed by the admin.

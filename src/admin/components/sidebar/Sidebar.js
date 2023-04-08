@@ -14,6 +14,8 @@ import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 import "./Sidebar.scss";
+import { Link } from "react-router-dom";
+import { Group } from "@mui/icons-material";
 
 const Sidebar = () => {
   return (
@@ -29,6 +31,14 @@ const Sidebar = () => {
             <DashboardIcon className="icon" />
             <span className="admin-sidebar__center-text">Dashboard</span>
           </li>
+
+          <Link to="/admin/management-seller">
+            <li className="admin-sidebar__center-item">
+              <Group className="icon" />
+              <span className="admin-sidebar__center-text">Management Sellers</span>
+            </li>
+          </Link>
+
           <li className="admin-sidebar__center-item">
             <PersonOutlineIcon className="icon" />
             <span className="admin-sidebar__center-text">Users</span>

@@ -72,7 +72,7 @@ const AuthProvider = (props) => {
   useEffect(() => {
     if (!!user.roles && user.token) {
       setRoles([]);
-      user.roles.map((role) => setRoles((prev) => [...prev, role.name]));
+      user.roles.map((role) => setRoles((prev) => [...prev, role]));
     }
   }, [user.token, user.roles]);
   /*  Check roles */

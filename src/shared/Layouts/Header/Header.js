@@ -88,30 +88,50 @@ const Header = () => {
               {authContext.isLoggedIn && (
                 <li className="header__action-item header__action-item--have-menu">
                   <AvatarUser circle />
-                  <span className="header__action-item__name">{authContext.username}</span>
+                  <span className="header__action-item__name">
+                    {authContext.username}
+                  </span>
 
                   <div className="header__menu-user">
                     <PopperWrapper className="header__menu-user-popper">
                       <ul className="header__menu-user-list">
-                        <Link
-                          to="/dashboard-user"
-                          className="header__menu-user-item"
-                        >
-                          <FontAwesomeIcon
-                            className="header__menu-user__icon"
-                            icon={faUser}
-                          />
+                        {authContext.roles.includes("ROLE_ADMIN") && (
+                          <Link
+                            to="/admin"
+                            className="header__menu-user-item"
+                          >
+                            <FontAwesomeIcon
+                              className="header__menu-user__icon"
+                              icon={faUser}
+                            />
 
-                          <span>My Account</span>
-                        </Link>
+                            <span>Admin Page</span>
+                          </Link>
+                        )}
 
-                        <Link className="header__menu-user-item">
-                          <FontAwesomeIcon
-                            className="header__menu-user__icon"
-                            icon={faCartShopping}
-                          />
-                          <span>My Order</span>
-                        </Link>
+                        {!authContext.roles.includes("ROLE_ADMIN") && (
+                          <Link
+                            to="/dashboard-user"
+                            className="header__menu-user-item"
+                          >
+                            <FontAwesomeIcon
+                              className="header__menu-user__icon"
+                              icon={faUser}
+                            />
+
+                            <span>My Account</span>
+                          </Link>
+                        )}
+
+                        {!authContext.roles.includes("ROLE_ADMIN") && (
+                          <Link className="header__menu-user-item">
+                            <FontAwesomeIcon
+                              className="header__menu-user__icon"
+                              icon={faCartShopping}
+                            />
+                            <span>My Order</span>
+                          </Link>
+                        )}
 
                         <li
                           onClick={authContext.logout}
