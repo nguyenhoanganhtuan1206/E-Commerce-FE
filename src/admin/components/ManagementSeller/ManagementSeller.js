@@ -4,17 +4,47 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import "./ManagementSeller.scss";
 import "../DataTable/DataTable.scss";
+import './ModalSellerDetail.scss';
 
 import { Navbar } from "../";
 import { useSellerApis } from "../../../apis/seller/seller-admin.api";
 import { LoadingSpinner } from "../../../shared/components";
 import { userColumns } from "../../pages/ManagementSellerPage/data/data_sellers";
+import { ButtonFields } from "../../../shared/FormElement";
+import ModalSellerDetail from "./ModalSellerDetail";
 
 const ManagementSeller = () => {
   const { getAllSellers } = useSellerApis();
 
   const [sellers, setSellers] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const [selectRowId, setSelectedRowId] = useState(null);
+
+  const actionColumns = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <>
+            <ButtonFields
+              onClick={() => {
+                setShowModal(true);
+                setSelectedRowId(params.id);
+              }}
+              subPrimary
+              className="management-seller__btn"
+            >
+              View Detail
+            </ButtonFields>
+          </>
+        );
+      },
+    },
+  ];
 
   useEffect(() => {
     const fetchSeller = async () => {
@@ -43,12 +73,21 @@ const ManagementSeller = () => {
         <div className="data-table">
           <DataGrid
             rows={sellers}
-            columns={userColumns}
+            columns={userColumns.concat(actionColumns)}
             pageSize={5}
             rowsPerPageOptions={[5]}
             checkboxSelection
+            disableRowSelectionOnClick
           />
         </div>
+      )}
+
+      {!!selectRowId && (
+        <ModalSellerDetail
+          sellerId={selectRowId}
+          showModal={showModal}
+          setShowModal={setShowModal}
+        />
       )}
     </div>
   );

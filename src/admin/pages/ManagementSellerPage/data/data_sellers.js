@@ -1,5 +1,3 @@
-import { ButtonFields } from "../../../../shared/FormElement";
-
 export const userColumns = [
   { field: "id", headerName: "ID", width: 70 },
   {
@@ -47,23 +45,6 @@ export const userColumns = [
         >
           {params.row.sellerApproval}
         </div>
-      );
-    },
-  },
-  {
-    field: "action",
-    headerName: "Action",
-    width: 200,
-    renderCell: () => {
-      return (
-        <>
-          <ButtonFields primary className="management-seller__btn">
-            View
-          </ButtonFields>
-          <ButtonFields borderOnly className="management-seller__btn">
-            Delete
-          </ButtonFields>
-        </>
       );
     },
   },

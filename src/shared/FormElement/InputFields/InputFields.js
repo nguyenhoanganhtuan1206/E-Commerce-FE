@@ -86,17 +86,15 @@ const InputFields = (props) => {
                   <div className="form-input__wrapper">
                     <textarea
                       onChange={onChange}
+                      value={value}
                       className={`${classes} ${
                         error && "form-input__input--error"
                       }`}
-                      value={value}
                       cols={cols}
                       rows={rows}
                       placeholder={placeholder}
                       name={fieldName}
                     />
-                    {error && <Alert alertMessage={error.message} error />}
-
                     {isLoading && (
                       <FontAwesomeIcon
                         icon={faSpinner}
@@ -104,6 +102,12 @@ const InputFields = (props) => {
                       />
                     )}
                   </div>
+                  {(alertErrorMessage || error) && (
+                    <Alert
+                      alertMessage={alertErrorMessage || error.message}
+                      error={alertErrorMessage || error}
+                    />
+                  )}
                 </div>
               </>
             ) : (

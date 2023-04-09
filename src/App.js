@@ -27,10 +27,6 @@ import ProtectRoutes from "./routes/ProtectRoutes";
 function App() {
   const authContext = useContext(AuthContext);
 
-  console.log(
-    authContext.isLoggedIn && authContext.roles.includes("ROLE_ADMIN")
-  );
-
   return (
     <Router>
       <Routes>

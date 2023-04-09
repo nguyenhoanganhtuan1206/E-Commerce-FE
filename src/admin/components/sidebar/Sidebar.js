@@ -27,15 +27,19 @@ const Sidebar = () => {
         <ul>
           <p className="admin-sidebar__center-title">MAIN</p>
 
-          <li className="admin-sidebar__center-item">
-            <DashboardIcon className="icon" />
-            <span className="admin-sidebar__center-text">Dashboard</span>
-          </li>
+          <Link to="/admin">
+            <li className="admin-sidebar__center-item">
+              <DashboardIcon className="icon" />
+              <span className="admin-sidebar__center-text">Dashboard</span>
+            </li>
+          </Link>
 
           <Link to="/admin/management-seller">
             <li className="admin-sidebar__center-item">
               <Group className="icon" />
-              <span className="admin-sidebar__center-text">Management Sellers</span>
+              <span className="admin-sidebar__center-text">
+                Management Sellers
+              </span>
             </li>
           </Link>
 
