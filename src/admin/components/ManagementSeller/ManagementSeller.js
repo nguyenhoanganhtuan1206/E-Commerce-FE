@@ -4,9 +4,8 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import "./ManagementSeller.scss";
 import "../DataTable/DataTable.scss";
-import './ModalSellerDetail.scss';
+import "./ModalSellerDetail.scss";
 
-import { Navbar } from "../";
 import { useSellerApis } from "../../../apis/seller/seller-admin.api";
 import { LoadingSpinner } from "../../../shared/components";
 import { userColumns } from "../../pages/ManagementSellerPage/data/data_sellers";
@@ -65,8 +64,6 @@ const ManagementSeller = () => {
 
   return (
     <div className="management-seller">
-      <Navbar />
-
       {isLoading && <LoadingSpinner option1 />}
 
       {!isLoading && (

@@ -43,5 +43,24 @@ export const useSellerApis = () => {
     [apiClient, error]
   );
 
-  return { getAllSellers, getSellerById, sendFeedbackToUser };
+  const approveSellerRequest = useCallback(
+    async (sellerId) => {
+      try {
+        const response = await apiClient.put(
+          `admin/sellers/${sellerId}/approval`
+        );
+
+        return response.data;
+      } catch (err) {
+        throw err?.response?.data?.message || error;
+      }
+    },
+    [apiClient, error]
+  );
+  return {
+    getAllSellers,
+    getSellerById,
+    sendFeedbackToUser,
+    approveSellerRequest,
+  };
 };

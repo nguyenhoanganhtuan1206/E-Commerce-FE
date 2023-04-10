@@ -15,14 +15,28 @@ import { formatDateTime } from "../../../shared/util/format-date";
 const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
   const methods = useForm({ mode: "all" });
 
-  const { getSellerById, sendFeedbackToUser } = useSellerApis();
+  const { getSellerById, sendFeedbackToUser, approveSellerRequest } =
+    useSellerApis();
 
   const [seller, setSeller] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [showModalFeedBack, setShowModalFeedback] = useState(false);
 
-  const onSubmit = (data) => {};
+  const handleApproveRequest = useCallback(async () => {
+    setIsLoadingButton(true);
+    try {
+      const response = await approveSellerRequest(sellerId);
+
+      toast.success(
+        `You have allowed account ${seller.sellerEmail} to become a seller`
+      );
+    } catch (err) {
+      toast.error(err);
+    } finally {
+      setIsLoadingButton(false);
+    }
+  }, [approveSellerRequest, seller, sellerId]);
 
   const onSubmitFeedback = useCallback(
     async (data) => {
@@ -73,7 +87,6 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
       {/* MODAL DETAIL */}
       {!isLoading && !!seller && (
         <Modal
-          onSubmit={methods.handleSubmit(onSubmit)}
           onCancel={() => setShowModal(false)}
           show={showModal}
           className="user-location__form-modal"
@@ -107,8 +120,8 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
 
               <ButtonFields
                 type="button"
-                onClick={methods.handleSubmit(onSubmit)}
-                isLoading={isLoading}
+                onClick={handleApproveRequest}
+                isLoading={isLoadingButton}
                 className="ml-5"
                 primary
               >
@@ -167,7 +180,6 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
       {/* MODAL FEEDBACK */}
       {!!seller && (
         <Modal
-          onSubmit={methods.handleSubmit(onSubmit)}
           show={showModalFeedBack}
           className="user-location__form-modal"
           header={

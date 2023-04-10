@@ -1,14 +1,15 @@
 import { memo } from "react";
 import { Chart, Featured, Navbar, Sidebar, Widget } from "../../components";
 
-import "../AdminLayoutStyles.scss";
 import "./AdminHome.scss";
 
 const AdminHome = () => {
   return (
-    <div className="admin-layout admin-home">
-      <Sidebar />
-      <div className="admin-layout__container">
+    <div className="row">
+      <div className="col-2 pr-0">
+        <Sidebar />
+      </div>
+      <div className="col-10 pl-0">
         <Navbar />
 
         <div className="admin-home__widgets">

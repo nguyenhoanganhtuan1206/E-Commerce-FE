@@ -21,7 +21,7 @@ const Sidebar = () => {
   return (
     <div className="admin-sidebar">
       <div className="admin-sidebar__top">
-        <span className="admin-sidebar__logo">Grid Admin</span>
+        <Link to="/admin" className="admin-sidebar__logo">Grid Admin</Link>
       </div>
       <div className="admin-sidebar__center">
         <ul>
