@@ -1,18 +1,20 @@
 import { useCallback } from "react";
-import useApiClient from "../../../shared/hooks/useAxios";
+import createApiClient from "../../../shared/hooks/useAxios";
+import { toast } from "react-toastify";
 
 export const useProfileApis = () => {
-  const { apiClient, error } = useApiClient();
+  const apiClient = createApiClient();
 
   const fetchUserProfile = useCallback(async () => {
     try {
       const response = await apiClient.get("/profile");
 
+      console.log("response", response);
       return response.data;
     } catch (err) {
-      throw err?.response?.data?.message || error;
+      toast.error(err.response.data.message, { autoClose: 2000 });
     }
-  }, [apiClient, error]);
+  }, [apiClient]);
 
   const updateUserProfile = useCallback(
     async (data) => {
@@ -21,10 +23,10 @@ export const useProfileApis = () => {
 
         return response.data;
       } catch (err) {
-        throw err?.response?.data?.message || error;
+        throw err?.response?.data?.message;
       }
     },
-    [apiClient, error]
+    [apiClient]
   );
 
   const updateUserPassword = useCallback(
@@ -34,10 +36,10 @@ export const useProfileApis = () => {
 
         return response.data;
       } catch (err) {
-        throw err?.response?.data?.message || error;
+        throw err?.response?.data?.message;
       }
     },
-    [apiClient, error]
+    [apiClient]
   );
 
   return { fetchUserProfile, updateUserProfile, updateUserPassword };

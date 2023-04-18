@@ -1,9 +1,9 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { useParams } from "react-router-dom";
 
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
-import { MainComponentUser, FormResetPassword } from "../../components";
+import { FormResetPassword } from "../../components";
 
 const ResetPasswordPage = () => {
   const token = useParams().token;
@@ -18,15 +18,13 @@ const ResetPasswordPage = () => {
       <Breadcrumbs title="Home" nextPages={["Forget Password"]} />
       {/* BreadCrumbs */}
 
-      <MainComponentUser>
-        <div className="main-content--user">
-          <h3 className="main-content--user__header">Update Your Password</h3>
+      <div className="m-5 border">
+        <h3 className="main-content--user__header">Update Your Password</h3>
 
-          <div className="main-content--user__body">
-            <FormResetPassword token={token} />
-          </div>
+        <div className="main-content--user__body">
+          <FormResetPassword token={token} />
         </div>
-      </MainComponentUser>
+      </div>
     </>
   );
 };

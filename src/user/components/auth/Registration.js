@@ -7,6 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 
 import Auth from "../../page/auth/Auth";
+<<<<<<< HEAD
+=======
+import { useRegisterMutation } from "../../../redux/apis/auth/authApis";
+>>>>>>> 417ae18 (Refresh to use RTK Query for "Password User")
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,

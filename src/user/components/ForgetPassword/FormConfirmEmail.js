@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 
 import { toast } from "react-toastify";
 import { FormProvider, useForm } from "react-hook-form";
@@ -6,39 +6,30 @@ import { Link } from "react-router-dom";
 
 import "./ForgetPassword.scss";
 
+import { useForgetPasswordMutation } from "../../../redux/apis/user/password/user-password.api";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { useForgetPasswordApis } from "../../../apis/user/password/password.api";
 
 const FormConfirmEmail = () => {
   const methods = useForm();
-
-  const { sendRequestConfirmEmail } = useForgetPasswordApis();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [doForgetPassword, forgetPasswordResults] = useForgetPasswordMutation();
 
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        await sendRequestConfirmEmail(data);
-
-        toast.success(
-          "We have sent the link to reset password. Please check your email!",
-          { autoClose: 1500 }
-        );
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
+      doForgetPassword(data)
+        .unwrap()
+        .then(() => {
+          toast.success(
+            "We have sent the link to reset password. Please check your email!",
+            { autoClose: 1500 }
+          );
+        });
     },
-    [sendRequestConfirmEmail]
+    [doForgetPassword]
   );
 
   return (
@@ -63,14 +54,14 @@ const FormConfirmEmail = () => {
                   VALIDATOR_MINLENGTH(9, "Email must be at least 9 characters"),
                   VALIDATOR_EMAIL("Email is invalid"),
                 ]}
-                alertErrorMessage={error}
+                alertErrorMessage={forgetPasswordResults.isError && forgetPasswordResults.error.data.message}
                 placeholder="Enter Your Email"
                 type="email"
                 htmlFor="email"
               />
 
               <ButtonFields
-                isLoading={isLoading}
+                isLoading={forgetPasswordResults.isLoading}
                 primary
                 fullWidth
                 className="form__forget-password__btn"

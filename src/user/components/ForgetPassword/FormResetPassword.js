@@ -2,7 +2,6 @@ import { memo, useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-import { useForgetPasswordApis } from "../../../apis/user/password/password.api";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_MATCHING,
@@ -10,35 +9,27 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
+import { useResetPasswordMutation } from "../../../redux/apis/user/password/user-password.api";
 
 const FormResetPassword = ({ token }) => {
   const methods = useForm({ mode: "onChange" });
+  const [doResetPassword, resetPasswordResults] = useResetPasswordMutation();
 
   const newPasswordValue = methods.watch("newPassword");
   const confirmPasswordValue = methods.watch("confirmPassword");
 
-  const { updatePassword } = useForgetPasswordApis();
-
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        await updatePassword(token, data);
-
-        toast.success("Change Password Successfully!");
-        methods.reset();
-        setError(null);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setIsLoading(false);
-      }
+      doResetPassword({ token, data })
+        .unwrap()
+        .then(() => {
+          toast.success("Change Password Successfully!");
+        })
+        .catch((error) => setError(error.data.message));
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [updatePassword]
+    [doResetPassword, token]
   );
 
   return (
@@ -90,7 +81,7 @@ const FormResetPassword = ({ token }) => {
           />
 
           <ButtonFields
-            isLoading={isLoading}
+            isLoading={resetPasswordResults.isLoading}
             primary
             className="profile-user__btn"
             disabled={!methods.formState.isValid}

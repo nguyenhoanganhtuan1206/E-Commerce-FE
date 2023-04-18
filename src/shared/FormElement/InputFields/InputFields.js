@@ -131,6 +131,7 @@ const InputFields = (props) => {
                     placeholder={placeholder}
                     required={required}
                     name={fieldName}
+                    autoComplete={type === "password" ? "off" : fieldName}
                   />
 
                   {type === "password" && isHiddenPassword && (
