@@ -2,10 +2,11 @@ import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
 import { Link, useNavigate } from "react-router-dom";
-
+import { useCallback, useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+<<<<<<< HEAD
 import { AuthContext } from "../../../context/auth-context";
 <<<<<<< HEAD
 import { useAuthApis } from "../../../apis/auth/auth.api";
@@ -14,6 +15,11 @@ import Auth from "../../page/auth/Auth";
 =======
 import { useLoginMutation } from "../../../redux/apis/auth/authApis";
 >>>>>>> 417ae18 (Refresh to use RTK Query for "Password User")
+=======
+import Auth from "../../page/auth/Auth";
+import { AuthContext } from "../../../context/auth-context";
+import { useLoginMutation } from "../../../redux/apis/authApis";
+>>>>>>> 53fbab3 (Refresh to use RTK Query for Auth)
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
@@ -21,32 +27,25 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { useCallback, useContext, useState } from "react";
 
 const Login = () => {
   const methods = useForm({ mode: "onSubmit" });
+  const [login, loginResults] = useLoginMutation();
 
   const navigate = useNavigate();
 
   const authContext = useContext(AuthContext);
 
-  const { login } = useAuthApis();
-  const [isLoading, setIsLoading] = useState(false);
-
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        const response = await login(data);
-
-        authContext.login(response);
-        toast.success("Login Successfully!");
-        navigate("/");
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+      login(data)
+        .unwrap()
+        .then((data) => {
+          authContext.login(data);
+          toast.success("Logged in Successfully!", { autoClose: 2000 });
+          navigate("/");
+        })
+        .catch((error) => toast.error(error.data.message));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [login]
@@ -125,7 +124,7 @@ const Login = () => {
           </div>
 
           <ButtonFields
-            isLoading={isLoading}
+            isLoading={loginResults.isLoading}
             primary
             className="auth-form__btn"
           >

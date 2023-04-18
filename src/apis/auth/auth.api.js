@@ -1,8 +1,9 @@
 import { useCallback } from "react";
 import useApiClient from "../../shared/hooks/useAxios";
+import createApiClient from "../../shared/hooks/useAxios";
 
 export const useAuthApis = () => {
-  const { apiClient, error } = useApiClient();
+  const apiClient = createApiClient();
 
   const login = useCallback(
     async (data) => {
@@ -11,10 +12,10 @@ export const useAuthApis = () => {
 
         return response.data;
       } catch (err) {
-        throw err?.response?.data?.message || error;
+        throw err?.response?.data?.message;
       }
     },
-    [apiClient, error]
+    [apiClient]
   );
 
   const register = useCallback(
@@ -24,10 +25,10 @@ export const useAuthApis = () => {
 
         return response.data;
       } catch (err) {
-        throw err?.response?.data?.message || error;
+        throw err?.response?.data?.message;
       }
     },
-    [apiClient, error]
+    [apiClient]
   );
 
   return { login, register };

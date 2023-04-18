@@ -2,15 +2,19 @@ import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
 import { toast } from "react-toastify";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 
 import Auth from "../../page/auth/Auth";
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import { useRegisterMutation } from "../../../redux/apis/auth/authApis";
 >>>>>>> 417ae18 (Refresh to use RTK Query for "Password User")
+=======
+import { useRegisterMutation } from "../../../redux/apis/authApis";
+>>>>>>> 53fbab3 (Refresh to use RTK Query for Auth)
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
@@ -21,36 +25,29 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 
-import { useAuthApis } from "../../../apis/auth/auth.api";
-
 const Registration = () => {
   const methods = useForm({ mode: "onChange" });
+  const [register, registerResults] = useRegisterMutation();
 
   const navigate = useNavigate();
-
-  const { register } = useAuthApis();
-  const [isLoading, setIsLoading] = useState(false);
 
   const currentPassword = methods.watch("password");
   const currentConfirmPassword = methods.watch("confirmPassword");
 
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        await register(data);
-
-        toast.success("Register Successfully!");
-        navigate("/login");
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+      register(data)
+        .unwrap()
+        .then(() => {
+          navigate("/login");
+          toast.success("Registered Successfully!", { autoClose: 2000 });
+        })
+        .catch((error) => toast.error(error.data.message));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [register]
   );
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -191,7 +188,7 @@ const Registration = () => {
             disabled={!methods.formState.isValid}
             primary
             className="auth-form__btn"
-            isLoading={isLoading}
+            isLoading={registerResults.isLoading}
           >
             Registration
           </ButtonFields>
