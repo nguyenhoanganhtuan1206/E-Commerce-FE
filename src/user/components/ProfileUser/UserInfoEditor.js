@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import "./ProfileUser.scss";
 
@@ -7,8 +8,6 @@ import { toast } from "react-toastify";
 
 import UserLocation from "../UserLocationEditor/UserLocation";
 import { LoadingSpinner } from "../../../shared/components";
-import { useProfileApis } from "../../../apis/user/profile/profile.api";
-import { useLocationApis } from "../../../apis/user/location/user-location.api";
 import {
   ButtonFields,
   InputFields,
@@ -21,151 +20,142 @@ import {
   VALIDATOR_NUMBER,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
+import {
+  useFetchProfileQuery,
+  useUpdateProfileMutation,
+} from "../../../redux/apis/user/profile/user-profile.api";
 
 const UserInfoEditor = () => {
   const methods = useForm({
     mode: "onChange",
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { isLoading, error, data } = useFetchProfileQuery();
+  const [updateProfile, updateProfileResults] = useUpdateProfileMutation();
   const [locations, setLocations] = useState([]);
 
-  const { fetchUserProfile, updateUserProfile } = useProfileApis();
-  const { getLocationsByUserId } = useLocationApis();
-
   useEffect(() => {
-    const getUserProfile = async () => {
-      setIsLoading(true);
-      try {
-        const fetchProfile = await fetchUserProfile();
-        const fetchLocations = await getLocationsByUserId();
+    if (error) {
+      navigate("/");
+    }
 
-        if (fetchLocations) {
-          setLocations(fetchLocations);
-        }
-        methods.reset(fetchProfile);
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    getUserProfile();
+    methods.reset(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [methods, data, error]);
 
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        await updateUserProfile(data);
-
-        toast.success("Update Profile Successfully", {
-          autoClose: 2000,
-        });
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+      updateProfile(data)
+        .unwrap()
+        .then(() => {
+          toast.success("Updated Profile Successfully!", { autoClose: 2000 });
+        })
+        .catch((error) => toast.error(error.data.message));
     },
-    [updateUserProfile]
+    [updateProfile]
   );
 
   return (
     <>
       {isLoading && <LoadingSpinner option2 />}
 
-      <FormProvider {...methods}>
-        <form
-          className="profile-user__form"
-          onSubmit={methods.handleSubmit(onSubmit)}
-        >
-          <UploadImage fieldName="avatar" />
-
-          <div className="profile-user__user-info mt-5">
-            <div className="row">
-              <div className="col-6">
-                <InputFields
-                  fieldName="username"
-                  type="text"
-                  label="Username *"
-                  htmlFor="username"
-                  placeholder="Enter Username"
-                  validators={[
-                    VALIDATOR_REQUIRED("Username cannot be empty"),
-                    VALIDATOR_MINLENGTH(6, "Username at least 6 characters"),
-                    VALIDATOR_MAXLENGTH(
-                      50,
-                      "Username must be less than 50 characters"
-                    ),
-                  ]}
-                />
-              </div>
-
-              <div className="col-6">
-                <InputFields
-                  fieldName="email"
-                  type="email"
-                  label="Email *"
-                  htmlFor="email"
-                  placeholder="Enter Email"
-                  validators={[
-                    VALIDATOR_REQUIRED("Email cannot be empty"),
-                    VALIDATOR_EMAIL("Email is invalid"),
-                    VALIDATOR_MINLENGTH(
-                      9,
-                      "Email must be at least 9 characters"
-                    ),
-                  ]}
-                />
-              </div>
-            </div>
-
-            <div className="row mt-4">
-              <div className="col-6">
-                <InputFields
-                  fieldName="phoneNumber"
-                  type="text"
-                  label="Phone Number *"
-                  htmlFor="phoneNumber"
-                  placeholder="Enter Phone Number"
-                  validators={[
-                    VALIDATOR_REQUIRED("Phone Number cannot be empty"),
-                    VALIDATOR_NUMBER("Phone Number is invalid"),
-                    VALIDATOR_MINLENGTH(9, "Address is invalid"),
-                    VALIDATOR_MAXLENGTH(11, "Address is invalid"),
-                  ]}
-                />
-              </div>
-
-              <div className="col-6">
-                <InputFields
-                  fieldName="address"
-                  type="text"
-                  label="Address *"
-                  htmlFor="address"
-                  placeholder="Enter Address"
-                  validators={[
-                    VALIDATOR_REQUIRED("Address cannot be empty"),
-                    VALIDATOR_MINLENGTH(3, "Address is invalid"),
-                  ]}
-                />
-              </div>
-            </div>
-          </div>
-
-          <ButtonFields
-            disabled={!methods.formState.isValid || !methods.formState.isDirty}
-            primary
-            className="profile-user__btn"
+      {!isLoading && (
+        <FormProvider {...methods}>
+          <form
+            className="profile-user__form"
+            onSubmit={methods.handleSubmit(onSubmit)}
           >
-            Upload Profile
-          </ButtonFields>
+            <UploadImage fieldName="avatar" />
 
-          <UserLocation locations={locations} />
-        </form>
-      </FormProvider>
+            <div className="profile-user__user-info mt-5">
+              <div className="row">
+                <div className="col-6">
+                  <InputFields
+                    fieldName="username"
+                    type="text"
+                    label="Username *"
+                    htmlFor="username"
+                    placeholder="Enter Username"
+                    validators={[
+                      VALIDATOR_REQUIRED("Username cannot be empty"),
+                      VALIDATOR_MINLENGTH(6, "Username at least 6 characters"),
+                      VALIDATOR_MAXLENGTH(
+                        50,
+                        "Username must be less than 50 characters"
+                      ),
+                    ]}
+                  />
+                </div>
+
+                <div className="col-6">
+                  <InputFields
+                    fieldName="email"
+                    type="email"
+                    label="Email *"
+                    htmlFor="email"
+                    placeholder="Enter Email"
+                    validators={[
+                      VALIDATOR_REQUIRED("Email cannot be empty"),
+                      VALIDATOR_EMAIL("Email is invalid"),
+                      VALIDATOR_MINLENGTH(
+                        9,
+                        "Email must be at least 9 characters"
+                      ),
+                    ]}
+                  />
+                </div>
+              </div>
+
+              <div className="row mt-4">
+                <div className="col-6">
+                  <InputFields
+                    fieldName="phoneNumber"
+                    type="text"
+                    label="Phone Number *"
+                    htmlFor="phoneNumber"
+                    placeholder="Enter Phone Number"
+                    validators={[
+                      VALIDATOR_REQUIRED("Phone Number cannot be empty"),
+                      VALIDATOR_NUMBER("Phone Number is invalid"),
+                      VALIDATOR_MINLENGTH(9, "Address is invalid"),
+                      VALIDATOR_MAXLENGTH(11, "Address is invalid"),
+                    ]}
+                  />
+                </div>
+
+                <div className="col-6">
+                  <InputFields
+                    fieldName="address"
+                    type="text"
+                    label="Address *"
+                    htmlFor="address"
+                    placeholder="Enter Address"
+                    validators={[
+                      VALIDATOR_REQUIRED("Address cannot be empty"),
+                      VALIDATOR_MINLENGTH(3, "Address is invalid"),
+                    ]}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <ButtonFields
+              isLoading={updateProfileResults.isLoading}
+              disabled={
+                !methods.formState.isValid || !methods.formState.isDirty
+              }
+              primary
+              className="profile-user__btn"
+            >
+              Upload Profile
+            </ButtonFields>
+
+            <UserLocation locations={locations} />
+          </form>
+        </FormProvider>
+      )}
     </>
   );
 };

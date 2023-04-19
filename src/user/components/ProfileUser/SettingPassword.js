@@ -1,8 +1,8 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useProfileApis } from "../../../apis/user/profile/profile.api";
-import { LoadingSpinner } from "../../../shared/components";
+
+import { useUpdateUserPasswordMutation } from "../../../redux/apis/user/profile/user-profile.api";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_MATCHING,
@@ -16,37 +16,30 @@ import "./ProfileUser.scss";
 const SettingsPassword = () => {
   const methods = useForm({ mode: "onChange" });
 
+  const [updatePassword, updatePasswordResults] =
+    useUpdateUserPasswordMutation();
+
   const newPasswordValue = methods.watch("newPassword");
   const confirmPasswordValue = methods.watch("confirmPassword");
 
-  const { updateUserPassword } = useProfileApis();
-
-  const [isLoading, setIsLoading] = useState(false);
-
   const onSubmit = useCallback(
     async (data) => {
-      setIsLoading(true);
-      try {
-        await updateUserPassword(data);
-
-        toast.success("Update Password Successfully!");
-        methods.reset();
-      } catch (err) {
-        toast.error(err, {
-          autoClose: 2000,
-        });
-      } finally {
-        setIsLoading(false);
-      }
+      updatePassword(data)
+        .unwrap()
+        .then(() => {
+          methods.reset();
+          toast.success("Updated Your Password Successfully!", {
+            autoClose: 2000,
+          });
+        })
+        .catch((error) => toast.error(error.data.message));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [updateUserPassword]
+    [updatePassword]
   );
 
   return (
     <>
-      {isLoading && <LoadingSpinner option2 />}
-
       <FormProvider {...methods}>
         <form
           className="profile-user__form"
@@ -108,6 +101,7 @@ const SettingsPassword = () => {
           />
 
           <ButtonFields
+            isLoading={updatePasswordResults.isLoading}
             primary
             className="profile-user__btn"
             disabled={!methods.formState.isValid || !methods.formState.isDirty}

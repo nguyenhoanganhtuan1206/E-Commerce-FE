@@ -1,5 +1,6 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 
+import { useSelector } from "react-redux";
 import { useWatch } from "react-hook-form";
 
 import SelectFields from "../SelectFields/SelectFields";
@@ -10,7 +11,6 @@ import {
   fetchDistrictsByProvinceName,
   fetchProvinces,
 } from "../../../redux/thunks/addressThunks";
-import { useSelector } from "react-redux";
 
 const RegionDropdown = ({ control }) => {
   const addressState = useSelector((state) => state.address);

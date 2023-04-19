@@ -10,11 +10,7 @@ import { AuthContext } from "../../../context/auth-context";
 
 import Auth from "../../page/auth/Auth";
 import { useLoginMutation } from "../../../redux/apis/auth/authApis";
-import {
-  ButtonFields,
-  InputFields,
-  RegionDropdown,
-} from "../../../shared/FormElement";
+import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
@@ -124,8 +120,6 @@ const Login = () => {
           >
             Login Now
           </ButtonFields>
-
-          <RegionDropdown control={methods.control} />
 
           <span className="outer__link">
             Don't have already account?
