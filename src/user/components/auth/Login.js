@@ -6,21 +6,15 @@ import { useCallback, useContext } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-<<<<<<< HEAD
 import { AuthContext } from "../../../context/auth-context";
-<<<<<<< HEAD
-import { useAuthApis } from "../../../apis/auth/auth.api";
 
 import Auth from "../../page/auth/Auth";
-=======
 import { useLoginMutation } from "../../../redux/apis/auth/authApis";
->>>>>>> 417ae18 (Refresh to use RTK Query for "Password User")
-=======
-import Auth from "../../page/auth/Auth";
-import { AuthContext } from "../../../context/auth-context";
-import { useLoginMutation } from "../../../redux/apis/authApis";
->>>>>>> 53fbab3 (Refresh to use RTK Query for Auth)
-import { ButtonFields, InputFields } from "../../../shared/FormElement";
+import {
+  ButtonFields,
+  InputFields,
+  RegionDropdown,
+} from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MAXLENGTH,
@@ -130,6 +124,8 @@ const Login = () => {
           >
             Login Now
           </ButtonFields>
+
+          <RegionDropdown control={methods.control} />
 
           <span className="outer__link">
             Don't have already account?
