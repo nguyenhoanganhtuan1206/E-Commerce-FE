@@ -1,36 +1,29 @@
-import classNames from "classnames";
+import { Skeleton } from "@mui/material";
 
-const Skeleton = ({ times, style, className }) => {
-  const outerClassNames = classNames(
-    "relative",
-    "overflow-hidden",
-    "bg-gray-200",
-    "rounded",
-    "mb-2.5",
-    className
-  );
-  const innerClassNames = classNames(
-    "animate-shimmer",
-    "absolute",
-    "inset-0",
-    "-translate-x-full",
-    "bg-gradient-to-r",
-    "from-gray-200",
-    "via-white",
-    "to-gray-200"
-  );
-
+const CustomSkeleton = ({
+  times,
+  variant,
+  width,
+  height,
+  style,
+  className,
+}) => {
   const boxes = Array(times)
     .fill(0)
     .map((_, i) => {
       return (
-        <div style={style} key={i} className={outerClassNames}>
-          <div className={innerClassNames} />
-        </div>
+        <Skeleton
+          animation="wave"
+          className={className}
+          variant={variant}
+          width={width}
+          height={height}
+          style={style}
+        />
       );
     });
 
   return boxes;
 };
 
-export default Skeleton;
+export default CustomSkeleton;
