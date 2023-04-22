@@ -26,7 +26,7 @@ const AuthProvider = (props) => {
       "userData",
       JSON.stringify({
         token: user.token,
-        accountId: user.accountId,
+        userId: user.userId,
         username: user.username,
         roles: user.roles,
         email: user.email,
@@ -81,7 +81,7 @@ const AuthProvider = (props) => {
   const containValues = {
     isLoggedIn: !!user.token,
     token: user.token,
-    accountId: user.accountId,
+    userId: user.userId,
     username: user.username,
     roles: roles,
     email: user.email,

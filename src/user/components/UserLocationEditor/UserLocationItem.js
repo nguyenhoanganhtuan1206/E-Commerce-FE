@@ -4,61 +4,57 @@ import "./UserLocationItem.scss";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { useDispatch } from "react-redux";
 
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
-import ModalFormUserLocation from "./ModalFormUserLocation";
+import ModalFormUpdateLocation from "./ModalFormUpdateLocation";
+import { toggleModalUpdate } from "../../../redux/slices/user/location/locationSlice";
 import { ModalWarning } from "../../../shared/components";
-import { useLocationApis } from "../../../apis/user/location/user-location.api";
+import {
+  useRemoveLocationMutation,
+  useUpdateDefaultLocationMutation,
+} from "../../../redux/apis/user/location/user-locations.api";
 
 const UserLocationItem = ({
   locationId,
   address,
-  city,
+  province,
   district,
   commune,
   defaultLocation,
 }) => {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const dispatch = useDispatch();
+
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSetDefaultLocation, setShowSetDefaultLocation] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const { deleteLocationById, updateDefaultLocation } = useLocationApis();
+  const [updateDefaultLocation, updateDefaultLocationResults] =
+    useUpdateDefaultLocationMutation();
+  const [removeLocation, removeLocationResults] = useRemoveLocationMutation();
 
-  const handleHiddenModal = () => {
-    setShowFormModal(false);
-  };
-
-  const handleShowModal = () => {
-    setShowFormModal(true);
-  };
+  const handleToggleUpdateLocation = useCallback(() => {
+    dispatch(toggleModalUpdate(locationId));
+  }, [locationId, dispatch]);
 
   const handleDeleteLocation = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await deleteLocationById(locationId);
-
-      toast.success("Deleted your location successful");
-      setShowDeleteModal(false);
-    } catch (err) {
-      toast.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [deleteLocationById, locationId]);
+    removeLocation(locationId)
+      .unwrap()
+      .then(() => {
+        setShowDeleteModal(false);
+        toast.success("Deleted Location Successfully!", { autoClose: 2000 });
+      })
+      .catch((error) => toast.error(error.data.message));
+  }, [removeLocation, locationId]);
 
   const handleSetDefaultLocation = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await updateDefaultLocation(locationId);
-
-      toast.success("Updated you default location successfully");
-      setShowSetDefaultLocation(false);
-    } catch (err) {
-      toast.error(err);
-    } finally {
-      setIsLoading(false);
-    }
+    updateDefaultLocation(locationId)
+      .unwrap()
+      .then(() => {
+        setShowDeleteModal(false);
+        toast.success("Updated Location Successfully!", { autoClose: 2000 });
+      })
+      .catch((error) => toast.error(error.data.message))
+      .finally(() => setShowSetDefaultLocation(false));
   }, [updateDefaultLocation, locationId]);
 
   return (
@@ -73,7 +69,7 @@ const UserLocationItem = ({
           <div className="d-flex align-items-center">
             <h4>Location Details: </h4>
             <span>
-              {city}, {district}, {commune}
+              {province}, {district}, {commune}
             </span>
           </div>
         </div>
@@ -84,7 +80,7 @@ const UserLocationItem = ({
               <FontAwesomeIcon
                 className="user-location__action-icon"
                 icon={faPenToSquare}
-                onClick={handleShowModal}
+                onClick={handleToggleUpdateLocation}
               />
 
               <FontAwesomeIcon
@@ -108,15 +104,6 @@ const UserLocationItem = ({
         </div>
       </div>
 
-      {/* MODAL UPDATE ADDRESS */}
-      <ModalFormUserLocation
-        locationId={locationId}
-        showFormModal={showFormModal}
-        handleHiddenModal={handleHiddenModal}
-        handleShowModal={handleShowModal}
-      />
-      {/* MODAL UPDATE ADDRESS */}
-
       {/* MODAL SET DEFAULT LOCATION */}
       <ModalWarning
         show={showSetDefaultLocation}
@@ -135,7 +122,7 @@ const UserLocationItem = ({
             <ButtonFields
               onClick={handleSetDefaultLocation}
               type="button"
-              isLoading={isLoading}
+              isLoading={updateDefaultLocationResults.isLoading}
               subPrimary
               className="seller-form__btn"
             >
@@ -166,7 +153,7 @@ const UserLocationItem = ({
             <ButtonFields
               onClick={handleDeleteLocation}
               type="button"
-              isLoading={isLoading}
+              isLoading={removeLocationResults.isLoading}
               subPrimary
               className="seller-form__btn"
             >
@@ -178,6 +165,7 @@ const UserLocationItem = ({
         Are you sure you want to delete this location?
       </ModalWarning>
       {/* MODAL DELETE */}
+      <ModalFormUpdateLocation />
     </>
   );
 };

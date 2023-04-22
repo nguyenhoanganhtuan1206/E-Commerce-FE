@@ -2,12 +2,12 @@ import { memo } from "react";
 import UserLocationEditor from "./UserLocationEditor";
 import UserLocationsList from "./UserLocationsList";
 
-const UserLocation = ({ locations }) => {
+const UserLocation = () => {
   return (
     <>
       <UserLocationEditor />
-      
-      <UserLocationsList locations={locations} />
+
+      <UserLocationsList />
     </>
   );
 };

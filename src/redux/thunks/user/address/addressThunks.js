@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import createApiClient from "../../shared/hooks/useAxios";
+import createApiClient from "../../../../shared/hooks/useAxios";
 
 const apiClient = createApiClient();
 

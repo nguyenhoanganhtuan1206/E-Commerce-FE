@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,10 @@ import { toast } from "react-toastify";
 
 import UserLocation from "../UserLocationEditor/UserLocation";
 import { LoadingSpinner } from "../../../shared/components";
+import {
+  useFetchProfileQuery,
+  useUpdateProfileMutation,
+} from "../../../redux/apis/user/profile/user-profile.api";
 import {
   ButtonFields,
   InputFields,
@@ -20,10 +24,6 @@ import {
   VALIDATOR_NUMBER,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import {
-  useFetchProfileQuery,
-  useUpdateProfileMutation,
-} from "../../../redux/apis/user/profile/user-profile.api";
 
 const UserInfoEditor = () => {
   const methods = useForm({
@@ -34,7 +34,6 @@ const UserInfoEditor = () => {
 
   const { isLoading, error, data } = useFetchProfileQuery();
   const [updateProfile, updateProfileResults] = useUpdateProfileMutation();
-  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     if (error) {
@@ -151,9 +150,9 @@ const UserInfoEditor = () => {
             >
               Upload Profile
             </ButtonFields>
-
-            <UserLocation locations={locations} />
           </form>
+
+          <UserLocation />
         </FormProvider>
       )}
     </>

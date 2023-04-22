@@ -12,3 +12,4 @@ export { default as Modal } from "./Modal/Modal";
 export { default as ModalError } from "./Modal/ModalError";
 export { default as ModalWarning } from "./Modal/ModalWarning";
 export { default as ModalSuccess } from "./Modal/ModalSuccess";
+export { default as Skeleton } from "./Skeleton/Skeleton";

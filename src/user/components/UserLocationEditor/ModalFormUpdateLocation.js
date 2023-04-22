@@ -1,10 +1,13 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { FormProvider, useForm } from "react-hook-form";
 
-import { useLocationApis } from "../../../apis/user/location/user-location.api";
+import { FormProvider, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Modal } from "../../../shared/components";
+import { useLocationApis } from "../../../apis/user/location/user-location.api";
+import { useUpdateLocationMutation } from "../../../redux/apis/user/location/user-locations.api";
+import { toggleModalUpdate } from "../../../redux/slices/user/location/locationSlice";
 import {
   ButtonFields,
   CheckboxFields,
@@ -16,100 +19,74 @@ import {
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 
-const ModalFormUserLocation = ({
-  locationId,
-  showFormModal,
-  handleHiddenModal,
-}) => {
-  const methods = useForm({
-    mode: "all",
-  });
+const ModalFormUpdateLocation = () => {
+  const methods = useForm();
+  const dispatch = useDispatch();
 
-  const { getLocationById, addLocationForUser, updateLocationForUser } =
-    useLocationApis();
+  const { fetchLocationById } = useLocationApis();
+  const locationState = useSelector((state) => state.location);
 
   const [defaultLocation, setDefaultLocation] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const [updateLocation, updateLocationResults] = useUpdateLocationMutation();
 
   const onSubmit = useCallback(
-    async (data) => {
-      setIsLoading(true);
-      try {
-        if (!locationId) {
-          const response = await addLocationForUser(data);
-
-          toast.success("Added new address successfully!", {
-            autoClose: 2000,
-          });
-        } else {
-          const response = await updateLocationForUser(data, locationId);
-
-          toast.success("Updated address successfully!", { autoClose: 2000 });
-        }
-
-        handleHiddenModal();
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
+    (data) => {
+      updateLocation({ locationId: locationState.locationId, data })
+        .unwrap()
+        .then(() =>
+          toast.success("Updated Location Successfully!", { autoClose: 2000 })
+        )
+        .catch((error) => toast.error(error.data.message));
+      dispatch(toggleModalUpdate());
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [addLocationForUser]
+    [updateLocation, locationState.locationId]
   );
 
   useEffect(() => {
-    if (locationId) {
+    if (locationState.locationId) {
       const fetchLocation = async () => {
-        setIsLoading(true);
         try {
-          const response = await getLocationById(locationId);
+          const response = await fetchLocationById(locationState.locationId);
 
           setDefaultLocation(response.defaultLocation);
           methods.reset(response);
-        } catch (err) {
-          toast.error(err, { autoClose: 2000 });
-        } finally {
-          setIsLoading(false);
+        } catch (error) {
+          toast.error(error, { autoClose: 2000 });
         }
       };
-
       fetchLocation();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [locationState.locationId, defaultLocation]);
 
   return (
-    <FormProvider {...methods}>
-      {!isLoading && (
+    <>
+      <FormProvider {...methods}>
         <Modal
           onSubmit={methods.handleSubmit(onSubmit)}
-          onCancel={handleHiddenModal}
-          show={showFormModal}
+          onCancel={() => dispatch(toggleModalUpdate())}
+          show={locationState.isModalUpdateOpen}
           className="user-location__form-modal"
-          header={
-            <h3 className="m-0">
-              {!locationId ? "New Address" : "Update Address"}
-            </h3>
-          }
+          header={<h3 className="m-0">Update Address</h3>}
           footer={
             <div className="d-flex justify-content-end">
               <ButtonFields
                 type="button"
-                onClick={handleHiddenModal}
+                onClick={() => dispatch(toggleModalUpdate())}
                 borderOnly
               >
                 Cancel
               </ButtonFields>
               <ButtonFields
-                type="button"
-                onClick={methods.handleSubmit(onSubmit)}
-                isLoading={isLoading}
+                type="submit"
+                isLoading={updateLocationResults.isLoading}
                 disabled={!methods.formState.isValid}
                 className="ml-5"
                 subPrimary
               >
-                {!locationId ? "Add" : "Update"}
+                Update
               </ButtonFields>
             </div>
           }
@@ -134,9 +111,9 @@ const ModalFormUserLocation = ({
             defaultChecked={defaultLocation}
           />
         </Modal>
-      )}
-    </FormProvider>
+      </FormProvider>
+    </>
   );
 };
 
-export default memo(ModalFormUserLocation);
+export default memo(ModalFormUpdateLocation);

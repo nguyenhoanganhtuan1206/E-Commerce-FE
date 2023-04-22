@@ -26,7 +26,7 @@ import ProtectRoutes from "./routes/ProtectRoutes";
 
 function App() {
   const authContext = useContext(AuthContext);
-
+  
   return (
     <Router>
       <Routes>

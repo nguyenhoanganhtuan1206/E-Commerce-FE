@@ -10,7 +10,7 @@ import {
   fetchCommunesByDistrictName,
   fetchDistrictsByProvinceName,
   fetchProvinces,
-} from "../../../redux/thunks/addressThunks";
+} from "../../../redux/thunks/user/address/addressThunks";
 
 const RegionDropdown = ({ control }) => {
   const addressState = useSelector((state) => state.address);
@@ -55,8 +55,9 @@ const RegionDropdown = ({ control }) => {
                 fieldName="province"
                 label="Province *"
                 validators={[VALIDATOR_REQUIRED("Province cannot be empty")]}
+                initialValue="initialValue"
               >
-                <option value="" disabled selected>
+                <option value="initialValue" disabled>
                   Please choose your province
                 </option>
 
@@ -75,8 +76,9 @@ const RegionDropdown = ({ control }) => {
               fieldName="district"
               label="District *"
               validators={[VALIDATOR_REQUIRED("District cannot be empty")]}
+              initialValue="initialValue"
             >
-              <option value="" disabled selected>
+              <option value="initialValue" disabled defaultValue="initialValue">
                 Please choose your district
               </option>
 
@@ -94,8 +96,9 @@ const RegionDropdown = ({ control }) => {
               fieldName="commune"
               label="Commune *"
               validators={[VALIDATOR_REQUIRED("Commune cannot be empty")]}
+              initialValue="initialValue"
             >
-              <option value="" disabled selected>
+              <option value="initialValue" disabled>
                 Please choose your commune
               </option>
 

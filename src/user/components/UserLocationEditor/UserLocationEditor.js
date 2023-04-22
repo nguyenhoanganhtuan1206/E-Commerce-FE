@@ -1,25 +1,23 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { memo, useState } from "react";
+import { memo } from "react";
+import { useDispatch } from "react-redux";
 
 import "./UserLocationEditor.scss";
 
-import ModalFormUserLocation from "./ModalFormUserLocation";
+import ModalFormAddLocation from "./ModalFormAddLocation";
+import { toggleModalAdd } from "../../../redux/slices/user/location/locationSlice";
 
 const UserLocations = () => {
-  const [showFormModal, setShowFormModal] = useState(false);
+  const dispatch = useDispatch();
 
-  const handleHiddenModal = () => {
-    setShowFormModal(false);
-  };
-
-  const handleShowModal = () => {
-    setShowFormModal(true);
+  const toggleShowModalAdd = () => {
+    dispatch(toggleModalAdd());
   };
 
   return (
     <>
-      <div className="user-location" onClick={handleShowModal}>
+      <div className="user-location" onClick={toggleShowModalAdd}>
         <div className="user-location__group">
           <FontAwesomeIcon className="user-location__icon" icon={faPlus} />
 
@@ -27,11 +25,7 @@ const UserLocations = () => {
         </div>
       </div>
 
-      <ModalFormUserLocation
-        showFormModal={showFormModal}
-        handleHiddenModal={handleHiddenModal}
-        handleShowModal={handleShowModal}
-      />
+      <ModalFormAddLocation />
     </>
   );
 };

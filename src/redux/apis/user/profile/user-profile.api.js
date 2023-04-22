@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const userProfileApis = createApi({
   reducerPath: "userProfile",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1",
+    baseUrl: "http://localhost:8080/api/v1/profile",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
@@ -27,7 +27,6 @@ const userProfileApis = createApi({
         },
         query: () => {
           return {
-            url: "/profile",
             method: "GET",
           };
         },
@@ -38,7 +37,6 @@ const userProfileApis = createApi({
         },
         query: (data) => {
           return {
-            url: "/profile",
             method: "PUT",
             body: data,
           };
@@ -47,7 +45,7 @@ const userProfileApis = createApi({
       updateUserPassword: builder.mutation({
         query: (data) => {
           return {
-            url: "/profile/update-password",
+            url: "/update-password",
             method: "PUT",
             body: data,
           };

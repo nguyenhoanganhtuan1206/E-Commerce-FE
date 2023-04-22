@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const userPasswordApis = createApi({
   reducerPath: "userPassword",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/",
+    baseUrl: "http://localhost:8080/api/v1/auth",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
@@ -15,7 +15,7 @@ const userPasswordApis = createApi({
       forgetPassword: builder.mutation({
         query: (data) => {
           return {
-            url: "/auth/forget-password",
+            url: "/forget-password",
             method: "POST",
             body: data,
           };
@@ -24,7 +24,7 @@ const userPasswordApis = createApi({
       resetPassword: builder.mutation({
         query: (payload) => {
           return {
-            url: `/auth/reset-password?token=${payload.token}`,
+            url: `/reset-password?token=${payload.token}`,
             body: payload.data,
             method: "PUT",
           };

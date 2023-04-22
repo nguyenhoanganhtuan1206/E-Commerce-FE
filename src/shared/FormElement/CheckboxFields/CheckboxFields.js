@@ -17,7 +17,7 @@ const CheckboxFields = ({ fieldName, label, defaultChecked = false }) => {
               type="checkbox"
               id={fieldName}
               onChange={onChange}
-              defaultChecked={value}
+              checked={value}
             />
             <label
               className="form-input__text"

@@ -3,7 +3,7 @@ import {
   fetchCommunesByDistrictName,
   fetchDistrictsByProvinceName,
   fetchProvinces,
-} from "../../thunks/addressThunks";
+} from "../../../thunks/user/address/addressThunks";
 
 const addressSlice = createSlice({
   name: "address",

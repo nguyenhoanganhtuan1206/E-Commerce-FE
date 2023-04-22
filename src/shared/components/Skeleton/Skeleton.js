@@ -13,6 +13,7 @@ const CustomSkeleton = ({
     .map((_, i) => {
       return (
         <Skeleton
+          key={i}
           animation="wave"
           className={className}
           variant={variant}
