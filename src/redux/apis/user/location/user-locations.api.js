@@ -20,11 +20,9 @@ const userLocationsApi = createApi({
     },
   }),
   endpoints: (builder) => {
-    const userId = JSON.parse(localStorage.getItem("userData")).userId;
-
     return {
       fetchLocations: builder.query({
-        providesTags: (result, error, location) => {
+        providesTags: (result, error, userId) => {
           const tags = result.map((location) => {
             return { type: "Location", id: location.id };
           });
@@ -32,8 +30,9 @@ const userLocationsApi = createApi({
 
           return tags;
         },
-        query: () => {
+        query: (userId) => {
           return {
+            url: `/user/${userId}`,
             method: "GET",
           };
         },
