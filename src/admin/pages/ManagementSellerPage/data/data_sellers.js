@@ -18,12 +18,12 @@ export const userColumns = [
   {
     field: "location",
     headerName: "Location Detail",
-    width: 300,
+    width: 450,
     renderCell: (params) => {
       return (
         <>
           <span>
-            {params.row.city}, {params.row.district}, {params.row.commune}
+            {params.row.province}, {params.row.district}, {params.row.commune}
           </span>
         </>
       );

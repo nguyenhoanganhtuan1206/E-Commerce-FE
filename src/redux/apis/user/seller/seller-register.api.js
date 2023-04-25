@@ -38,6 +38,37 @@ const useSellerRegisterApi = createApi({
           };
         },
       }),
+      fetchSellerById: builder.query({
+        providesTags: (result, error, args) => {
+          return [{ type: "UserSellers", id: result.userId }];
+        },
+        query: (sellerId) => {
+          return {
+            url: `/admin/sellers/${sellerId}`,
+            method: "GET",
+          };
+        },
+      }),
+      sendFeedback: builder.mutation({
+        query: (payload) => {
+          return {
+            url: `/admin/sellers/${payload.sellerId}/feedback`,
+            body: payload.data,
+            method: "POST",
+          };
+        },
+      }),
+      approvalSellerRequest: builder.mutation({
+        invalidatesTags: (result, error, sellerId) => {
+          return [{ type: "UserSellers", id: result.userId }];
+        },
+        query: (sellerId) => {
+          return {
+            url: `/admin/sellers/${sellerId}/approval`,
+            method: "PUT",
+          };
+        },
+      }),
 
       /* USER */
       registerNewSeller: builder.mutation({
@@ -54,7 +85,7 @@ const useSellerRegisterApi = createApi({
       }),
       updateSeller: builder.mutation({
         invalidatesTags: (result, error, args) => {
-          return [{ type: "UserSellers", id: result.userId }];
+          return [{ type: "Seller" }];
         },
         query: (data) => {
           return {
@@ -70,8 +101,10 @@ const useSellerRegisterApi = createApi({
 
 export const {
   useRegisterNewSellerMutation,
-  useFetchDetailSellerByUserIdQuery,
+  useApprovalSellerRequestMutation,
   useFetchListSellersQuery,
   useUpdateSellerMutation,
+  useFetchSellerByIdQuery,
+  useSendFeedbackMutation,
 } = useSellerRegisterApi;
 export { useSellerRegisterApi };

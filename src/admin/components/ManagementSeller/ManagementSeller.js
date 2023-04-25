@@ -1,22 +1,19 @@
-import { memo, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { memo, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
 import "./ManagementSeller.scss";
 import "../DataTable/DataTable.scss";
 import "./ModalSellerDetail.scss";
 
-import { useSellerApis } from "../../../apis/seller/seller-admin.api";
-import { LoadingSpinner } from "../../../shared/components";
+import ModalSellerDetail from "./ModalSellerDetail";
+import { Skeleton } from "../../../shared/components";
 import { userColumns } from "../../pages/ManagementSellerPage/data/data_sellers";
 import { ButtonFields } from "../../../shared/FormElement";
-import ModalSellerDetail from "./ModalSellerDetail";
+import { useFetchListSellersQuery } from "../../../redux/apis/user/seller/seller-register.api";
 
 const ManagementSeller = () => {
-  const { getAllSellers } = useSellerApis();
+  const listSellers = useFetchListSellersQuery();
 
-  const [sellers, setSellers] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
   const [showModal, setShowModal] = useState(false);
 
   const [selectRowId, setSelectedRowId] = useState(null);
@@ -45,31 +42,24 @@ const ManagementSeller = () => {
     },
   ];
 
-  useEffect(() => {
-    const fetchSeller = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getAllSellers();
+  let displayContent;
 
-        setSellers(response);
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchSeller();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <div className="management-seller">
-      {isLoading && <LoadingSpinner option1 />}
-
-      {!isLoading && (
+  if (listSellers.isFetching) {
+    displayContent = (
+      <>
+        <div className="container">
+          <Skeleton times={6} style={{ height: "7rem", width: "100%" }} />
+        </div>
+      </>
+    );
+  } else if (listSellers.isError) {
+    displayContent = <div>Something went wrong</div>;
+  } else {
+    displayContent = (
+      <div className="management-seller">
         <div className="data-table">
           <DataGrid
-            rows={sellers}
+            rows={listSellers.data}
             columns={userColumns.concat(actionColumns)}
             pageSize={5}
             rowsPerPageOptions={[5]}
@@ -77,17 +67,19 @@ const ManagementSeller = () => {
             disableRowSelectionOnClick
           />
         </div>
-      )}
 
-      {!!selectRowId && (
-        <ModalSellerDetail
-          sellerId={selectRowId}
-          showModal={showModal}
-          setShowModal={setShowModal}
-        />
-      )}
-    </div>
-  );
+        {!!selectRowId && (
+          <ModalSellerDetail
+            sellerId={selectRowId}
+            showModal={showModal}
+            setShowModal={setShowModal}
+          />
+        )}
+      </div>
+    );
+  }
+
+  return <>{displayContent}</>;
 };
 
 export default memo(ManagementSeller);

@@ -1,91 +1,69 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import { formatDateTime } from "../../../shared/util/format-date";
+import {
+  useApprovalSellerRequestMutation,
+  useFetchSellerByIdQuery,
+  useSendFeedbackMutation,
+} from "../../../redux/apis/user/seller/seller-register.api";
 import { LoadingSpinner, Modal } from "../../../shared/components";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
-import { useSellerApis } from "../../../apis/seller/seller-admin.api";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { formatDateTime } from "../../../shared/util/format-date";
 
 const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
   const methods = useForm({ mode: "all" });
 
-  const { getSellerById, sendFeedbackToUser, approveSellerRequest } =
-    useSellerApis();
+  const sellerDetail = useFetchSellerByIdQuery(sellerId);
+  const [sendFeedback, sendFeedbackResults] = useSendFeedbackMutation();
+  const [approvalSeller, approvalSellerResults] =
+    useApprovalSellerRequestMutation();
 
-  const [seller, setSeller] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingButton, setIsLoadingButton] = useState(false);
   const [showModalFeedBack, setShowModalFeedback] = useState(false);
 
-  const handleApproveRequest = useCallback(async () => {
-    setIsLoadingButton(true);
-    try {
-      const response = await approveSellerRequest(sellerId);
-
-      toast.success(
-        `You have allowed account ${seller.sellerEmail} to become a seller`
-      );
-    } catch (err) {
-      toast.error(err);
-    } finally {
-      setIsLoadingButton(false);
-    }
-  }, [approveSellerRequest, seller, sellerId]);
+  const handleApproveRequest = useCallback(() => {
+    approvalSeller(sellerId)
+      .unwrap()
+      .then(() => {
+        toast.success(
+          `You have allowed account ${sellerDetail.data.sellerName} to become a seller`
+        );
+        setShowModal(false);
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sellerId, sellerDetail]);
 
   const onSubmitFeedback = useCallback(
-    async (data) => {
-      setIsLoadingButton(true);
-      try {
-        const response = await sendFeedbackToUser(data, sellerId);
+    (data) => {
+      sendFeedback({ sellerId, data })
+        .unwrap()
+        .then(() => {
+          toast.success("Your feedback has been sent successfully!", {
+            autoClose: 2000,
+          });
 
-        toast.success("Your feedback has been sent successfully", {
-          autoClose: 2000,
-        });
-
-        setShowModalFeedback(false);
-        methods.reset();
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoadingButton(false);
-      }
+          methods.reset();
+          setShowModalFeedback(false);
+        })
+        .catch((error) => toast.error(error.data.message));
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sellerId, sendFeedbackToUser]
+    [methods, sellerId, sendFeedback]
   );
-
-  const fetchSeller = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const response = await getSellerById(sellerId);
-
-      setSeller(response);
-      setShowModalFeedback(false);
-    } catch (err) {
-      toast.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sellerId, getSellerById]);
-
-  useEffect(() => {
-    fetchSeller();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
-      {isLoading && <LoadingSpinner option1 />}
+      {sellerDetail.isLoading && <LoadingSpinner option1 />}
 
       {/* MODAL DETAIL */}
-      {!isLoading && !!seller && (
+      {!!sellerDetail.data && !sellerDetail.isLoading && (
         <Modal
           onCancel={() => setShowModal(false)}
           show={showModal}
@@ -111,7 +89,6 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
                   setShowModal(false);
                   setShowModalFeedback(true);
                 }}
-                isLoading={isLoading}
                 className="ml-5"
                 subPrimary
               >
@@ -121,7 +98,7 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
               <ButtonFields
                 type="button"
                 onClick={handleApproveRequest}
-                isLoading={isLoadingButton}
+                isLoading={approvalSellerResults.isLoading}
                 className="ml-5"
                 primary
               >
@@ -134,42 +111,43 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Seller Name:</h3>
               <span className="modal-seller__detail-text">
-                {seller.sellerName}
+                {sellerDetail.data.sellerName}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Seller Email:</h3>
               <span className="modal-seller__detail-text">
-                {seller.emailSeller}
+                {sellerDetail.data.emailSeller}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Seller Address:</h3>
               <span className="modal-seller__detail-text">
-                {seller.address}
+                {sellerDetail.data.address}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Location Detail:</h3>
               <span className="modal-seller__detail-text">
-                {seller.city}, {seller.district}, {seller.commune}
+                {sellerDetail.data.province}, {sellerDetail.data.district},
+                {sellerDetail.data.commune}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Phone Number:</h3>
               <span className="modal-seller__detail-text">
-                {seller.phoneNumber}
+                {sellerDetail.data.phoneNumber}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Created At:</h3>
               <span className="modal-seller__detail-text">
-                {formatDateTime(seller.createdAt)}
+                {formatDateTime(sellerDetail.data.createdAt)}
               </span>
             </div>
           </div>
@@ -178,7 +156,7 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
       {/* MODAL DETAIL */}
 
       {/* MODAL FEEDBACK */}
-      {!!seller && (
+      {!!sellerDetail.data && !sellerDetail.isLoading && (
         <Modal
           show={showModalFeedBack}
           className="user-location__form-modal"
@@ -203,7 +181,7 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
               <ButtonFields
                 type="button"
                 onClick={methods.handleSubmit(onSubmitFeedback)}
-                isLoading={isLoadingButton}
+                isLoading={sendFeedbackResults.isLoading}
                 className="ml-5"
                 primary
               >
@@ -216,14 +194,14 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Seller Name:</h3>
               <span className="modal-seller__detail-text">
-                {seller.sellerName}
+                {sellerDetail.data.sellerName}
               </span>
             </div>
 
             <div className="modal-seller__detail-group">
               <h3 className="modal-seller__detail-title">Seller Email:</h3>
               <span className="modal-seller__detail-text">
-                {seller.emailSeller}
+                {sellerDetail.data.emailSeller}
               </span>
             </div>
 

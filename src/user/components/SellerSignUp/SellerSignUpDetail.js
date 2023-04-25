@@ -72,7 +72,8 @@ const SellerSignUpDetail = () => {
               )
             )
           )
-          .catch((error) => toast.error(error.data.message));
+          .catch((error) => toast.error(error.data.message))
+          .finally(() => dispatch(toggleShowConfirmEmail()));
       } else {
         registerNewSeller({
           ...data,
@@ -86,9 +87,9 @@ const SellerSignUpDetail = () => {
               )
             )
           )
-          .catch((error) => toast.error(error.data.message));
+          .catch((error) => toast.error(error.data.message))
+          .finally(() => dispatch(toggleShowConfirmEmail()));
       }
-      dispatch(toggleShowConfirmEmail());
     },
     [dispatch, sellerState, registerNewSeller, updateSeller]
   );

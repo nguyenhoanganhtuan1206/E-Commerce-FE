@@ -1,21 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchSellerDetail } from "../../thunks/seller/sellerThunk";
 
+const initialState = {
+  isLoading: false,
+  isError: false,
+  data: null,
+  messageSuccessful: null,
+  isShowConfirmEmail: false,
+  paymentMethods: [],
+  isCheckedCod: false,
+  isCheckedPaypal: false,
+  isShowModalFeedback: false,
+};
+
 const sellerSlices = createSlice({
   name: "seller",
-  initialState: {
-    isLoading: false,
-    isError: false,
-    data: null,
-    messageSuccessful: null,
-    isShowConfirmEmail: false,
-    paymentMethods: [],
-    isCheckedCod: false,
-    isCheckedPaypal: false,
-  },
+  initialState,
   reducers: {
     toggleShowConfirmEmail: (state) => {
       state.isShowConfirmEmail = !state.isShowConfirmEmail;
+    },
+    toggleShowModalFeedback: (state) => {
+      state.isShowModalFeedback = !state.isShowModalFeedback;
     },
     setMessageRegisterSuccessful: (state, action) => {
       state.messageSuccessful = action.payload;
@@ -68,5 +74,6 @@ export const {
   toggleShowConfirmEmail,
   handleChangePaymentMethod,
   setCheckedPaymentMethod,
+  toggleShowModalFeedback,
 } = sellerSlices.actions;
 export const sellerReducer = sellerSlices.reducer;
