@@ -9,8 +9,6 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 const ModalSuccess = ({ headerSuccess, show, message, onCancel, footer }) => {
   return (
     <Modal
-      className="modal-action"
-      contentClass="modal-action__content"
       show={show}
       header={
         <div className="modal-action__header">
@@ -23,6 +21,8 @@ const ModalSuccess = ({ headerSuccess, show, message, onCancel, footer }) => {
       }
       footer={footer}
       onCancel={onCancel}
+      className="modal-action"
+      contentClass="modal-action__content"
     >
       {message}
     </Modal>

@@ -5,6 +5,7 @@ import Backdrop from "../Backdrop/Backdrop";
 const Modal = (props) => {
   const {
     show,
+    onSubmit,
     onCancel,
     className,
     headerClass,
@@ -13,7 +14,6 @@ const Modal = (props) => {
     header,
     children,
     footer,
-    onSubmit,
   } = props;
 
   const classes = `modal-alert ${className}

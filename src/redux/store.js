@@ -6,22 +6,27 @@ import { addressReducer } from "./slices/user/address/addressSlice";
 import { userProfileApis } from "./apis/user/profile/user-profile.api";
 import { userLocationsApi } from "./apis/user/location/user-locations.api";
 import { locationReducer } from "./slices/user/location/locationSlice";
+import { useSellerRegisterApi } from "./apis/user/seller/seller-register.api";
+import { sellerReducer } from "./slices/seller/sellerSlice";
 
 const store = configureStore({
   reducer: {
     address: addressReducer,
     location: locationReducer,
+    seller: sellerReducer,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
     [userLocationsApi.reducerPath]: userLocationsApi.reducer,
+    [useSellerRegisterApi.reducerPath]: useSellerRegisterApi.reducer,
   },
   middleware: (getDefaultNormalizer) => {
     return getDefaultNormalizer()
       .concat(authApis.middleware)
       .concat(userPasswordApis.middleware)
       .concat(userProfileApis.middleware)
-      .concat(userLocationsApi.middleware);
+      .concat(userLocationsApi.middleware)
+      .concat(useSellerRegisterApi.middleware);
   },
 });
 

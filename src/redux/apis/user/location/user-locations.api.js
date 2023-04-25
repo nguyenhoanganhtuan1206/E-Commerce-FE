@@ -49,7 +49,7 @@ const userLocationsApi = createApi({
         },
       }),
       updateLocation: builder.mutation({
-        invalidatesTags: (result, error, location) => {
+        invalidatesTags: (result, error, args) => {
           return [{ type: "Location", id: result.id }];
         },
         query: (payload) => {
@@ -72,7 +72,7 @@ const userLocationsApi = createApi({
         },
       }),
       updateDefaultLocation: builder.mutation({
-        invalidatesTags: (result, error, location) => {
+        invalidatesTags: (result, error, args) => {
           return [{ type: "Location", id: result.id }];
         },
         query: (locationId) => {

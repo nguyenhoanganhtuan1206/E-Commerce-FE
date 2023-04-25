@@ -1,13 +1,17 @@
-import React, { memo } from "react";
+import React, { memo, useContext } from "react";
 
 import UserLocationItem from "./UserLocationItem";
 import "./UserLocationItem.scss";
 
 import { useFetchLocationsQuery } from "../../../redux/apis/user/location/user-locations.api";
 import CustomSkeleton from "../../../shared/components/Skeleton/Skeleton";
+import { AuthContext } from "../../../context/auth-context";
 
 const UserLocationsList = () => {
-  const { data, isFetching, isError } = useFetchLocationsQuery();
+  const authContext = useContext(AuthContext);
+  const { data, isFetching, isError } = useFetchLocationsQuery(
+    authContext.userId
+  );
 
   let displayLocations;
   if (isFetching) {

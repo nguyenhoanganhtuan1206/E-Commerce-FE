@@ -12,6 +12,7 @@ const CardPaymentMethod = ({
   title,
   subTitle,
   onCheckboxChange,
+  initialValue = false,
   validators = [],
 }) => {
   const { control } = useFormContext();
@@ -20,6 +21,7 @@ const CardPaymentMethod = ({
     <Controller
       control={control}
       name={fieldName}
+      defaultValue={initialValue}
       rules={{
         validate: {
           validate: (value) => {
@@ -29,7 +31,7 @@ const CardPaymentMethod = ({
           },
         },
       }}
-      render={({ field: { onChange, value } }) => {
+      render={({ field: { onChange, value = initialValue } }) => {
         return (
           <>
             <label
@@ -42,7 +44,7 @@ const CardPaymentMethod = ({
                 type="checkbox"
                 id={fieldName}
                 name={fieldName}
-                value={value}
+                defaultChecked={value}
                 onChange={(e) => {
                   onChange(e.target.checked);
                   onCheckboxChange(e.target.name, e.target.checked);

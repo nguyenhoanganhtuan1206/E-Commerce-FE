@@ -8,7 +8,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: all 0.2s ease-in;
+  transition: all 0.05s ease-in;
 
   &:hover,
   &--active {
@@ -37,7 +37,7 @@
     justify-content: center;
     margin-left: 1.4rem;
 
-    transition: all 0.25s ease-in-out;
+    transition: all 0.05s ease-in-out;
 
     h4 {
       font-size: 1.6rem;
