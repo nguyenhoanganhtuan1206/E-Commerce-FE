@@ -17,10 +17,10 @@ const schema = yup.object({
   password: yup.string(),
   confirmPassword: yup
     .string()
-    .oneOf([
-      yup.ref("password"),
-      "Confirm Password must match with New Password",
-    ]),
+    .oneOf(
+      [yup.ref("password")],
+      "Confirm Password must match with New Password"
+    ),
 });
 
 const FormResetPassword = ({ token }) => {

@@ -1,10 +1,11 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { useWatch } from "react-hook-form";
-import { toast } from "react-toastify";
-import { useBrandApis } from "../../../apis/brand/brand.api";
+import { useSelector } from "react-redux";
 
-import { useCategoryApis } from "../../../apis/category/category.api";
-import { useVariantApis } from "../../../apis/variant/variant.api";
+import useThunk from "../../../shared/hooks/useThunk";
+import { fetchCategoryVariantByCategoryName } from "../../../redux/thunks/admin/variant/variantThunk";
+import { fetchBrandByCategoryName } from "../../../redux/thunks/admin/brand/brandThunk";
+import { fetchCategory } from "../../../redux/thunks/admin/category/categoryThunk";
 import { LoadingSpinner } from "../../../shared/components";
 import { InputFields, SelectFields } from "../../../shared/FormElement";
 import {
@@ -14,60 +15,34 @@ import {
 } from "../../../shared/util/validators";
 
 const FormAdInfo = () => {
-  const { getCategories } = useCategoryApis();
-  const { getVariantsByCategoryName } = useVariantApis();
-  const { getBrandsByCategoryName } = useBrandApis();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [categories, setCategories] = useState([]);
-  const [variants, setVariants] = useState([]);
-  const [brands, setBrands] = useState([]);
-
+  const fetchAllState = useSelector((state) => state.fetchAll);
   const categoryNameValue = useWatch({ name: "categories" });
 
-  useEffect(() => {
-    const fetchVariants = async () => {
-      setIsLoading(true);
-      try {
-        const responseVariant = await getVariantsByCategoryName(
-          categoryNameValue
-        );
-        const responseBrand = await getBrandsByCategoryName(categoryNameValue);
-        setVariants(responseVariant);
-        setBrands(responseBrand);
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchVariants();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryNameValue]);
+  const [fetchCategories, fetchCategoriesLoading] = useThunk(fetchCategory);
+  const [fetchCategoryVariants, fetchCategoryVariantsLoading] = useThunk(
+    fetchCategoryVariantByCategoryName
+  );
+  const [fetchBrands, fetchBrandsLoading] = useThunk(fetchBrandByCategoryName);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getCategories();
-        setCategories(response);
-      } catch (err) {
-        toast.error(err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchCategories();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCategories]);
+
+  useEffect(() => {
+    fetchCategoryVariants(categoryNameValue);
+    fetchBrands(categoryNameValue);
+  }, [categoryNameValue, fetchCategoryVariants, fetchBrands]);
+
+  const isLoadingFetching =
+    fetchCategoriesLoading ||
+    fetchCategoryVariantsLoading ||
+    fetchBrandsLoading;
 
   return (
     <>
-      {isLoading && <LoadingSpinner option2 />}
+      {isLoadingFetching && <LoadingSpinner option2 />}
 
-      {!isLoading && categories.length > 0 && (
+      {!isLoadingFetching && (
         <>
           <InputFields
             fieldName="nameProduct"
@@ -84,11 +59,15 @@ const FormAdInfo = () => {
             <div className="col-4">
               <SelectFields
                 fieldName="categories"
-                initialValue={categories[0].categoryName}
+                initialValue="initialValue"
                 label="Categories*"
                 validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
               >
-                {categories.map((category) => (
+                <option value="initialValue" disabled>
+                  Category
+                </option>
+
+                {fetchAllState.categories.data.map((category) => (
                   <option key={category.id} value={category.categoryName}>
                     {category.categoryName}
                   </option>
@@ -96,32 +75,43 @@ const FormAdInfo = () => {
               </SelectFields>
             </div>
 
-            {!isLoading && variants.length > 0 && (
-              <div className="col-4">
-                <SelectFields
-                  fieldName="variant"
-                  initialValue="Mobiles"
-                  label="Categories*"
-                  validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
-                >
-                  {variants.map((variant) => (
-                    <option key={variant.id} value={variant.variantName}>
-                      {variant.variantName}
+            {!isLoadingFetching &&
+              fetchAllState.categoryVariants.data.length > 0 && (
+                <div className="col-4">
+                  <SelectFields
+                    fieldName="variant"
+                    initialValue="initialValue"
+                    label="Categories Variant*"
+                    validators={[
+                      VALIDATOR_REQUIRED("Category cannot be empty"),
+                    ]}
+                  >
+                    <option value="initialValue" disabled>
+                      Category Variant
                     </option>
-                  ))}
-                </SelectFields>
-              </div>
-            )}
 
-            {!isLoading && brands.length > 0 && (
+                    {fetchAllState.categoryVariants.data.map((variant) => (
+                      <option key={variant.id} value={variant.variantName}>
+                        {variant.variantName}
+                      </option>
+                    ))}
+                  </SelectFields>
+                </div>
+              )}
+
+            {!isLoadingFetching && fetchAllState.brands.data.length > 0 && (
               <div className="col-4">
                 <SelectFields
                   fieldName="brand"
-                  initialValue="Mobiles"
-                  label="Categories*"
-                  validators={[VALIDATOR_REQUIRED("Category cannot be empty")]}
+                  initialValue="initialValue"
+                  label="Brand*"
+                  validators={[VALIDATOR_REQUIRED("Brand cannot be empty")]}
                 >
-                  {brands.map((brand) => (
+                  <option value="initialValue" disabled>
+                    Brand
+                  </option>
+
+                  {fetchAllState.brands.data.map((brand) => (
                     <option key={brand.id} value={brand.brandName}>
                       {brand.brandName}
                     </option>

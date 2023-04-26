@@ -13,6 +13,7 @@ import { ButtonFields } from "../../../shared/FormElement";
 const PostAd = () => {
   const authContext = useContext(AuthContext);
 
+  console.log(authContext.roles.includes("ROLE_SELLER"));
   return (
     <>
       <Header />

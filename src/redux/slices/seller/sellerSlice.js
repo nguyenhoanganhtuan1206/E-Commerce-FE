@@ -63,7 +63,6 @@ const sellerSlices = createSlice({
     builder.addCase(fetchSellerDetail.fulfilled, (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
-      // state.paymentMethods = action.payload.paymentMethods;
     });
   },
 });

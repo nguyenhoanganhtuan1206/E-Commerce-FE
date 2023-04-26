@@ -8,9 +8,11 @@ import { userLocationsApi } from "./apis/user/location/user-locations.api";
 import { locationReducer } from "./slices/user/location/locationSlice";
 import { useSellerRegisterApi } from "./apis/user/seller/seller-register.api";
 import { sellerReducer } from "./slices/seller/sellerSlice";
+import { fetchAllReducer } from "./slices/admin/fetchAll/fetchAllSlice";
 
 const store = configureStore({
   reducer: {
+    fetchAll: fetchAllReducer,
     address: addressReducer,
     location: locationReducer,
     seller: sellerReducer,
