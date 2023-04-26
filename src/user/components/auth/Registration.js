@@ -1,6 +1,8 @@
 import "../../page/auth/Auth.scss";
 import "../../components/auth/Login.scss";
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
 import { useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -11,24 +13,30 @@ import { useRegisterMutation } from "../../../redux/apis/auth/authApis";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
-  VALIDATOR_MATCHING,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_NUMBER,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 
+const schema = yup.object({
+  password: yup.string(),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref("password")],
+      "Confirm Password must match with New Password"
+    ),
+});
+
 const Registration = () => {
-  const methods = useForm({ mode: "onChange" });
+  const methods = useForm({ resolver: yupResolver(schema), mode: "onChange" });
   const [register, registerResults] = useRegisterMutation();
 
   const navigate = useNavigate();
 
-  const currentPassword = methods.watch("password");
-  const currentConfirmPassword = methods.watch("confirmPassword");
-
   const onSubmit = useCallback(
-    async (data) => {
+    (data) => {
       register(data)
         .unwrap()
         .then(() => {
@@ -131,10 +139,6 @@ const Registration = () => {
                 30,
                 "Password must be at between 6 to 30 characters"
               ),
-              VALIDATOR_MATCHING(
-                currentConfirmPassword,
-                "Password not matching"
-              ),
             ]}
             placeholder="Enter Password"
             type="password"
@@ -154,7 +158,6 @@ const Registration = () => {
                 30,
                 "Password must be at between 6 to 30 characters"
               ),
-              VALIDATOR_MATCHING(currentPassword, "Password not matching"),
             ]}
             placeholder="Enter Password"
             type="password"

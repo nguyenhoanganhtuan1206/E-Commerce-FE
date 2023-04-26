@@ -2,10 +2,12 @@ import { memo, useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useUpdateUserPasswordMutation } from "../../../redux/apis/user/profile/user-profile.api";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import {
-  VALIDATOR_MATCHING,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
@@ -13,14 +15,21 @@ import {
 
 import "./ProfileUser.scss";
 
+const schema = yup.object({
+  password: yup.string(),
+  confirmPassword: yup
+    .string()
+    .oneOf([
+      yup.ref("password"),
+      "Confirm Password must match with New Password",
+    ]),
+});
+
 const SettingsPassword = () => {
-  const methods = useForm({ mode: "onChange" });
+  const methods = useForm({ resolver: yupResolver(schema), mode: "onChange" });
 
   const [updatePassword, updatePasswordResults] =
     useUpdateUserPasswordMutation();
-
-  const newPasswordValue = methods.watch("newPassword");
-  const confirmPasswordValue = methods.watch("confirmPassword");
 
   const onSubmit = useCallback(
     async (data) => {
@@ -73,10 +82,6 @@ const SettingsPassword = () => {
                 30,
                 "New Password must be less than 30 characters"
               ),
-              VALIDATOR_MATCHING(
-                confirmPasswordValue,
-                "New Password must be matching"
-              ),
             ]}
           />
 
@@ -92,10 +97,6 @@ const SettingsPassword = () => {
               VALIDATOR_MAXLENGTH(
                 30,
                 "Confirm Password must be less than 50 characters"
-              ),
-              VALIDATOR_MATCHING(
-                newPasswordValue,
-                "Confirm Password must be matching"
               ),
             ]}
           />
