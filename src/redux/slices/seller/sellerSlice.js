@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchSellerDetail } from "../../thunks/seller/sellerThunk";
 
 const initialState = {
   isLoading: false,
@@ -8,8 +7,6 @@ const initialState = {
   messageSuccessful: null,
   isShowConfirmEmail: false,
   paymentMethods: [],
-  isCheckedCod: false,
-  isCheckedPaypal: false,
   isShowModalFeedback: false,
 };
 
@@ -38,32 +35,6 @@ const sellerSlices = createSlice({
         );
       }
     },
-    setCheckedPaymentMethod: (state, action) => {
-      const paymentMethods = {
-        COD: "isCheckedCod",
-        Paypal: "isCheckedPaypal",
-      };
-
-      const selectedMethod = action.payload;
-      const stateProperty = paymentMethods[selectedMethod];
-
-      if (stateProperty) {
-        state[stateProperty] = true;
-      }
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchSellerDetail.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(fetchSellerDetail.rejected, (state) => {
-      state.isLoading = false;
-      state.isError = true;
-    });
-    builder.addCase(fetchSellerDetail.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.data = action.payload;
-    });
   },
 });
 
@@ -72,7 +43,6 @@ export const {
   setMessageRegisterSuccessful,
   toggleShowConfirmEmail,
   handleChangePaymentMethod,
-  setCheckedPaymentMethod,
   toggleShowModalFeedback,
 } = sellerSlices.actions;
 export const sellerReducer = sellerSlices.reducer;

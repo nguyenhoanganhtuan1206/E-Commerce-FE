@@ -1,19 +1,19 @@
-import { MainComponentUser } from "../../components";
+import { MainComponentUser, SellerSignUpDetail } from "../../components";
 
 import "../MainContent.scss";
 import "./PostAd.scss";
 
 import { Header } from "../../../shared/Layouts";
 import { FormPostAd } from "../../components/PostAd";
-import { Breadcrumbs, ModalError } from "../../../shared/components";
+import { Breadcrumbs } from "../../../shared/components";
 import { memo, useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
-import { ButtonFields } from "../../../shared/FormElement";
 
 const PostAd = () => {
   const authContext = useContext(AuthContext);
 
-  console.log(authContext.roles.includes("ROLE_SELLER"));
+  const sellingEnabled = authContext.roles.includes("ROLE_SELLER");
+
   return (
     <>
       <Header />
@@ -21,29 +21,14 @@ const PostAd = () => {
       <Breadcrumbs title="Post An" nextPages={["Home"]} />
       <MainComponentUser>
         <div className="main-content--user">
-          <h3 className="main-content--user__header">Post An Ad</h3>
+          <h3 className="main-content--user__header">
+            {sellingEnabled ? "Post An Ad" : "Register As Seller"}
+          </h3>
 
           <div className="main-content--user__body">
-            {authContext.roles.includes("ROLE_SELLER") && <FormPostAd />}
+            {sellingEnabled && <FormPostAd />}
 
-            <ModalError
-              show={!authContext.roles.includes("ROLE_SELLER")}
-              headerError="SORRY"
-              footer={
-                <div className="d-flex align-items-center justify-content-end">
-                  <ButtonFields
-                    primary
-                    to="/registration-seller"
-                    className="post-ad__link"
-                  >
-                    Go To Register Sell
-                  </ButtonFields>
-                </div>
-              }
-            >
-              In order to list a product for sale on our system. You must first
-              complete the registration process.
-            </ModalError>
+            {!sellingEnabled && <SellerSignUpDetail />}
           </div>
         </div>
       </MainComponentUser>

@@ -39,7 +39,9 @@ const userLocationsApi = createApi({
       }),
       addLocations: builder.mutation({
         invalidatesTags: (result, error, location) => {
-          return [{ type: "UserLocations", id: result.userId }];
+          if (!error) {
+            return [{ type: "UserLocations", id: result.userId }];
+          }
         },
         query: (data) => {
           return {

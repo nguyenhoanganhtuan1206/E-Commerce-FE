@@ -71,6 +71,20 @@ const useSellerRegisterApi = createApi({
       }),
 
       /* USER */
+      fetchDetailSeller: builder.query({
+        providesTags: (result, error, args) => {
+          if (result) {
+            return [{ type: "UserSellers", id: result.userId }];
+          }
+          return [{ type: "Seller" }];
+        },
+        query: () => {
+          return {
+            url: "/seller/registration",
+            method: "GET",
+          };
+        },
+      }),
       registerNewSeller: builder.mutation({
         invalidatesTags: (result, error, args) => {
           return [{ type: "Seller" }];
@@ -106,5 +120,6 @@ export const {
   useUpdateSellerMutation,
   useFetchSellerByIdQuery,
   useSendFeedbackMutation,
+  useFetchDetailSellerQuery,
 } = useSellerRegisterApi;
 export { useSellerRegisterApi };

@@ -1,13 +1,12 @@
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./SellerSignUp.scss";
 
-import useThunk from "../../../shared/hooks/useThunk";
-import { fetchSellerDetail } from "../../../redux/thunks/seller/sellerThunk";
 import {
+  useFetchDetailSellerQuery,
   useRegisterNewSellerMutation,
   useUpdateSellerMutation,
 } from "../../../redux/apis/user/seller/seller-register.api";
@@ -40,16 +39,15 @@ const SellerSignUpDetail = () => {
   const dispatch = useDispatch();
   const sellerState = useSelector((state) => state.seller);
 
-  const [doFetchSeller, isLoadingFetchSeller] = useThunk(fetchSellerDetail);
+  const fetchSellerDetail = useFetchDetailSellerQuery();
   const [registerNewSeller, registerNewSellerResults] =
     useRegisterNewSellerMutation();
   const [updateSeller, updateSellerResults] = useUpdateSellerMutation();
 
   useEffect(() => {
-    doFetchSeller();
-    methods.reset(sellerState.data);
+    methods.reset(fetchSellerDetail.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoadingFetchSeller]);
+  }, [fetchSellerDetail]);
 
   const onSubmit = useCallback(
     async (data) => {
@@ -96,7 +94,7 @@ const SellerSignUpDetail = () => {
 
   return (
     <>
-      {isLoadingFetchSeller && <LoadingSpinner option2 />}
+      {fetchSellerDetail.isFetching && <LoadingSpinner option2 />}
 
       <ModalSuccess
         show={sellerState.messageSuccessful}
@@ -194,7 +192,7 @@ const SellerSignUpDetail = () => {
 
         <p className="form-input__label mt-5">Select your payment method *</p>
 
-        <FormCardPaymentMethod isLoading={isLoadingFetchSeller} />
+        <FormCardPaymentMethod />
 
         {!!sellerState.data &&
           sellerState.data.sellerApproval === "PENDING" && (

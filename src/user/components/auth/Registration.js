@@ -11,16 +11,33 @@ import { FormProvider, useForm } from "react-hook-form";
 import Auth from "../../page/auth/Auth";
 import { useRegisterMutation } from "../../../redux/apis/auth/authApis";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_NUMBER,
-  VALIDATOR_REQUIRED,
-} from "../../../shared/util/validators";
 
 const schema = yup.object({
-  password: yup.string(),
+  username: yup
+    .string()
+    .required("Username cannot be empty")
+    .min(6, "Username must be at between 6 to 50 characters")
+    .max(50, "Username must be at between 6 to 50 characters"),
+  email: yup
+    .string()
+    .required("Email cannot be empty")
+    .min(9, "Email must be at least 9 characters")
+    .email("Email is invalid"),
+  phoneNumber: yup
+    .string()
+    .required("Phone Number cannot be empty")
+    .matches(/\d+/g, "Phone Number is invalid")
+    .min(9, "Phone Number is invalid")
+    .max(11, "Phone Number is invalid"),
+  address: yup
+    .string()
+    .required("Address cannot be empty")
+    .min(3, "Address is invalid"),
+  password: yup
+    .string()
+    .required("Password cannot be empty")
+    .min(6, "Password must be at between 6 to 30 characters")
+    .max(30, "Password must be at between 6 to 30 characters"),
   confirmPassword: yup
     .string()
     .oneOf(
@@ -71,17 +88,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="username"
-            validators={[
-              VALIDATOR_REQUIRED("Username cannot be empty"),
-              VALIDATOR_MINLENGTH(
-                6,
-                "Username must be at between 6 to 50 characters"
-              ),
-              VALIDATOR_MAXLENGTH(
-                50,
-                "Username must be at between 6 to 50 characters"
-              ),
-            ]}
             placeholder="Enter Username"
             type="text"
             label="Username (*)"
@@ -90,11 +96,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="email"
-            validators={[
-              VALIDATOR_REQUIRED("Email cannot be empty"),
-              VALIDATOR_MINLENGTH(9, "Email must be at least 9 characters"),
-              VALIDATOR_EMAIL("Email is invalid"),
-            ]}
             placeholder="Enter Email"
             type="email"
             label="Email (*)"
@@ -103,12 +104,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="phoneNumber"
-            validators={[
-              VALIDATOR_REQUIRED("Phone Number cannot be empty"),
-              VALIDATOR_MINLENGTH(9, "Phone Number is invalid"),
-              VALIDATOR_MAXLENGTH(11, "Phone Number is invalid"),
-              VALIDATOR_NUMBER("Phone Number is invalid"),
-            ]}
             placeholder="Enter Phone Number"
             type="text"
             label="Phone Number (*)"
@@ -117,10 +112,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="address"
-            validators={[
-              VALIDATOR_REQUIRED("Address cannot be empty"),
-              VALIDATOR_MINLENGTH(3, "Address is invalid"),
-            ]}
             placeholder="Enter Address"
             type="text"
             label="Address (*)"
@@ -129,17 +120,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="password"
-            validators={[
-              VALIDATOR_REQUIRED("Password cannot be empty"),
-              VALIDATOR_MINLENGTH(
-                6,
-                "Password must be at between 6 to 30 characters"
-              ),
-              VALIDATOR_MAXLENGTH(
-                30,
-                "Password must be at between 6 to 30 characters"
-              ),
-            ]}
             placeholder="Enter Password"
             type="password"
             label="Password (*)"
@@ -148,17 +128,6 @@ const Registration = () => {
 
           <InputFields
             fieldName="confirmPassword"
-            validators={[
-              VALIDATOR_REQUIRED("Password cannot be empty"),
-              VALIDATOR_MINLENGTH(
-                6,
-                "Password must be at between 6 to 30 characters"
-              ),
-              VALIDATOR_MAXLENGTH(
-                30,
-                "Password must be at between 6 to 30 characters"
-              ),
-            ]}
             placeholder="Enter Password"
             type="password"
             label="Password (*)"

@@ -48,7 +48,7 @@ const ButtonFields = (props) => {
       className={classes}
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || isLoading}
     >
       {props.children}
       <span className={`${isLoading && "btn--loading"}`}></span>
