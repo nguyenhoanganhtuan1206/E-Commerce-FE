@@ -1,6 +1,11 @@
+@import "../../../shared/sass/abstracts/mixins";
+
+.room-chat__group {
+  border-top: 1px solid var(--color-border-dark);
+}
+
 .room-chat__form {
   padding: 1.5rem;
-  border-top: 1px solid var(--color-border-dark);
 
   display: flex;
   align-items: center;
@@ -48,8 +53,89 @@
     color: #fff;
 
     &:hover {
-        opacity: 0.9;
-        cursor: pointer;
+      opacity: 0.9;
+      cursor: pointer;
+    }
+  }
+}
+
+.preview__file-item {
+  list-style: none;
+  width: 14rem;
+  margin: 1.2rem 0.8rem 0rem 1.4rem;
+
+  position: relative;
+}
+
+.preview__file-icon__close {
+  position: absolute;
+  top: -7px;
+  right: -10px;
+
+  @include circle(
+    1.2rem,
+    1.2rem,
+    var(--color-grey-light-2),
+    var(--color-primary-2)
+  );
+
+  color: var(--color-grey-light-2);
+  padding: 0.4rem 0.4rem;
+
+  &:hover {
+    background-color: var(--color-grey-light-2);
+    border: 1px solid var(--color-primary-2);
+    color: var(--color-primary-2);
+  }
+}
+
+.preview__file {
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  color: #fff;
+  transition: all 0.2s ease-in;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  cursor: pointer;
+
+  &--image {
+    position: relative;
+
+    height: 10rem;
+    width: 14rem;
+  }
+
+  &--file {
+    background-color: var(--color-primary-2);
+    padding: 1.2rem;
+
+    &:hover {
+      color: var(--color-primary-2);
+      border: 1px solid var(--color-primary-2);
+      background-color: var(--color-grey-light-2);
+    }
+  }
+
+  &-icon {
+    font-size: 2rem !important;
+  }
+
+  &-name {
+    @include limitWidthFont(9rem);
+
+    font-size: 1.4rem;
+    margin-left: 0.8rem;
+  }
+
+  &-image {
+    height: 100%;
+    width: 100%;
+    transition: transform linear 0.2s;
+    object-fit: cover;
+
+    &:hover {
+      transform: scale(1.1);
     }
   }
 }
