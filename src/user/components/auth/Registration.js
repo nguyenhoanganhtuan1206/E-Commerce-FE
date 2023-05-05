@@ -4,13 +4,15 @@ import "../../components/auth/Login.scss";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FormProvider, useForm } from "react-hook-form";
 
 import Auth from "../../page/auth/Auth";
 import { useRegisterMutation } from "../../../redux/apis/auth/authApis";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../../config/firebaseConfig";
 
 const schema = yup.object({
   username: yup
@@ -48,16 +50,41 @@ const schema = yup.object({
 
 const Registration = () => {
   const methods = useForm({ resolver: yupResolver(schema), mode: "onChange" });
+  const [isLoading, setIsLoading] = useState(false);
   const [register, registerResults] = useRegisterMutation();
 
   const navigate = useNavigate();
+
+  const setUserToFirestore = async (user) => {
+    setIsLoading(true);
+    try {
+      await setDoc(doc(db, "users", user.id), {
+        uid: user.id,
+        username: user.username,
+        email: user.email,
+      });
+
+      /* Create new empty chat on firestore */
+      await setDoc(doc(db, "userChats", user.id), {});
+    } catch (error) {
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const onSubmit = useCallback(
     (data) => {
       register(data)
         .unwrap()
-        .then(() => {
+        .then((res) => {
+          console.log("res", res);
           navigate("/login");
+
+          /* SETTING INFORMATION USER TO FIRESTORE */
+          setUserToFirestore(res);
+          /* SETTING INFORMATION USER TO FIRESTORE */
+
           toast.success("Registered Successfully!", { autoClose: 2000 });
         })
         .catch((error) => toast.error(error.data.message));
@@ -65,6 +92,8 @@ const Registration = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [register]
   );
+
+  const isLoadingSubmit = registerResults.isLoading || isLoading;
 
   return (
     <FormProvider {...methods}>
@@ -153,7 +182,7 @@ const Registration = () => {
             disabled={!methods.formState.isValid}
             primary
             className="auth-form__btn"
-            isLoading={registerResults.isLoading}
+            isLoading={isLoadingSubmit}
           >
             Registration
           </ButtonFields>
