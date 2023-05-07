@@ -12,6 +12,7 @@ import ChatPreviewFiles from "./ChatPreviewFiles";
 const ChatInput = () => {
   const inputRef = useRef();
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState(null);
   const [storedFilesMap, setStoredFilesMap] = useState(new Map());
 
@@ -34,8 +35,19 @@ const ChatInput = () => {
     [storedFilesMap]
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!message) {
+      setError("You have to enter your message");
+      setTimeout(() => setError(null), 2000);
+
+      return;
+    }
+  };
+
   return (
-    <form className="room-chat__form-wrapper">
+    <form className="room-chat__form-wrapper" onSubmit={(e) => handleSubmit(e)}>
       {selectedFiles && selectedFiles.length > 0 && (
         <>
           <ul className="preview__file-list">
@@ -57,9 +69,7 @@ const ChatInput = () => {
       )}
       <div className="room-chat__form">
         <div className="room-chat__form-group">
-          <div className="room-chat__form-input__error">
-            Error have to enter your message
-          </div>
+          {error && <div className="room-chat__form-input__error">{error}</div>}
 
           <input
             placeholder="Type something here..."

@@ -4,7 +4,12 @@
   object-fit: cover;
 }
 
-@mixin circle($height-value, $width-value, $border-color: var(--color-border), $background-color: transparent) {
+@mixin circle(
+  $height-value,
+  $width-value,
+  $border-color: var(--color-border),
+  $background-color: transparent
+) {
   height: $height-value;
   width: $width-value;
   border: 1px solid $border-color;
@@ -51,8 +56,9 @@
 }
 
 // SCROLL BAR
-@mixin scrollbarWithColorPrimary($widthValue: 0.3em) {
+@mixin scrollbarWithColorPrimary($widthValue: 0.3em, $heightValue: auto) {
   &::-webkit-scrollbar {
+    height: $heightValue;
     width: $widthValue;
     background-color: var(--color-primary-2);
     border-radius: 5px;

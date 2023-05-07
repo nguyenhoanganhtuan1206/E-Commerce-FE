@@ -1,6 +1,6 @@
 import React, { memo, useCallback } from "react";
 
-import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ArticleIcon from "@mui/icons-material/Article";
 
