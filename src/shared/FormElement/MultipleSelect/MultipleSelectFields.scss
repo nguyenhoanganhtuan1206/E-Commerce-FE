@@ -1,0 +1,95 @@
+@import "../../../shared/sass/base/animations";
+@import "../../../shared/sass/abstracts/mixins";
+
+.multiple__select-form {
+  position: relative;
+}
+
+.multiple__select-select {
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__item {
+    background-color: var(--color-grey-light-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+
+    &:not(:last-child) {
+      margin-right: 1.2rem;
+    }
+  }
+
+  &__icon {
+    @include circle(1rem, 1rem, var(--color-grey-dark-2));
+    padding: 0.2rem;
+    margin-left: 0.8rem;
+
+    &:hover {
+      background-color: #000;
+      color: #fff;
+    }
+  }
+}
+
+.multiple__select-dropdown {
+  @include fadeInDown(-50px, 0);
+  position: absolute;
+  top: 110%;
+  width: 100%;
+
+  border: 1px solid var(--color-grey-light-3);
+  transform-origin: top center;
+  border-radius: 3px;
+  animation: fadeInDown linear 0.2s, fadeIn 0.25s ease-in;
+  background-color: #fff;
+  display: none;
+
+  &.active {
+    display: block;
+  }
+
+  &__item {
+    padding: 0.8rem 1.2rem;
+    transition: all 0.1s linear;
+    background-color: transparent;
+
+    &.active {
+      background-color: var(--color-grey-light-2);
+
+      .multiple__select-dropdown__text {
+        color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      .multiple__select-dropdown__icon {
+        visibility: visible;
+      }
+    }
+
+    &:hover {
+      background-color: var(--color-grey-light-2);
+      cursor: pointer;
+    }
+  }
+
+  &__icon {
+    color: var(--color-primary);
+    font-size: 1.6rem;
+    margin-right: 0.8rem;
+    visibility: hidden;
+    transition: all ease-in 0.1s;
+    animation: fadeIn 0.25s ease-in;
+  }
+
+  &__text {
+    font-size: 1.4rem;
+  }
+}

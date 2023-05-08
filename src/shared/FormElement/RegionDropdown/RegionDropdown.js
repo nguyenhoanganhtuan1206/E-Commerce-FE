@@ -55,9 +55,9 @@ const RegionDropdown = ({ control }) => {
                 fieldName="province"
                 label="Province *"
                 validators={[VALIDATOR_REQUIRED("Province cannot be empty")]}
-                initialValue="initialValue"
+                initialValue=""
               >
-                <option value="initialValue" disabled>
+                <option value="" disabled>
                   Please choose your province
                 </option>
 
@@ -76,9 +76,9 @@ const RegionDropdown = ({ control }) => {
               fieldName="district"
               label="District *"
               validators={[VALIDATOR_REQUIRED("District cannot be empty")]}
-              initialValue="initialValue"
+              initialValue=""
             >
-              <option value="initialValue" disabled defaultValue="initialValue">
+              <option value="" disabled>
                 Please choose your district
               </option>
 
@@ -96,9 +96,9 @@ const RegionDropdown = ({ control }) => {
               fieldName="commune"
               label="Commune *"
               validators={[VALIDATOR_REQUIRED("Commune cannot be empty")]}
-              initialValue="initialValue"
+              initialValue=""
             >
-              <option value="initialValue" disabled>
+              <option value="" disabled>
                 Please choose your commune
               </option>
 

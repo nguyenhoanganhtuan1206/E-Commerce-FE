@@ -1,12 +1,3 @@
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @mixin scaleAndClose($start, $middle, $end) {
   @keyframes scaleAndClose {
     0% {

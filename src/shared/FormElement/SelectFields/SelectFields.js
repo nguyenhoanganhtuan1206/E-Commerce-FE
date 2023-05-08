@@ -3,10 +3,11 @@ import { memo } from "react";
 
 import { Controller, useFormContext } from "react-hook-form";
 
-import { validateForm } from "../../util/validators";
-import Alert from "../../components/Alert/Alert";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
+import Alert from "../../components/Alert/Alert";
+import { validateForm } from "../../util/validators";
 
 const SelectFields = (props) => {
   const {
