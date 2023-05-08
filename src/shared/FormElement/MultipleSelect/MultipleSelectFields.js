@@ -1,13 +1,8 @@
+import { Controller } from "react-hook-form";
+import { useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
-
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import {
-  handleSelectValues,
-  toggleShowDropdown,
-} from "../../../redux/slices/FormElement/MultipleSelect/multipleSelectSlices";
 
 import "./MultipleSelectFields.scss";
 
@@ -17,75 +12,89 @@ import "./MultipleSelectFields.scss";
  */
 
 const MultipleSelectFields = ({
+  fieldName,
   data = [],
   propName,
   placeholder,
   label,
   htmlFor,
 }) => {
-  const multipleSelectState = useSelector((state) => state.multipleSelect);
-  const dispatch = useDispatch();
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
 
-  const handleOnChange = useCallback(
-    (value) => {
-      dispatch(handleSelectValues(value));
-    },
-    [dispatch]
-  );
+  const toggleShowDropdown = () => {
+    setIsShowDropdown(!isShowDropdown);
+  };
 
   return (
-    <div className="multiple__select-form">
-      <label className="form-input__label" htmlFor={htmlFor}>
-        {/* {label} */}
-        Multiple select
-      </label>
+    <Controller
+      name={fieldName}
+      render={({ field: { onChange, value = [] } }) => {
+        const onChangeValue = (selectedValue) => {
+          const valueExisted = value.indexOf(selectedValue);
 
-      <div
-        onClick={() => dispatch(toggleShowDropdown())}
-        className="form-input__input multiple__select-select"
-      >
-        {/* {placeholder} */}
-        {multipleSelectState.selectedValues.length > 0
-          ? multipleSelectState.selectedValues.map((value, index) => (
-              <div key={index} className="multiple__select-select__item">
-                {value}
-                <FontAwesomeIcon
-                  onClick={() => handleOnChange(value)}
-                  className="multiple__select-select__icon"
-                  icon={faClose}
-                />
-              </div>
-            ))
-          : "SELECT SOMETHING..."}
-      </div>
+          if (valueExisted === -1) {
+            onChange([...value, selectedValue]);
+          } else {
+            onChange(value.filter((item) => item !== selectedValue));
+          }
+          setIsShowDropdown(true);
+        };
 
-      <div
-        className={`multiple__select-dropdown ${
-          multipleSelectState.isShowDropdown ? "active" : ""
-        }`}
-      >
-        {data.map((item, index) => (
-          <div
-            onClick={() => handleOnChange(item[propName])}
-            key={index}
-            className={`multiple__select-dropdown__item ${
-              multipleSelectState.selectedValues.indexOf(item[propName]) === -1
-                ? ""
-                : "active"
-            }`}
-          >
-            <FontAwesomeIcon
-              className="multiple__select-dropdown__icon"
-              icon={faCheck}
-            />
+        return (
+          <div className="multiple__select-form">
+            <label className="form-input__label" htmlFor={htmlFor}>
+              {label}
+            </label>
 
-            <span className="multiple__select-dropdown__text">
-              {item[propName]}
-            </span>
+            <div
+              onClick={toggleShowDropdown}
+              className="form-input__input multiple__select-select"
+            >
+              {value.length > 0
+                ? value.map((value, index) => (
+                    <div key={index} className="multiple__select-select__item">
+                      {value}
+                      <FontAwesomeIcon
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onChangeValue(value);
+                        }}
+                        className="multiple__select-select__icon"
+                        icon={faClose}
+                      />
+                    </div>
+                  ))
+                : placeholder}
+            </div>
+
+            <div
+              className={`multiple__select-dropdown ${
+                isShowDropdown ? "active" : ""
+              }`}
+            >
+              {data.map((item, index) => (
+                <div
+                  onClick={() => onChangeValue(item[propName])}
+                  key={index}
+                  className={`multiple__select-dropdown__item ${
+                    value.indexOf(item[propName]) === -1 ? "" : "active"
+                  }`}
+                >
+                  <FontAwesomeIcon
+                    className="multiple__select-dropdown__icon"
+                    icon={faCheck}
+                  />
+
+                  <span className="multiple__select-dropdown__text">
+                    {item[propName]}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </div>
+        );
+      }}
+    />
   );
 };
 
