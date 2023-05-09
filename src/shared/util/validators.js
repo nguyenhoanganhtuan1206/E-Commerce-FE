@@ -5,6 +5,7 @@ const VALIDATOR_TYPE_MIN = "MIN";
 const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_NUMBER = "NUMBER";
+const VALIDATOR_TYPE_CHARACTER = "CHARACTER";
 const VALIDATOR_TYPE_FROM_API = "API";
 
 export const VALIDATOR_REQUIRED = (message) => ({
@@ -52,6 +53,11 @@ export const VALIDATOR_NUMBER = (message) => ({
   message,
 });
 
+export const VALIDATOR_CHARACTERS = (message) => ({
+  type: VALIDATOR_TYPE_CHARACTER,
+  message,
+});
+
 /* Validate */
 export const validateForm = (value = "", validators) => {
   let isValid = true;
@@ -96,6 +102,11 @@ export const validateForm = (value = "", validators) => {
 
     if (validator.type === VALIDATOR_TYPE_EMAIL) {
       isValid = isValid && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+      message = validator.message;
+    }
+
+    if (validator.type === VALIDATOR_CHARACTERS) {
+      isValid = isValid && /^[a-zA-Z]+$/.test(value);
       message = validator.message;
     }
 
