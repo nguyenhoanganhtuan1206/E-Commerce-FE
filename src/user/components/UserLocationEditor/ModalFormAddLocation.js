@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useEffect } from "react";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +40,10 @@ const ModalFormAddLocation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [addLocation]
   );
+
+  useEffect(() => {
+    methods.reset();
+  }, [methods, locationState]);
 
   return (
     <FormProvider {...methods}>

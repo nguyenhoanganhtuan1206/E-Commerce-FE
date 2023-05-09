@@ -20,7 +20,7 @@ import {
 } from "../../../shared/util/validators";
 
 const ModalFormUpdateLocation = () => {
-  const methods = useForm();
+  const methods = useForm({ mode: "all" });
   const dispatch = useDispatch();
 
   const { fetchLocationById } = useLocationApis();
@@ -39,6 +39,7 @@ const ModalFormUpdateLocation = () => {
         )
         .catch((error) => toast.error(error.data.message));
       dispatch(toggleModalUpdate());
+      methods.reset();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [updateLocation, locationState.locationId]
