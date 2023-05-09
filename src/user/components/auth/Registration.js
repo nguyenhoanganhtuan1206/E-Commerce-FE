@@ -17,7 +17,7 @@ import { db } from "../../../config/firebaseConfig";
 const schema = yup.object({
   username: yup
     .string()
-    .matches(/^[a-zA-Z]+$/, "Username must be characters")
+    .matches(/^[a-zA-Z ]+$/, "Username must be characters")
     .required("Username cannot be empty")
     .min(6, "Username must be at between 6 to 50 characters")
     .max(50, "Username must be at between 6 to 50 characters"),
