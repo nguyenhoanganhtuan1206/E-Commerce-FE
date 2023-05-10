@@ -1,4 +1,3 @@
-import { memo } from "react";
 import "../MainContent.scss";
 
 import {
@@ -41,4 +40,4 @@ const ProfileUserPage = () => {
   );
 };
 
-export default memo(ProfileUserPage);
+export default ProfileUserPage;

@@ -1,5 +1,4 @@
 import "../FormFieldsStyle.scss";
-import { memo } from "react";
 
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -73,4 +72,4 @@ const SelectFields = (props) => {
   );
 };
 
-export default memo(SelectFields);
+export default SelectFields;

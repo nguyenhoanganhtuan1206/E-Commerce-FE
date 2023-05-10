@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { MainComponentUser } from "../../components";
@@ -22,4 +21,4 @@ const ConfirmEmailPage = () => {
   );
 };
 
-export default memo(ConfirmEmailPage);
+export default ConfirmEmailPage;

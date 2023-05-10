@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 import "../FormFieldsStyle.scss";
@@ -33,4 +32,4 @@ const CheckboxFields = ({ fieldName, label, defaultChecked = false }) => {
   );
 };
 
-export default memo(CheckboxFields);
+export default CheckboxFields;

@@ -3,7 +3,6 @@ import "./FilterProducts.scss";
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { FilterProductsList, WidgetFilterProducts } from "../../components";
-import { memo } from "react";
 
 const FilterProducts = (props) => {
   return (
@@ -35,4 +34,4 @@ const FilterProducts = (props) => {
   );
 };
 
-export default memo(FilterProducts);
+export default FilterProducts;

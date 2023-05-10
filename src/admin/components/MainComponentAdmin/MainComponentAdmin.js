@@ -1,4 +1,3 @@
-import { memo } from "react";
 import Sidebar from "../sidebar/Sidebar";
 import Navbar from "../navbar/Navbar";
 
@@ -18,4 +17,4 @@ const MainComponentAdmin = ({ children }) => {
   );
 };
 
-export default memo(MainComponentAdmin);
+export default MainComponentAdmin;

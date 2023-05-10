@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 import "../FormFieldsStyle.scss";
@@ -174,4 +174,4 @@ const InputFields = (props) => {
   );
 };
 
-export default memo(InputFields);
+export default InputFields;

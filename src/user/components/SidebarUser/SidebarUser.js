@@ -11,7 +11,6 @@ import {
   faShoppingBasket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { memo } from "react";
 
 const SidebarUser = () => {
   return (
@@ -92,4 +91,4 @@ const SidebarUser = () => {
   );
 };
 
-export default memo(SidebarUser);
+export default SidebarUser;

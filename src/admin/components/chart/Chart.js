@@ -1,10 +1,7 @@
-import { memo } from "react";
-
 import {
   AreaChart,
   Area,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
@@ -56,4 +53,4 @@ const Chart = () => {
   );
 };
 
-export default memo(Chart);
+export default Chart;

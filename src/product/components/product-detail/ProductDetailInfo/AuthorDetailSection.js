@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,4 +39,4 @@ const AuthorDetailSection = () => {
   );
 };
 
-export default memo(AuthorDetailSection);
+export default AuthorDetailSection;

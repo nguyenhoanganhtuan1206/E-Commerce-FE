@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -115,4 +115,4 @@ const SettingsPassword = () => {
   );
 };
 
-export default memo(SettingsPassword);
+export default SettingsPassword;

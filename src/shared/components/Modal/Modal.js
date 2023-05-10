@@ -1,4 +1,3 @@
-import { memo } from "react";
 import "./Modal.scss";
 import Backdrop from "../Backdrop/Backdrop";
 
@@ -40,4 +39,4 @@ const Modal = (props) => {
   );
 };
 
-export default memo(Modal);
+export default Modal;

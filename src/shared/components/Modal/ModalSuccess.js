@@ -1,6 +1,5 @@
 import "./Modal";
 import "./ModalAlert.scss";
-import { memo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Modal from "./Modal";
@@ -29,4 +28,4 @@ const ModalSuccess = ({ headerSuccess, show, message, onCancel, footer }) => {
   );
 };
 
-export default memo(ModalSuccess);
+export default ModalSuccess;

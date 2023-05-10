@@ -1,11 +1,16 @@
-import { memo } from "react";
-
 import "./ModalAlert.scss";
 import Modal from "./Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const ModalWarning = ({ headerWarning, onSubmit, show, onCancel, footer, children }) => {
+const ModalWarning = ({
+  headerWarning,
+  onSubmit,
+  show,
+  onCancel,
+  footer,
+  children,
+}) => {
   return (
     <Modal
       show={show}
@@ -29,4 +34,4 @@ const ModalWarning = ({ headerWarning, onSubmit, show, onCancel, footer, childre
   );
 };
 
-export default memo(ModalWarning);
+export default ModalWarning;

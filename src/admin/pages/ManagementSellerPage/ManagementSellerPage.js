@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import "./ManagementSellerPage.scss";
 import { ManagementSeller, MainComponentAdmin } from "../../components";
 
@@ -11,4 +9,4 @@ const ManagementSellerPage = () => {
   );
 };
 
-export default memo(ManagementSellerPage);
+export default ManagementSellerPage;

@@ -42,6 +42,7 @@ const AuthProvider = (props) => {
     /* Because we have old expiration date -> we need to clear it */
     setTokenExpirationDate(null);
     localStorage.removeItem("userData");
+    window.location.reload();
   }, []);
 
   /* Check expire time and auto logout */

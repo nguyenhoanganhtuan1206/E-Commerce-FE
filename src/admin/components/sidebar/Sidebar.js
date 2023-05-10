@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -21,7 +19,9 @@ const Sidebar = () => {
   return (
     <div className="admin-sidebar">
       <div className="admin-sidebar__top">
-        <Link to="/admin" className="admin-sidebar__logo">Grid Admin</Link>
+        <Link to="/admin" className="admin-sidebar__logo">
+          Grid Admin
+        </Link>
       </div>
       <div className="admin-sidebar__center">
         <ul>
@@ -48,10 +48,14 @@ const Sidebar = () => {
             <span className="admin-sidebar__center-text">Users</span>
           </li>
 
-          <li className="admin-sidebar__center-item">
-            <StoreIcon className="icon" />
-            <span className="admin-sidebar__center-text">Products</span>
-          </li>
+          <Link to="/admin/management-products">
+            <li className="admin-sidebar__center-item">
+              <StoreIcon className="icon" />
+              <span className="admin-sidebar__center-text">
+                Management Products
+              </span>
+            </li>
+          </Link>
 
           <li className="admin-sidebar__center-item">
             <CreditCardIcon className="icon" />
@@ -111,4 +115,4 @@ const Sidebar = () => {
   );
 };
 
-export default memo(Sidebar);
+export default Sidebar;

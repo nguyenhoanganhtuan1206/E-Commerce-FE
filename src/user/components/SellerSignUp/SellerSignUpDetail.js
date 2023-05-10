@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -245,4 +245,4 @@ const SellerSignUpDetail = () => {
   );
 };
 
-export default memo(SellerSignUpDetail);
+export default SellerSignUpDetail;

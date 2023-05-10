@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -233,4 +233,4 @@ const ModalSellerDetail = ({ sellerId, showModal, setShowModal }) => {
   );
 };
 
-export default memo(ModalSellerDetail);
+export default ModalSellerDetail;

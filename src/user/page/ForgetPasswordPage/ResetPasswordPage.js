@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { useParams } from "react-router-dom";
 
 import { Breadcrumbs } from "../../../shared/components";
@@ -29,4 +28,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default memo(ResetPasswordPage);
+export default ResetPasswordPage;

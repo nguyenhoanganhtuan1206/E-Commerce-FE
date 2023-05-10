@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import "./ModalAlert.scss";
 import Modal from "./Modal";
 
@@ -29,4 +27,4 @@ const ModalError = ({ headerError, show, onCancel, footer, children }) => {
   );
 };
 
-export default memo(ModalError);
+export default ModalError;

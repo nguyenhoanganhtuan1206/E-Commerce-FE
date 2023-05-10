@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { MainComponentUser, MyAdsUser } from "../../components";
@@ -27,4 +26,4 @@ const MyAdsPage = (props) => {
   );
 };
 
-export default memo(MyAdsPage);
+export default MyAdsPage;

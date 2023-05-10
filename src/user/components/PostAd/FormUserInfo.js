@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { InputFields } from "../../../shared/FormElement";
 import {
   VALIDATOR_EMAIL,
@@ -46,4 +45,4 @@ const FormUserInfo = () => {
   );
 };
 
-export default memo(FormUserInfo);
+export default FormUserInfo;

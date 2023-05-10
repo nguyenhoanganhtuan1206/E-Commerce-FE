@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { useState } from "react";
 
 import "./AvatarUser.scss";
 
@@ -25,4 +25,4 @@ const AvatarUser = ({ placeSrc, src, className, alt, circle, ...props }) => {
   );
 };
 
-export default memo(AvatarUser);
+export default AvatarUser;

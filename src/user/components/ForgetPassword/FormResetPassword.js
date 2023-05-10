@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -81,4 +81,4 @@ const FormResetPassword = ({ token }) => {
   );
 };
 
-export default memo(FormResetPassword);
+export default FormResetPassword;

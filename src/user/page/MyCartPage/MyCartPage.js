@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { MainComponentUser, MyCart } from "../../components";
@@ -27,4 +26,4 @@ const MyCartPage = (props) => {
   );
 };
 
-export default memo(MyCartPage);
+export default MyCartPage;

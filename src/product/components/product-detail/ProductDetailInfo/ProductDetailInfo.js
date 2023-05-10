@@ -1,7 +1,6 @@
 import "./ProductDetailInfo.scss";
 import "../ProductDetail.scss";
 
-import { memo } from "react";
 import ButtonFields from "../../../../shared/FormElement/ButtonFields/ButtonFields";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -64,4 +63,4 @@ const ProductDetailInfo = (props) => {
   );
 };
 
-export default memo(ProductDetailInfo);
+export default ProductDetailInfo;

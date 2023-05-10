@@ -1,4 +1,3 @@
-import { memo } from "react";
 
 import "./Featured.scss";
 import {
@@ -58,4 +57,4 @@ const Featured = () => {
   );
 };
 
-export default memo(Featured);
+export default Featured;

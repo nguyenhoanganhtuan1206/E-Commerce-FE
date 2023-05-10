@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Chart, Featured, Navbar, Sidebar, Widget } from "../../components";
 
 import "./AdminHome.scss";
@@ -28,4 +27,4 @@ const AdminHome = () => {
   );
 };
 
-export default memo(AdminHome);
+export default AdminHome;

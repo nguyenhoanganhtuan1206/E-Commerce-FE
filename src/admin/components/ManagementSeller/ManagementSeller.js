@@ -1,4 +1,3 @@
-import { memo, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
 import "./ManagementSeller.scss";
@@ -10,6 +9,7 @@ import { Skeleton } from "../../../shared/components";
 import { userColumns } from "../../pages/ManagementSellerPage/data/data_sellers";
 import { ButtonFields } from "../../../shared/FormElement";
 import { useFetchListSellersQuery } from "../../../redux/apis/user/seller/seller-register.api";
+import { useState } from "react";
 
 const ManagementSeller = () => {
   const listSellers = useFetchListSellersQuery();
@@ -82,4 +82,4 @@ const ManagementSeller = () => {
   return <>{displayContent}</>;
 };
 
-export default memo(ManagementSeller);
+export default ManagementSeller;

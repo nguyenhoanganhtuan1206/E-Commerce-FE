@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import "./ProductDetailInfo.scss";
 import "../ProductDetail.scss";
 
@@ -38,4 +36,4 @@ const ProductDetailsSection = (props) => {
   );
 };
 
-export default memo(ProductDetailsSection);
+export default ProductDetailsSection;

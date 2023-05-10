@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 
 import { toast } from "react-toastify";
 import { FormProvider, useForm } from "react-hook-form";
@@ -54,7 +54,10 @@ const FormConfirmEmail = () => {
                   VALIDATOR_MINLENGTH(9, "Email must be at least 9 characters"),
                   VALIDATOR_EMAIL("Email is invalid"),
                 ]}
-                alertErrorMessage={forgetPasswordResults.isError && forgetPasswordResults.error.data.message}
+                alertErrorMessage={
+                  forgetPasswordResults.isError &&
+                  forgetPasswordResults.error.data.message
+                }
                 placeholder="Enter Your Email"
                 type="email"
                 htmlFor="email"
@@ -83,4 +86,4 @@ const FormConfirmEmail = () => {
   );
 };
 
-export default memo(FormConfirmEmail);
+export default FormConfirmEmail;

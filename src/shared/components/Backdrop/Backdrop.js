@@ -1,7 +1,6 @@
-import { memo } from "react";
 import ReactDOM from "react-dom";
 
-import './Backdrop.scss';
+import "./Backdrop.scss";
 
 const Backdrop = ({ onClick }) => {
   const content = <div className="backdrop" onClick={onClick}></div>;
@@ -12,4 +11,4 @@ const Backdrop = ({ onClick }) => {
   );
 };
 
-export default memo(Backdrop);
+export default Backdrop;

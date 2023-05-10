@@ -1,4 +1,3 @@
-import { memo } from "react";
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { MainComponentUser } from "../../components";
@@ -23,4 +22,4 @@ const DashboardUserPage = () => {
   );
 };
 
-export default memo(DashboardUserPage);
+export default DashboardUserPage;

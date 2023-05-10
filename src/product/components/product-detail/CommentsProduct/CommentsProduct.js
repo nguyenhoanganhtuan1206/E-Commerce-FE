@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 const CommentsProduct = (props) => {
   return (
     <div className="comment-product">
@@ -10,4 +8,4 @@ const CommentsProduct = (props) => {
   );
 };
 
-export default memo(CommentsProduct);
+export default CommentsProduct;

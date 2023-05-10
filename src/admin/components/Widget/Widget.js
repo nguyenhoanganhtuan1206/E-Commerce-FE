@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import "./Widget.scss";
 import {
   AccountBalanceWalletOutlined,
@@ -102,4 +100,4 @@ const Widget = ({ type }) => {
   );
 };
 
-export default memo(Widget);
+export default Widget;

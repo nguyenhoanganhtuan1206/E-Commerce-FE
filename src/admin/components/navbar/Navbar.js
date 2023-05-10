@@ -1,5 +1,3 @@
-import { memo } from "react";
-
 import {
   ChatBubbleOutline,
   DarkModeOutlined,
@@ -53,4 +51,4 @@ const Navbar = () => {
   );
 };
 
-export default memo(Navbar);
+export default Navbar;
