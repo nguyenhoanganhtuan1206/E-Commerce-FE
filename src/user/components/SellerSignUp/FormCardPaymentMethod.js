@@ -2,7 +2,7 @@ import { memo } from "react";
 import { CardPaymentMethod } from "../../../shared/FormElement";
 
 import { useDispatch } from "react-redux";
-import { handleChangePaymentMethod } from "../../../redux/slices/seller/sellerSlice";
+import { handleChangePaymentMethod } from "../../../redux/slices/seller/add-product/addProductSlice";
 
 const FormCardPaymentMethod = () => {
   const dispatch = useDispatch();

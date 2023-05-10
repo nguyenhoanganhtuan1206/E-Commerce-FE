@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +10,6 @@ import {
   useRegisterNewSellerMutation,
   useUpdateSellerMutation,
 } from "../../../redux/apis/user/seller/seller-register.api";
-import FormCardPaymentMethod from "./FormCardPaymentMethod";
 import {
   ButtonFields,
   InputFields,
@@ -26,6 +25,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
   VALIDATOR_EMAIL,
+  VALIDATOR_CHARACTERS,
 } from "../../../shared/util/validators";
 import {
   clearMessageSuccessful,
@@ -45,23 +45,16 @@ const SellerSignUpDetail = () => {
   const [updateSeller, updateSellerResults] = useUpdateSellerMutation();
 
   useEffect(() => {
-    methods.reset(fetchSellerDetail.data);
+    if (!registerNewSellerResults.isError) {
+      methods.reset(fetchSellerDetail.data);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchSellerDetail]);
+  }, [fetchSellerDetail, registerNewSellerResults]);
 
   const onSubmit = useCallback(
     async (data) => {
-      if (sellerState.paymentMethods.length === 0) {
-        toast.error("You must be select a payment method");
-
-        return;
-      }
-
       if (sellerState.data) {
-        updateSeller({
-          ...data,
-          namePaymentMethods: sellerState.paymentMethods,
-        })
+        updateSeller(data)
           .unwrap()
           .then(() =>
             dispatch(
@@ -70,13 +63,14 @@ const SellerSignUpDetail = () => {
               )
             )
           )
-          .catch((error) => toast.error(error.data.message))
+          .catch((error) =>
+            toast.error(
+              error.data.message || "Something went wrong! Please try again"
+            )
+          )
           .finally(() => dispatch(toggleShowConfirmEmail()));
       } else {
-        registerNewSeller({
-          ...data,
-          namePaymentMethods: sellerState.paymentMethods,
-        })
+        registerNewSeller(data)
           .unwrap()
           .then(() =>
             dispatch(
@@ -85,7 +79,11 @@ const SellerSignUpDetail = () => {
               )
             )
           )
-          .catch((error) => toast.error(error.data.message))
+          .catch((error) =>
+            toast.error(
+              error.data.message || "Something went wrong! Please try again"
+            )
+          )
           .finally(() => dispatch(toggleShowConfirmEmail()));
       }
     },
@@ -135,6 +133,7 @@ const SellerSignUpDetail = () => {
               50,
               "Seller name must be at between 6 to 50 characters"
             ),
+            VALIDATOR_CHARACTERS("Seller name must be characters"),
           ]}
           placeholder="Enter Seller Name"
           type="text"
@@ -190,10 +189,6 @@ const SellerSignUpDetail = () => {
           <RegionDropdown control={methods.control} />
         </div>
 
-        <p className="form-input__label mt-5">Select your payment method *</p>
-
-        <FormCardPaymentMethod />
-
         {!!sellerState.data &&
           sellerState.data.sellerApproval === "PENDING" && (
             <p className="form-seller__profile-text">
@@ -205,10 +200,7 @@ const SellerSignUpDetail = () => {
         <ButtonFields
           type="button"
           onClick={() => dispatch(toggleShowConfirmEmail())}
-          disabled={
-            !methods.formState.isValid ||
-            sellerState.paymentMethods.length === 0
-          }
+          disabled={!methods.formState.isValid}
           primary
           className="mt-4"
         >
