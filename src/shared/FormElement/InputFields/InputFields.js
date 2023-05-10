@@ -35,6 +35,7 @@ const InputFields = (props) => {
     htmlFor,
     noBorder,
     alertErrorMessage,
+    classNameForm,
   } = props;
 
   const { control } = useFormContext();
@@ -74,7 +75,7 @@ const InputFields = (props) => {
           <>
             {type === "textarea" ? (
               <>
-                <div className="form-input__group">
+                <div className={`form-input__group ${classNameForm}`}>
                   <label
                     className={`form-input__label  ${
                       value ? "change-event" : null
@@ -111,7 +112,7 @@ const InputFields = (props) => {
                 </div>
               </>
             ) : (
-              <div className="form-input__group">
+              <div className={`form-input__group ${classNameForm}`}>
                 <label
                   className={`form-input__label  ${
                     value ? "change-event" : null

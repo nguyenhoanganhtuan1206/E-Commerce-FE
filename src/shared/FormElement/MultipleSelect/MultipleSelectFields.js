@@ -1,14 +1,19 @@
-import { Controller } from "react-hook-form";
+import "./MultipleSelectFields.scss";
+
 import { useState } from "react";
+
+import { Controller } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
 
-import "./MultipleSelectFields.scss";
+import { handleOnChange } from "../../../redux/slices/FormElement/MultipleSelect/multipleSelectSlice";
 
 /**
  *
- * @propName :used for get data from Object. For example: categories[propName] => categories.name
+ * @propName :used for get data from Object. For example: categories[propName] => categories.name\
+ * @subData and @subState is data and state of customize from user
  */
 
 const MultipleSelectFields = ({
@@ -18,7 +23,10 @@ const MultipleSelectFields = ({
   placeholder,
   label,
   htmlFor,
+  componentAddNew,
+  componentSubData,
 }) => {
+  const dispatch = useDispatch();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
   const toggleShowDropdown = () => {
@@ -37,7 +45,8 @@ const MultipleSelectFields = ({
           } else {
             onChange(value.filter((item) => item !== selectedValue));
           }
-          setIsShowDropdown(true);
+
+          dispatch(handleOnChange(selectedValue));
         };
 
         return (
@@ -90,6 +99,16 @@ const MultipleSelectFields = ({
                   </span>
                 </div>
               ))}
+
+              {/* Place for Component Add More Attribute */}
+              {componentAddNew && (
+                <>
+                  {componentAddNew}
+
+                  {componentSubData}
+                </>
+              )}
+              {/* Place for Component Add More Attribute */}
             </div>
           </div>
         );

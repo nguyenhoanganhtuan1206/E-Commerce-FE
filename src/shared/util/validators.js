@@ -105,8 +105,9 @@ export const validateForm = (value = "", validators) => {
       message = validator.message;
     }
 
-    if (validator.type === VALIDATOR_CHARACTERS) {
-      isValid = isValid && /^[a-zA-Z]+$/.test(value);
+    if (validator.type === VALIDATOR_TYPE_CHARACTER) {
+      const characterPattern = /^[a-zA-Z ]+$/;
+      isValid = isValid && value.match(characterPattern) !== null;
       message = validator.message;
     }
 

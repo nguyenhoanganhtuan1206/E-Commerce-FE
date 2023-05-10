@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCategory } from "../../../thunks/admin/category/categoryThunk";
-import { fetchCategoryVariantByCategoryName } from "../../../thunks/admin/variant/variantThunk";
-import { fetchBrandByCategoryName } from "../../../thunks/admin/brand/brandThunk";
+import { fetchCategoryVariants } from "../../../thunks/admin/variant/variantThunk";
+import { fetchBrands } from "../../../thunks/admin/brand/brandThunk";
+import { fetchProductStyles } from "../../../thunks/admin/product-style/productStyleThunk";
 
 const initialState = {
   categories: {
@@ -15,6 +16,11 @@ const initialState = {
     data: [],
   },
   categoryVariants: {
+    isLoading: false,
+    isError: false,
+    data: [],
+  },
+  productStyles: {
     isLoading: false,
     isError: false,
     data: [],
@@ -39,32 +45,42 @@ const fetchAllSlices = createSlice({
       });
 
     builder
-      .addCase(fetchCategoryVariantByCategoryName.pending, (state) => {
+      .addCase(fetchCategoryVariants.pending, (state) => {
         state.categoryVariants.isLoading = true;
       })
-      .addCase(fetchCategoryVariantByCategoryName.rejected, (state) => {
+      .addCase(fetchCategoryVariants.rejected, (state) => {
         state.categoryVariants.isError = true;
         state.categoryVariants.isLoading = false;
       })
-      .addCase(
-        fetchCategoryVariantByCategoryName.fulfilled,
-        (state, action) => {
-          state.categoryVariants.isLoading = false;
-          state.categoryVariants.data = action.payload;
-        }
-      );
+      .addCase(fetchCategoryVariants.fulfilled, (state, action) => {
+        state.categoryVariants.isLoading = false;
+        state.categoryVariants.data = action.payload;
+      });
 
     builder
-      .addCase(fetchBrandByCategoryName.pending, (state) => {
+      .addCase(fetchBrands.pending, (state) => {
         state.brands.isLoading = true;
       })
-      .addCase(fetchBrandByCategoryName.rejected, (state) => {
+      .addCase(fetchBrands.rejected, (state) => {
         state.brands.isLoading = false;
         state.brands.isError = false;
       })
-      .addCase(fetchBrandByCategoryName.fulfilled, (state, action) => {
+      .addCase(fetchBrands.fulfilled, (state, action) => {
         state.brands.isLoading = false;
         state.brands.data = action.payload;
+      });
+
+    builder
+      .addCase(fetchProductStyles.pending, (state) => {
+        state.productStyles.isLoading = true;
+      })
+      .addCase(fetchProductStyles.rejected, (state) => {
+        state.productStyles.isLoading = false;
+        state.productStyles.isError = false;
+      })
+      .addCase(fetchProductStyles.fulfilled, (state, action) => {
+        state.productStyles.isLoading = false;
+        state.productStyles.data = action.payload;
       });
   },
 });
