@@ -5,6 +5,10 @@
 
   position: relative;
 
+  &:last-child {
+    margin-top: 1.8rem;
+  }
+
   &__icon {
     position: absolute;
     top: 10px;
@@ -20,7 +24,7 @@
 
   &__input {
     min-height: 4rem;
-    width: 50%;
+    width: 60%;
   }
 }
 

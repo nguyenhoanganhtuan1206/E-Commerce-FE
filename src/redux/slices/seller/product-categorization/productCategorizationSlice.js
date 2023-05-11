@@ -35,13 +35,13 @@ const productCategorizationSlices = createSlice({
     addNewSizeValue: (state, action) => {
       const isDuplicate = state.sizeValues.some(
         (item) =>
-          item.colorValue.toLowerCase() ===
+          item.sizeValue.toLowerCase() ===
           action.payload.sizeValue.toLowerCase()
       );
 
       if (isDuplicate) {
         toast.error(
-          `Size ${action.payload} is already existed! Please choose another value`
+          `Size ${action.payload.sizeValue} is already existed! Please choose another value`
         );
       } else {
         state.sizeValues = [...state.sizeValues, action.payload];
