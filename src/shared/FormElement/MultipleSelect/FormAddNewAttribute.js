@@ -8,14 +8,14 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 
-import InputFields from "../InputFields/InputFields";
 import ButtonFields from "../ButtonFields/ButtonFields";
+import InputFields from "../InputFields/InputFields";
 
-const schema = yup.object({
-  name: yup.string().required("Cannot be empty"),
-});
+const FormAddNewAttribute = ({ onCreateNewAttribute, fieldName }) => {
+  const schema = yup.object({
+    [fieldName]: yup.string().required("Cannot be empty"),
+  });
 
-const FormAddNewAttribute = ({ onCreateNewAttribute }) => {
   const methods = useForm({ resolver: yupResolver(schema) });
 
   const [showInput, setShowInput] = useState(false);
@@ -45,7 +45,7 @@ const FormAddNewAttribute = ({ onCreateNewAttribute }) => {
         <FormProvider {...methods}>
           <div className="p-4 d-flex align-items-center">
             <InputFields
-              fieldName="name"
+              fieldName={fieldName}
               placeholder="Enter your data..."
               classNameForm="multiple__select__form-group"
               className="multiple__select__form-input form-input__input"

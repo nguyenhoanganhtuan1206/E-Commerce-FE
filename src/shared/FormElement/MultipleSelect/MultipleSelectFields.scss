@@ -8,10 +8,10 @@
 .multiple__select-select {
   display: flex;
   align-items: center;
-  max-width: 41rem;
   width: 100%;
   line-break: auto;
   flex-wrap: wrap;
+  background-color: #fff;
   z-index: 10;
 
   &:hover {
@@ -72,8 +72,6 @@
     align-items: center;
 
     &.active {
-      background-color: var(--color-grey-light-2);
-
       .multiple__select-dropdown__text {
         color: var(--color-primary);
         font-weight: 600;
@@ -85,7 +83,7 @@
     }
 
     &:hover {
-      background-color: var(--color-grey-light-2);
+      background-color: #eee;
       cursor: pointer;
     }
   }

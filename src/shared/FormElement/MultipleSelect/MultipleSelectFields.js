@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
 
 import { handleOnChange } from "../../../redux/slices/FormElement/MultipleSelect/multipleSelectSlice";
+import { validateForm } from "../../util/validators";
 
 /**
  *
@@ -25,6 +26,8 @@ const MultipleSelectFields = ({
   htmlFor,
   componentAddNew,
   componentSubData,
+  className,
+  validators = [],
 }) => {
   const dispatch = useDispatch();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
@@ -36,6 +39,15 @@ const MultipleSelectFields = ({
   return (
     <Controller
       name={fieldName}
+      rules={{
+        validate: {
+          validate: (value) => {
+            if (validators.length >= 1) {
+              return validateForm(value, validators);
+            }
+          },
+        },
+      }}
       render={({ field: { onChange, value = [] } }) => {
         const onChangeValue = (selectedValue) => {
           const valueExisted = value.indexOf(selectedValue);
@@ -50,7 +62,7 @@ const MultipleSelectFields = ({
         };
 
         return (
-          <div className="multiple__select-form">
+          <div className={`multiple__select-form ${className}`}>
             <label className="form-input__label" htmlFor={htmlFor}>
               {label}
             </label>
@@ -59,21 +71,25 @@ const MultipleSelectFields = ({
               onClick={toggleShowDropdown}
               className="form-input__input multiple__select-select"
             >
-              {value.length > 0
-                ? value.map((value, index) => (
-                    <div key={index} className="multiple__select-select__item">
-                      {value}
-                      <FontAwesomeIcon
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onChangeValue(value);
-                        }}
-                        className="multiple__select-select__icon"
-                        icon={faClose}
-                      />
-                    </div>
-                  ))
-                : placeholder}
+              {value.length > 0 ? (
+                value.map((value, index) => (
+                  <div key={index} className="multiple__select-select__item">
+                    {value}
+                    <FontAwesomeIcon
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onChangeValue(value);
+                      }}
+                      className="multiple__select-select__icon"
+                      icon={faClose}
+                    />
+                  </div>
+                ))
+              ) : (
+                <span style={{ color: "var(--color-grey-dark-2)" }}>
+                  {placeholder}
+                </span>
+              )}
             </div>
 
             <div
