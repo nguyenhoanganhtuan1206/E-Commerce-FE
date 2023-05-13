@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import classes from './CategorizationTable.module.scss';
@@ -8,8 +8,10 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import {
     addInventoryForm,
+    removeInventoryForm,
     updateInventory
 } from "../../../../redux/slices/seller/inventory/inventorySlice";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 const CategorizationTableItem = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,7 @@ const CategorizationTableItem = () => {
         (state) => state.productCategorization
     );
     const inventoryState = useSelector((state) => state.inventory);
+    console.log(inventoryState);
 
     return <>
         {inventoryState.inventories.map((inventory, index, arr) => (
@@ -83,6 +86,19 @@ const CategorizationTableItem = () => {
                             value={inventory.price}
                             type="number"
                         />
+                    </div>
+
+                    <div
+                        style={{ width: "150px" }}
+                        className={classes.categorizationTableBody__item}
+                    >
+                        {index !== 0 &&
+                            <FontAwesomeIcon
+                                onClick={() => dispatch(removeInventoryForm(inventory))}
+                                className={classes.categorizationTable__icon}
+                                icon={faTrashAlt}
+                            />
+                        }
                     </div>
                 </div>
 

@@ -7,6 +7,12 @@
     height: 4rem;
     min-height: unset;
   }
+
+  &__icon {
+    font-size: 1.6rem;
+    padding: 0.8rem;
+    cursor: pointer;
+  }
 }
 
 .categorizationTableHeader {
