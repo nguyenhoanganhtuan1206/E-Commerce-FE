@@ -3,7 +3,7 @@ import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import {
   handleOnChangeColorName,
@@ -71,6 +71,12 @@ const FormAddCategorization = () => {
                   type="text"
                 />
               </div>
+
+              <FontAwesomeIcon
+                onClick={() => dispatch(toggleShowFormSize())}
+                className={classes.formCategorization__icon}
+                icon={faClose}
+              />
             </div>
           </>
         )}

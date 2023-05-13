@@ -16,12 +16,12 @@ const CategorizationTable = () => {
                     {productCategorizationState.colorName ? productCategorizationState.colorName : "Categorization 1"}
                 </div>
 
-                {productCategorizationState.sizeName && <div className={`${classes.categorizationTableHeader__item} font-weight-bold`}>
+                {productCategorizationState.isShowFormSize && <div className={`${classes.categorizationTableHeader__item} font-weight-bold`}>
                     {productCategorizationState.sizeName ? productCategorizationState.sizeName : "Categorization 2"}
                 </div>}
 
-                <div className={classes.categorizationTableHeader__item}>Price (*)</div>
                 <div className={classes.categorizationTableHeader__item}>Quantity (*)</div>
+                <div className={classes.categorizationTableHeader__item}>Price (*)</div>
             </div>
 
             <CategorizationTableItem />

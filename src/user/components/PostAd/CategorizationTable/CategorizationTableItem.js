@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import classes from './CategorizationTable.module.scss';
@@ -6,29 +6,48 @@ import classes from './CategorizationTable.module.scss';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-import { handleIncreaseFormNum } from "../../../../redux/slices/seller/product-categorization/productCategorizationSlice";
+import {
+    addInventoryForm,
+    updateInventory
+} from "../../../../redux/slices/seller/inventory/inventorySlice";
 
 const CategorizationTableItem = () => {
     const dispatch = useDispatch();
     const productCategorizationState = useSelector(
         (state) => state.productCategorization
     );
+    const inventoryState = useSelector((state) => state.inventory);
+
     return <>
-        {Array.from({ length: productCategorizationState.formNumbers }).map((_, i, arr) => (
-            <React.Fragment key={i}>
+        {inventoryState.inventories.map((inventory, index, arr) => (
+            <React.Fragment key={index}>
                 <div className={`${classes.categorizationTableBody}`}>
                     <div className={classes.categorizationTableBody__item}>
                         <input
-                            // onChange={handleOnChangeColorValue}
+                            onChange={e => dispatch(updateInventory({
+                                index,
+                                field: "colorValue",
+                                value: e.target.value,
+                                colorName: productCategorizationState.colorName,
+                                sizeName: productCategorizationState.sizeName,
+                            }))}
+                            value={inventory.colorValue}
                             className={`${classes.categorizationTable__input} form-input__input`}
                             placeholder="Example: Red, White, ..."
                             type="text"
                         />
                     </div>
 
-                    {productCategorizationState.sizeName && <div className={classes.categorizationTableBody__item}>
+                    {productCategorizationState.isShowFormSize && <div className={classes.categorizationTableBody__item}>
                         <input
-                            // onChange={(e) => dispatch(handleOnChangeColorName(e.target.value))}
+                            onChange={e => dispatch(updateInventory({
+                                index,
+                                field: "sizeValue",
+                                value: e.target.value,
+                                colorName: productCategorizationState.colorName,
+                                sizeName: productCategorizationState.sizeName,
+                            }))}
+                            value={inventory.sizeValue}
                             className={`${classes.categorizationTable__input} form-input__input`}
                             placeholder="Example: S, L, XL ..."
                             type="text"
@@ -37,25 +56,46 @@ const CategorizationTableItem = () => {
 
                     <div className={classes.categorizationTableBody__item}>
                         <input
-                            // onChange={(e) => dispatch(handleOnChangeColorName(e.target.value))}
+                            onChange={e => dispatch(updateInventory({
+                                index,
+                                field: "quantity",
+                                value: e.target.value,
+                                colorName: productCategorizationState.colorName,
+                                sizeName: productCategorizationState.sizeName,
+                            }))}
+                            value={inventory.quantity}
                             className={`${classes.categorizationTable__input} form-input__input`}
-                            placeholder="Enter price (*)"
-                            type="text"
+                            placeholder="Enter quantity (*)"
+                            type="number"
                         />
                     </div>
                     <div className={classes.categorizationTableBody__item}>
                         <input
-                            // onChange={(e) => dispatch(handleOnChangeColorName(e.target.value))}
+                            onChange={e => dispatch(updateInventory({
+                                index,
+                                field: "price",
+                                value: e.target.value,
+                                colorName: productCategorizationState.colorName,
+                                sizeName: productCategorizationState.sizeName,
+                            }))}
                             className={`${classes.categorizationTable__input} form-input__input`}
-                            placeholder="Enter Quantity (*)"
-                            type="text"
+                            placeholder="Enter price (*)"
+                            value={inventory.price}
+                            type="number"
                         />
                     </div>
                 </div>
 
-                {i === arr.length - 1 && (
+                {index === arr.length - 1 && (
                     <div
-                        onClick={() => dispatch(handleIncreaseFormNum())}
+                        onClick={() => dispatch(addInventoryForm({
+                            colorName: "",
+                            colorValue: "",
+                            sizeName: "",
+                            sizeValue: "",
+                            quantity: 0,
+                            price: 0
+                        }))}
                         className={`${classes.categorizationTableAddMore}`}
                     >
                         <FontAwesomeIcon
@@ -70,4 +110,4 @@ const CategorizationTableItem = () => {
     </>
 }
 
-export default CategorizationTableItem;
+export default memo(CategorizationTableItem);
