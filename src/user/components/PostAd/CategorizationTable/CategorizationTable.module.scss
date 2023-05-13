@@ -1,0 +1,65 @@
+.categorizationTable {
+  border: 1px solid var(--color-grey-light-2);
+  border-radius: 5px;
+  overflow: hidden;
+
+  &__input {
+    height: 4rem;
+    min-height: unset;
+  }
+}
+
+.categorizationTableHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 1.4rem;
+  background-color: #f5f5f5;
+
+  &__item {
+    width: 100%;
+    padding: 0.6rem;
+    text-align: center;
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--color-grey-light-3);
+    }
+  }
+}
+
+.categorizationTableBody {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--color-border);
+
+  &__item {
+    border-right: 1px solid var(--color-border);
+    width: 100%;
+    text-align: center;
+    min-height: 5rem;
+    height: 100%;
+    padding: 0.9rem 1.2rem;
+  }
+}
+
+.categorizationTableAddMore {
+  padding: 0.8rem;
+  font-size: 1.6rem;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &__icon {
+    transform: translateY(-2px);
+    font-size: 1.6rem;
+    margin-right: 0.6rem;
+  }
+}

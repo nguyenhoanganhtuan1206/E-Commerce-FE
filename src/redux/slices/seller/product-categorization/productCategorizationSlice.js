@@ -1,15 +1,11 @@
-import { toast } from "react-toastify";
 import { createSlice } from "@reduxjs/toolkit";
-
-import {
-  PRODUCT_CATEGORIZATION_COLOR,
-  PRODUCT_CATEGORIZATION_SIZE,
-} from "../../../../data/product-categorization/product-categorization-data";
 
 const initialState = {
   isShowForm: false,
-  colorValues: PRODUCT_CATEGORIZATION_COLOR,
-  sizeValues: PRODUCT_CATEGORIZATION_SIZE,
+  colorName: null,
+  sizeName: null,
+  formNumbers: 1,
+  isShowFormSize: false,
 };
 
 const productCategorizationSlices = createSlice({
@@ -19,37 +15,31 @@ const productCategorizationSlices = createSlice({
     toggleShowAddForm: (state) => {
       state.isShowForm = !state.isShowForm;
     },
-    addNewColorValue: (state, action) => {
-      const isDuplicate = state.colorValues.some(
-        (item) =>
-          item.colorValue.toLowerCase() ===
-          action.payload.colorValue.toLowerCase()
-      );
-
-      if (isDuplicate) {
-        toast.error(`Color ${action.payload.colorValue} is already existed`);
-      } else {
-        state.colorValues = [...state.colorValues, action.payload];
-      }
+    toggleShowFormSize: (state) => {
+      state.isShowFormSize = !state.isShowFormSize;
     },
-    addNewSizeValue: (state, action) => {
-      const isDuplicate = state.sizeValues.some(
-        (item) =>
-          item.sizeValue.toLowerCase() ===
-          action.payload.sizeValue.toLowerCase()
-      );
-
-      if (isDuplicate) {
-        toast.error(
-          `Size ${action.payload.sizeValue} is already existed! Please choose another value`
-        );
-      } else {
-        state.sizeValues = [...state.sizeValues, action.payload];
-      }
+    handleOnChangeColorName: (state, action) => {
+      state.colorName = action.payload;
     },
+    handleOnChangeSizeName: (state, action) => {
+      state.sizeName = action.payload;
+    },
+    handleIncreaseFormNum: (state) => {
+      state.formNumbers += 1;
+    },
+    handleDecreaseFormNum: (state) => {
+      state.formNumbers -= 1;
+    }
   },
 });
 
-export const { toggleShowAddForm, addNewColorValue, addNewSizeValue } =
+export const {
+  toggleShowAddForm,
+  toggleShowFormSize,
+  handleOnChangeSizeName,
+  handleOnChangeColorName,
+  handleIncreaseFormNum,
+  handleDecreaseFormNum,
+} =
   productCategorizationSlices.actions;
 export const productCategorizationReducer = productCategorizationSlices.reducer;
