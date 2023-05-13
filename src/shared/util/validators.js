@@ -6,6 +6,8 @@ const VALIDATOR_TYPE_MAX = "MAX";
 const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_NUMBER = "NUMBER";
 const VALIDATOR_TYPE_CHARACTER = "CHARACTER";
+const VALIDATOR_TYPE_MAX_LENGTH_ARRAY = "MAXLENGTH_ARRAY";
+const VALIDATOR_TYPE_MIN_LENGTH_ARRAY = "MINLENGTH_ARRAY";
 const VALIDATOR_TYPE_FROM_API = "API";
 
 export const VALIDATOR_REQUIRED = (message) => ({
@@ -58,6 +60,18 @@ export const VALIDATOR_CHARACTERS = (message) => ({
   message,
 });
 
+export const VALIDATOR_MAX_LENGTH_ARRAY = (val, message) => ({
+  type: VALIDATOR_TYPE_MAX_LENGTH_ARRAY,
+  val,
+  message,
+});
+
+export const VALIDATOR_MIN_LENGTH_ARRAY = (val, message) => ({
+  type: VALIDATOR_TYPE_MIN_LENGTH_ARRAY,
+  val,
+  message,
+});
+
 /* Validate */
 export const validateForm = (value = "", validators) => {
   let isValid = true;
@@ -91,6 +105,16 @@ export const validateForm = (value = "", validators) => {
 
     if (validator.type === VALIDATOR_TYPE_MAX) {
       isValid = isValid && +value <= validator.val;
+      message = validator.message;
+    }
+
+    if (validator.type === VALIDATOR_TYPE_MAX_LENGTH_ARRAY) {
+      isValid = isValid && +value.length <= validator.val;
+      message = validator.message;
+    }
+
+    if (validator.type === VALIDATOR_TYPE_MIN_LENGTH_ARRAY) {
+      isValid = isValid && +value.length >= validator.val;
       message = validator.message;
     }
 

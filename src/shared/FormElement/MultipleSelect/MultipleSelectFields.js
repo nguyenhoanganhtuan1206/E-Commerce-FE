@@ -48,7 +48,7 @@ const MultipleSelectFields = ({
           },
         },
       }}
-      render={({ field: { onChange, value = [] } }) => {
+      render={({ field: { onChange, value = [] }, fieldState: { error } }) => {
         const onChangeValue = (selectedValue) => {
           const valueExisted = value.indexOf(selectedValue);
 
@@ -91,19 +91,22 @@ const MultipleSelectFields = ({
                 </span>
               )}
             </div>
+            {error &&
+              <div className="alert alert-danger">
+                {error.message}
+              </div>
+            }
 
             <div
-              className={`multiple__select-dropdown ${
-                isShowDropdown ? "active" : ""
-              }`}
+              className={`multiple__select-dropdown ${isShowDropdown ? "active" : ""
+                }`}
             >
               {data.map((item, index) => (
                 <div
                   onClick={() => onChangeValue(item[propName])}
                   key={index}
-                  className={`multiple__select-dropdown__item ${
-                    value.indexOf(item[propName]) === -1 ? "" : "active"
-                  }`}
+                  className={`multiple__select-dropdown__item ${value.indexOf(item[propName]) === -1 ? "" : "active"
+                    }`}
                 >
                   <FontAwesomeIcon
                     className="multiple__select-dropdown__icon"
