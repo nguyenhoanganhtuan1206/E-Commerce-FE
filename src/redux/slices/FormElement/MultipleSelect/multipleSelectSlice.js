@@ -10,7 +10,6 @@ const multipleSelectSlices = createSlice({
   reducers: {
     handleOnChange: (state, action) => {
       const valuesSelected = state.valuesSelected;
-
       const valueExisted = valuesSelected.indexOf(action.payload);
 
       if (valueExisted === -1) {

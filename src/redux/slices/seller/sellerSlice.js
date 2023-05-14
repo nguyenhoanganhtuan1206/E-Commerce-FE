@@ -6,7 +6,6 @@ const initialState = {
   data: null,
   messageSuccessful: null,
   isShowConfirmEmail: false,
-  paymentMethods: [],
   isShowModalFeedback: false,
 };
 
@@ -26,15 +25,6 @@ const sellerSlices = createSlice({
     clearMessageSuccessful: (state) => {
       state.messageSuccessful = null;
     },
-    handleChangePaymentMethod: (state, action) => {
-      if (action.payload.checked) {
-        state.paymentMethods = [...state.paymentMethods, action.payload.name];
-      } else {
-        state.paymentMethods = state.paymentMethods.filter(
-          (value) => value !== action.payload.name
-        );
-      }
-    },
   },
 });
 
@@ -42,7 +32,6 @@ export const {
   clearMessageSuccessful,
   setMessageRegisterSuccessful,
   toggleShowConfirmEmail,
-  handleChangePaymentMethod,
   toggleShowModalFeedback,
 } = sellerSlices.actions;
 export const sellerReducer = sellerSlices.reducer;

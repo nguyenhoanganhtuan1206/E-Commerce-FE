@@ -1,23 +1,18 @@
 import { memo } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
-
 import { faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { handleOnChange } from "../../../redux/slices/FormElement/MultipleSelect/multipleSelectSlice";
 import CustomSkeleton from "../../components/Skeleton/Skeleton";
 
-const MultiSelectOptionList = ({
-  data,
-  isFetching,
+const MultiSelectCustomizeList = ({
+  onChange,
+  value = [],
+  data = [],
+  isFetching = false,
   propName,
   onDeleteItem,
 }) => {
-  const multipleSelectState = useSelector((state) => state.multipleSelect);
-
-  const dispatch = useDispatch();
-
   const handleDeleteItem = (e, value) => {
     e.stopPropagation();
     onDeleteItem(value);
@@ -41,13 +36,12 @@ const MultiSelectOptionList = ({
         <h3 className="multiple__select-option__title">Your Customize</h3>
         {data.map((item, index) => (
           <div
-            onClick={() => dispatch(handleOnChange(item[propName]))}
+            onClick={() => onChange(item[propName])}
             key={index}
-            className={`multiple__select-dropdown__item ${
-              multipleSelectState.valuesSelected.indexOf(item[propName]) === -1
-                ? ""
-                : "active"
-            }`}
+            className={`multiple__select-dropdown__item ${value.indexOf(item[propName]) === -1
+              ? ""
+              : "active"
+              }`}
           >
             <FontAwesomeIcon
               className="multiple__select-dropdown__icon"
@@ -74,4 +68,4 @@ const MultiSelectOptionList = ({
   return <>{displayContent}</>;
 };
 
-export default memo(MultiSelectOptionList);
+export default memo(MultiSelectCustomizeList);

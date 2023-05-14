@@ -19,7 +19,6 @@ const CategorizationTableItem = () => {
         (state) => state.productCategorization
     );
     const inventoryState = useSelector((state) => state.inventory);
-    console.log(inventoryState);
 
     return <>
         {inventoryState.inventories.map((inventory, index, arr) => (

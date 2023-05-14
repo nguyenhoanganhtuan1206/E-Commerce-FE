@@ -3,13 +3,12 @@ import "./MultipleSelectFields.scss";
 import { useState } from "react";
 
 import { Controller } from "react-hook-form";
-import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
 
-import { handleOnChange } from "../../../redux/slices/FormElement/MultipleSelect/multipleSelectSlice";
 import { validateForm } from "../../util/validators";
+import MultiSelectCustomizeList from "./MultiSelectCustomizeList";
 
 /**
  *
@@ -28,8 +27,10 @@ const MultipleSelectFields = ({
   componentSubData,
   className,
   validators = [],
+  customizeData = [],
+  customizeIsFetching = false,
+  customizeOnDelete,
 }) => {
-  const dispatch = useDispatch();
   const [isShowDropdown, setIsShowDropdown] = useState(false);
 
   const toggleShowDropdown = () => {
@@ -48,7 +49,10 @@ const MultipleSelectFields = ({
           },
         },
       }}
-      render={({ field: { onChange, value = [] }, fieldState: { error } }) => {
+      render={({ field: {
+        onChange, value = [] },
+        fieldState: { error }
+      }) => {
         const onChangeValue = (selectedValue) => {
           const valueExisted = value.indexOf(selectedValue);
 
@@ -57,8 +61,6 @@ const MultipleSelectFields = ({
           } else {
             onChange(value.filter((item) => item !== selectedValue));
           }
-
-          dispatch(handleOnChange(selectedValue));
         };
 
         return (
@@ -124,7 +126,15 @@ const MultipleSelectFields = ({
                 <>
                   {componentAddNew}
 
-                  {componentSubData}
+                  {componentSubData &&
+                    <MultiSelectCustomizeList
+                      onChange={onChangeValue}
+                      value={value}
+                      data={customizeData}
+                      isFetching={customizeIsFetching}
+                      propName={propName}
+                      onDeleteItem={customizeOnDelete}
+                    />}
                 </>
               )}
               {/* Place for Component Add More Attribute */}

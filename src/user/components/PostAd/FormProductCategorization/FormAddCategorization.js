@@ -1,5 +1,5 @@
 import classes from "./FormAddCategorization.module.scss";
-import React from "react";
+import React, { memo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { faClose, faPlus } from "@fortawesome/free-solid-svg-icons";
 import {
   handleOnChangeColorName,
   handleOnChangeSizeName,
+  toggleShowAddForm,
   toggleShowFormSize,
 } from "../../../../redux/slices/seller/product-categorization/productCategorizationSlice";
 import {
@@ -37,6 +38,12 @@ const FormAddCategorization = () => {
               type="text"
             />
           </div>
+
+          <FontAwesomeIcon
+            onClick={() => dispatch(toggleShowAddForm())}
+            className={classes.formCategorization__icon}
+            icon={faClose}
+          />
         </div>
       </div>
 
@@ -97,4 +104,4 @@ const FormAddCategorization = () => {
   );
 };
 
-export default FormAddCategorization;
+export default memo(FormAddCategorization);
