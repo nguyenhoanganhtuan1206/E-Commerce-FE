@@ -3,10 +3,10 @@ import createApiClient from "../../../../shared/hooks/useAxios";
 
 const apiClient = createApiClient();
 
-export const fetchCategory = createAsyncThunk(
-  "category/fetchCategory",
+export const fetchProductStyles = createAsyncThunk(
+  "productStyle/fetchProductStyle",
   async () => {
-    const response = await apiClient.get("/categories");
+    const response = await apiClient.get("/product-styles");
 
     return response.data;
   }

@@ -53,7 +53,7 @@ const SellerSignUpDetail = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      if (sellerState.data) {
+      if (fetchSellerDetail.data) {
         updateSeller(data)
           .unwrap()
           .then(() =>
@@ -87,7 +87,7 @@ const SellerSignUpDetail = () => {
           .finally(() => dispatch(toggleShowConfirmEmail()));
       }
     },
-    [dispatch, sellerState, registerNewSeller, updateSeller]
+    [fetchSellerDetail, updateSeller, dispatch, registerNewSeller]
   );
 
   return (

@@ -15,18 +15,22 @@ import {
   ProfileUserPage,
   ConfirmEmailPage,
   ResetPasswordPage,
-  SellerSignUpDetailPage,
 } from "./user/page";
-import { AdminHome, ManagementSellerPage } from "./admin/pages/";
+import {
+  AdminHome,
+  ManagementProductPage,
+  ManagementSellerPage,
+} from "./admin/pages/";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import ProtectRoutes from "./routes/ProtectRoutes";
+import Demo from "./user/page/Demo/Demo";
 
 function App() {
   const authContext = useContext(AuthContext);
-  
+
   return (
     <Router>
       <Routes>
@@ -36,6 +40,7 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/product" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
+        <Route path="/demo" element={<Demo />} />
         {/* Routes permit all */}
         <Route
           path="/reset-password/confirm-email"
@@ -47,16 +52,13 @@ function App() {
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
-          <Route path="/chat-user" element={<ChatPageUser />} />
           <Route path="/my-ads" element={<MyAdsPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/post-ad" element={<PostAd />} />
-          <Route
-            path="/registration-seller"
-            element={<SellerSignUpDetailPage />}
-          />
         </Route>
+        <Route path="/chat-user" element={<ChatPageUser />} />
+
         {/* Routes logged in and all roles */}
         {/* Routes required Admin */}
         <Route
@@ -73,6 +75,11 @@ function App() {
           <Route
             path="/admin/management-seller"
             element={<ManagementSellerPage />}
+          />
+
+          <Route
+            path="/admin/management-products"
+            element={<ManagementProductPage />}
           />
         </Route>
 

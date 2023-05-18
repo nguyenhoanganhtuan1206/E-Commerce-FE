@@ -12,7 +12,7 @@ const HeaderPostAd = ({ currentSteps = 1 }) => {
 
         <div className="post-ad__header-sub-title">
           <h4>Step</h4>
-          <p>Ad Information</p>
+          <p>Information Basic</p>
         </div>
       </div>
 
@@ -25,7 +25,7 @@ const HeaderPostAd = ({ currentSteps = 1 }) => {
 
         <div className="post-ad__header-sub-title">
           <h4>Step</h4>
-          <p>Ad Details</p>
+          <p>Information Details</p>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ const HeaderPostAd = ({ currentSteps = 1 }) => {
 
         <div className="post-ad__header-sub-title">
           <h4>Step</h4>
-          <p>User Information</p>
+          <p>Another Information</p>
         </div>
       </div>
     </header>

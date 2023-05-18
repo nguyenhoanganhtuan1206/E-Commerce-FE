@@ -1,18 +1,26 @@
-import { MainComponentUser, SellerSignUpDetail } from "../../components";
-
 import "../MainContent.scss";
 import "./PostAd.scss";
 
+import { MainComponentUser, SellerSignUpDetail } from "../../components";
 import { Header } from "../../../shared/Layouts";
 import { FormPostAd } from "../../components/PostAd";
 import { Breadcrumbs } from "../../../shared/components";
-import { memo, useContext } from "react";
-import { AuthContext } from "../../../context/auth-context";
+import { useFetchDetailSellerQuery } from "../../../redux/apis/user/seller/seller-register.api";
 
 const PostAd = () => {
-  const authContext = useContext(AuthContext);
+  const fetchSellerDetail = useFetchDetailSellerQuery();
 
-  const sellingEnabled = authContext.roles.includes("ROLE_SELLER");
+  let isCheck = false;
+
+  if (fetchSellerDetail.data) {
+    if (fetchSellerDetail.data.sellerApproval === "ACTIVE") {
+      isCheck = true;
+    } else {
+      isCheck = false;
+    }
+  } else {
+    isCheck = false;
+  }
 
   return (
     <>
@@ -22,13 +30,13 @@ const PostAd = () => {
       <MainComponentUser>
         <div className="main-content--user">
           <h3 className="main-content--user__header">
-            {sellingEnabled ? "Post An Ad" : "Register As Seller"}
+            {isCheck ? "Post An Ad" : "Register As Seller"}
           </h3>
 
           <div className="main-content--user__body">
-            {sellingEnabled && <FormPostAd />}
+            {isCheck && <FormPostAd />}
 
-            {!sellingEnabled && <SellerSignUpDetail />}
+            {!isCheck && <SellerSignUpDetail />}
           </div>
         </div>
       </MainComponentUser>
@@ -36,4 +44,4 @@ const PostAd = () => {
   );
 };
 
-export default memo(PostAd);
+export default PostAd;

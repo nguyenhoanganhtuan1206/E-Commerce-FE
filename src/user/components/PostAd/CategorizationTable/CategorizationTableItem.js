@@ -20,6 +20,8 @@ const CategorizationTableItem = () => {
     );
     const inventoryState = useSelector((state) => state.inventory);
 
+    console.log("inventoryState", inventoryState.inventories);
+
     return <>
         {inventoryState.inventories.map((inventory, index, arr) => (
             <React.Fragment key={index}>

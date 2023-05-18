@@ -13,6 +13,11 @@ const productCategorizationSlices = createSlice({
   initialState,
   reducers: {
     toggleShowAddForm: (state) => {
+      if (!state.isShowForm) {
+        /* Set null if turn off */
+        state.colorName = null;
+        state.sizeName = null;
+      }
       state.isShowForm = !state.isShowForm;
     },
     toggleShowFormSize: (state) => {

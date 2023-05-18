@@ -22,17 +22,6 @@ const inventorySlice = createSlice({
             state.inventories[index].sizeName = sizeName;
             state.inventories[index][field] = value;
         },
-        updateInventories: (state, action) => {
-            state.inventories = [{
-                colorName: action.payload.colorName || "",
-                colorValue: "",
-                sizeName: action.payload.sizeName || "",
-                sizeValue: "",
-                quantity: 0,
-                price: 0
-            }]
-
-        },
         removeInventoryForm: (state, action) => {
             state.inventories.splice(action.payload, 1);
         }
@@ -42,7 +31,6 @@ const inventorySlice = createSlice({
 export const {
     addInventoryForm,
     updateInventory,
-    updateInventories,
     removeInventoryForm
 } = inventorySlice.actions;
 export const inventoryReducer = inventorySlice.reducer;
