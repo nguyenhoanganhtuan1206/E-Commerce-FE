@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { CardPaymentMethod } from "../../../shared/FormElement";
 
 import { useDispatch } from "react-redux";
@@ -6,9 +6,9 @@ import { handleChangePaymentMethod } from "../../../redux/slices/seller/add-prod
 
 const FormCardPaymentMethod = () => {
   const dispatch = useDispatch();
-  const handleCheckboxChange = (name, checked) => {
+  const handleCheckboxChange = useCallback((name, checked) => {
     dispatch(handleChangePaymentMethod({ name, checked }));
-  };
+  }, [dispatch]);
 
   return (
     <div className="row">

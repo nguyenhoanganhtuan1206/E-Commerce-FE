@@ -24,13 +24,14 @@ const inventorySlice = createSlice({
         },
         removeInventoryForm: (state, action) => {
             state.inventories.splice(action.payload, 1);
-        }
+        },
     }
 });
 
 export const {
     addInventoryForm,
     updateInventory,
-    removeInventoryForm
+    removeInventoryForm,
+    updateStateFormInventory
 } = inventorySlice.actions;
 export const inventoryReducer = inventorySlice.reducer;

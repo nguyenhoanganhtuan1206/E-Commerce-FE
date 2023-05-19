@@ -26,10 +26,6 @@
     width: 100%;
     padding: 0.6rem;
     text-align: center;
-
-    &:not(:last-child) {
-      border-right: 1px solid var(--color-grey-light-3);
-    }
   }
 }
 
@@ -41,12 +37,12 @@
   border-bottom: 1px solid var(--color-border);
 
   &__item {
-    border-right: 1px solid var(--color-border);
     width: 100%;
     text-align: center;
     min-height: 5rem;
     height: 100%;
     padding: 0.9rem 1.2rem;
+    border-right: 1px solid var(--color-border);
   }
 }
 

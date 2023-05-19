@@ -1,17 +1,17 @@
-import React, { memo } from "react";
+import React, { memo, } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import classes from './CategorizationTable.module.scss';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 import {
     addInventoryForm,
     removeInventoryForm,
-    updateInventory
+    updateInventory,
 } from "../../../../redux/slices/seller/inventory/inventorySlice";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
 const CategorizationTableItem = () => {
     const dispatch = useDispatch();
@@ -19,8 +19,6 @@ const CategorizationTableItem = () => {
         (state) => state.productCategorization
     );
     const inventoryState = useSelector((state) => state.inventory);
-
-    console.log("inventoryState", inventoryState.inventories);
 
     return <>
         {inventoryState.inventories.map((inventory, index, arr) => (
@@ -90,8 +88,7 @@ const CategorizationTableItem = () => {
                     </div>
 
                     <div
-                        style={{ width: "150px" }}
-                        className={classes.categorizationTableBody__item}
+                        style={{ width: "150px", textAlign: "center" }}
                     >
                         {index !== 0 &&
                             <FontAwesomeIcon

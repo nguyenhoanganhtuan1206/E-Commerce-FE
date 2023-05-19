@@ -2,7 +2,6 @@ import { useCallback } from "react";
 
 import "./FormPostAd.scss";
 
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -13,7 +12,8 @@ import FormAdInfoBasic from "./FormAdInfoBasic";
 import { ButtonFields } from "../../../shared/FormElement";
 import { useStorageFile } from "../../../firebase/image-product/service-firebase";
 import { useCreateProductMutation } from "../../../redux/apis/seller/product/seller-product.api";
-import { handleDecreaseStep, handleIncreaseStep } from "../../../redux/slices/seller/add-product/addProductSlice";
+import { handleDecreaseStep, handleIncreaseStep, handleResetStep } from "../../../redux/slices/seller/add-product/addProductSlice";
+import { toast } from "react-toastify";
 
 const FormPostAd = () => {
   const methods = useForm({ mode: "all" });
@@ -27,7 +27,7 @@ const FormPostAd = () => {
   const inventoryState = useSelector((state) => state.inventory);
   const [createProduct, createProductResults] = useCreateProductMutation();
 
-  const { handleStorageFiles, isError } = useStorageFile();
+  const { handleStorageFiles, isErrorUploadFiles } = useStorageFile();
 
 
   const onClickNextStep = useCallback(() => {
@@ -44,19 +44,13 @@ const FormPostAd = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      if (addProductState.paymentMethods.length === 0) {
-        toast.error("Shipping options required. Please choose at least one");
-
-        return;
-      }
-
       if (data.images.length < 5) {
         toast.error("Please select at least 5 images");
 
         return;
       }
 
-      if (isError) {
+      if (isErrorUploadFiles) {
         return;
       }
 
@@ -87,6 +81,7 @@ const FormPostAd = () => {
             "You created product successfully! Please wait for our approval.",
             { autoClose: 2000 }
           );
+          dispatch(handleResetStep());
         })
         .catch((error) => {
           toast.error(error.data.message);
@@ -97,10 +92,11 @@ const FormPostAd = () => {
       createProduct,
       handleStorageFiles,
       inventoryState,
-      isError,
+      isErrorUploadFiles,
       methods,
       productCatalogState,
-      productCategorizationState
+      productCategorizationState,
+      dispatch
     ]
   );
 
@@ -158,7 +154,7 @@ const FormPostAd = () => {
                 isLoading={createProductResults.isLoading}
                 type="submit"
                 className="post-ad__btn next"
-                disabled={!methods.formState.isValid}
+                disabled={addProductState.paymentMethods.length === 0 || !methods.formState.isValid}
               >
                 Submit Ad
               </ButtonFields>

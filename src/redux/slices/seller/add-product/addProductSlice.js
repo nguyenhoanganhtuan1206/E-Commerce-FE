@@ -37,6 +37,9 @@ const addProductSlices = createSlice({
       } else {
         toast.error("Something went wrong! Please try again");
       }
+    },
+    handleResetStep: (state) => {
+      state.currentStepForm = 0;
     }
   },
 });
@@ -45,6 +48,7 @@ export const {
   toggleShowFormCreateNewProductStyle,
   handleChangePaymentMethod,
   handleDecreaseStep,
-  handleIncreaseStep
+  handleIncreaseStep,
+  handleResetStep
 } = addProductSlices.actions;
 export const addProductReducer = addProductSlices.reducer;

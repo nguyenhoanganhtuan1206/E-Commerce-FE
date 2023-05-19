@@ -21,17 +21,14 @@ import {
 } from "../../../shared/FormElement";
 import {
   VALIDATOR_MAX,
-  VALIDATOR_MIN,
   VALIDATOR_MIN_LENGTH_ARRAY,
   VALIDATOR_NUMBER,
-  VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
 import {
   useFetchProductStylesBySellerIdQuery,
   useDeleteProductStyleMutation,
   useAddProductStyleMutation,
 } from "../../../redux/apis/seller/product-style/product-style.api";
-import { useController } from "react-hook-form";
 
 const FormAdInfoDetails = () => {
 
@@ -142,11 +139,10 @@ const FormAdInfoDetails = () => {
               <InputFields
                 fieldName="price"
                 validators={[
-                  VALIDATOR_REQUIRED("Price cannot be empty"),
                   VALIDATOR_NUMBER("Price is invalid"),
-                  VALIDATOR_MIN(5, "Price must be at least $5"),
                   VALIDATOR_MAX(1000000, "Price must be less than $1000000"),
                 ]}
+                initialValue={0}
                 placeholder="Enter Price"
                 type="number"
                 label="Price (*)"
@@ -158,8 +154,10 @@ const FormAdInfoDetails = () => {
               <InputFields
                 fieldName="quantity"
                 validators={[
+                  VALIDATOR_NUMBER("Quantity is invalid"),
                   VALIDATOR_MAX(10000, "Quantity cannot large than 10000 unit"),
                 ]}
+                initialValue={0}
                 placeholder="Enter quantity"
                 type="number"
                 label="Quantity (*)"
