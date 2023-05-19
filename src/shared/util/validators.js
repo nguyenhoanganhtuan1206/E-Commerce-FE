@@ -120,8 +120,8 @@ export const validateForm = (value = "", validators) => {
 
     if (validator.type === VALIDATOR_TYPE_NUMBER) {
       const numberPattern = /\d+/g;
-      isValid = isValid && value.match(numberPattern) !== null;
-      message = validator.message;
+      isValid = isValid && typeof value === "string" && value.match(numberPattern) !== null;
+      message = validator.message;      
     }
 
     if (validator.type === VALIDATOR_TYPE_EMAIL) {
