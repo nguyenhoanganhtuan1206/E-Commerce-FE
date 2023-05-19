@@ -3,12 +3,10 @@ import createApiClient from "../../../../shared/hooks/useAxios";
 
 const apiClient = createApiClient();
 
-export const fetchCategoryVariantByCategoryName = createAsyncThunk(
+export const fetchCategoryVariants = createAsyncThunk(
   "categoryVariant/fetchCategoryVariant",
-  async (params) => {
-    const response = await apiClient.get(
-      `/category-variant?categoryName=${params}`
-    );
+  async () => {
+    const response = await apiClient.get("/variants");
 
     return response.data;
   }
