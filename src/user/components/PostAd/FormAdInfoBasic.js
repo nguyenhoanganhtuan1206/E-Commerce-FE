@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import useThunk from "../../../shared/hooks/useThunk";
+import LoadingSpinner from "../../../shared/components/LoadingSpinner/LoadingSpinner";
 import { fetchCategory } from "../../../redux/thunks/admin/category/categoryThunk";
 import {
   InputFields,
@@ -17,7 +18,6 @@ import {
 } from "../../../shared/util/validators";
 import { fetchBrands } from "../../../redux/thunks/admin/brand/brandThunk";
 import { fetchCategoryVariants } from "../../../redux/thunks/admin/variant/variantThunk";
-import LoadingSpinner from "../../../shared/components/LoadingSpinner/LoadingSpinner";
 
 const FormAdInfoBasic = () => {
   const fetchAllState = useSelector((state) => state.fetchAll);

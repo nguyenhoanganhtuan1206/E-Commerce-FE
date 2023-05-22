@@ -1,34 +1,51 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import "./FormPostAd.scss";
 
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { FormProvider, useForm } from "react-hook-form";
 
+import useThunk from "../../../shared/hooks/useThunk";
+import { fetchProductById } from "../../../redux/thunks/seller/product/productThunk";
 import HeaderPostAd from "./HeaderPostAd";
 import FormAdInfoDetails from "./FormAdInfoDetails";
 import FormAdInfoAddition from "./FormAdInfoAddition";
 import FormAdInfoBasic from "./FormAdInfoBasic";
 import { ButtonFields } from "../../../shared/FormElement";
-import { useStorageFile } from "../../../firebase/image-product/service-firebase";
+import { useUploadFileFirebase } from "../../../firebase/image-product/firebase-service";
 import { useCreateProductMutation } from "../../../redux/apis/seller/product/seller-product.api";
-import { handleDecreaseStep, handleIncreaseStep, handleResetStep } from "../../../redux/slices/seller/add-product/addProductSlice";
-import { toast } from "react-toastify";
+import {
+  handleDecreaseStep,
+  handleIncreaseStep,
+  handleResetStep,
+} from "../../../redux/slices/seller/add-product/addProductSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { resetInventoryForm } from "../../../redux/slices/seller/inventory/inventorySlice";
 
 const FormPostAd = () => {
-  const methods = useForm({ mode: "all" });
+  const methods = useForm({
+    mode: "all",
+  });
+  const params = useParams("productId");
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  const formStepState = useSelector(state => state.addProduct);
+  const formStepState = useSelector((state) => state.addProduct);
 
   const addProductState = useSelector((state) => state.addProduct);
-  const productCategorizationState = useSelector((state) => state.productCategorization);
+  const myAdsState = useSelector((state) => state.myAds);
+  const productCategorizationState = useSelector(
+    (state) => state.productCategorization
+  );
   const productCatalogState = useSelector((state) => state.addProduct);
   const inventoryState = useSelector((state) => state.inventory);
   const [createProduct, createProductResults] = useCreateProductMutation();
 
-  const { handleStorageFiles, isErrorUploadFiles } = useStorageFile();
+  const [doFetchProductById, isLoadingFetchProductById] =
+    useThunk(fetchProductById);
 
+  const { handleUploadFile, isError } = useUploadFileFirebase();
 
   const onClickNextStep = useCallback(() => {
     if (formStepState.currentStepForm < 3 || methods.formState.formIsValid) {
@@ -42,6 +59,17 @@ const FormPostAd = () => {
     }
   }, [dispatch, formStepState]);
 
+  const fetchProductData = useCallback(async () => {
+    doFetchProductById(params.productId);
+    methods.reset(myAdsState.productData);
+  }, [doFetchProductById, methods, myAdsState.productData, params.productId]);
+
+  useEffect(() => {
+    if (params.productId) {
+      fetchProductData();
+    }
+  }, [fetchProductData, params.productId]);
+
   const onSubmit = useCallback(
     async (data) => {
       if (data.images.length < 5) {
@@ -50,31 +78,35 @@ const FormPostAd = () => {
         return;
       }
 
-      if (isErrorUploadFiles) {
-        return;
-      }
-
-      if (productCategorizationState.isShowFormSize) {
-        methods.setValue('quantity', 0);
-        methods.setValue('price', 0);
+      if (productCategorizationState.isShowForm) {
+        methods.unregister("quantity");
+        methods.unregister("price");
       }
 
       createProduct({
         ...data,
         optionValues: productCatalogState.productOptionValues,
         paymentMethods: addProductState.paymentMethods,
-        inventories: inventoryState.inventories.map((inventory) => ({
-          colorName: inventory.colorName,
-          colorValue: inventory.colorValue,
-          sizeName: inventory.sizeName,
-          sizeValue: inventory.sizeValue,
-          quantity: Number(inventory.quantity),
-          price: Number(inventory.price),
-        }))
+        inventories: productCategorizationState.isShowForm
+          ? inventoryState.inventories.map((inventory) => ({
+              colorName: inventory.colorName,
+              colorValue: inventory.colorValue,
+              sizeName: inventory.sizeName,
+              sizeValue: inventory.sizeValue,
+              quantity: Number(inventory.quantity),
+              price: Number(inventory.price),
+            }))
+          : [],
       })
         .unwrap()
-        .then(() => {
-          data.images.map((file) => handleStorageFiles(file, data.name));
+        .then(async (response) => {
+          for (const file of data.images) {
+            await handleUploadFile(file, response.id, response.sellerId);
+          }
+
+          if (isError) {
+            return;
+          }
 
           methods.reset();
           toast.success(
@@ -82,21 +114,24 @@ const FormPostAd = () => {
             { autoClose: 2000 }
           );
           dispatch(handleResetStep());
+          dispatch(resetInventoryForm());
+          navigate("/my-ads");
         })
         .catch((error) => {
           toast.error(error.data.message);
         });
     },
     [
-      addProductState.paymentMethods,
+      navigate,
+      productCategorizationState.isShowForm,
       createProduct,
-      handleStorageFiles,
-      inventoryState,
-      isErrorUploadFiles,
+      productCatalogState.productOptionValues,
+      addProductState.paymentMethods,
+      inventoryState.inventories,
       methods,
-      productCatalogState,
-      productCategorizationState,
-      dispatch
+      isError,
+      dispatch,
+      handleUploadFile,
     ]
   );
 
@@ -106,7 +141,7 @@ const FormPostAd = () => {
         return <FormAdInfoBasic />;
 
       case 2:
-        return <FormAdInfoDetails />;
+        return <FormAdInfoDetails methods={methods} />;
 
       case 3:
         return <FormAdInfoAddition />;
@@ -118,6 +153,8 @@ const FormPostAd = () => {
 
   return (
     <>
+      {/* {isLoadingFetchProductById && <LoadingSpinner option1 />} */}
+
       <FormProvider {...methods}>
         <form
           className="post-ad__form"
@@ -154,7 +191,10 @@ const FormPostAd = () => {
                 isLoading={createProductResults.isLoading}
                 type="submit"
                 className="post-ad__btn next"
-                disabled={addProductState.paymentMethods.length === 0 || !methods.formState.isValid}
+                disabled={
+                  addProductState.paymentMethods.length === 0 ||
+                  !methods.formState.isValid
+                }
               >
                 Submit Ad
               </ButtonFields>

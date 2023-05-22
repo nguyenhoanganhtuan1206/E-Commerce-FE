@@ -39,7 +39,7 @@ const addProductSlices = createSlice({
       }
     },
     handleResetStep: (state) => {
-      state.currentStepForm = 0;
+      state.currentStepForm = 1;
     }
   },
 });

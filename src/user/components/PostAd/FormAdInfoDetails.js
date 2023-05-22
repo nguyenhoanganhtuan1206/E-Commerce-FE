@@ -30,8 +30,7 @@ import {
   useAddProductStyleMutation,
 } from "../../../redux/apis/seller/product-style/product-style.api";
 
-const FormAdInfoDetails = () => {
-
+const FormAdInfoDetails = ({ methods }) => {
   const dispatch = useDispatch();
   const fetchAllState = useSelector((state) => state.fetchAll);
   const productCategorizationState = useSelector(
@@ -49,6 +48,12 @@ const FormAdInfoDetails = () => {
     useDeleteProductStyleMutation();
 
   const isLoading = isLoadingCategories || isLoadingProductStyles;
+
+  const toggleShowAddFormCategorization = useCallback(() => {
+    dispatch(toggleShowAddForm());
+    methods.unregister("price");
+    methods.unregister("quantity");
+  }, [dispatch, methods]);
 
   const handleAddNewProductStyle = useCallback(
     (data, methods) => {
@@ -83,7 +88,7 @@ const FormAdInfoDetails = () => {
             label="Categories*"
             addNew
             validators={[
-              VALIDATOR_MIN_LENGTH_ARRAY(1, "Must be choose at least category")
+              VALIDATOR_MIN_LENGTH_ARRAY(1, "Must be choose at least category"),
             ]}
           />
         </div>
@@ -105,7 +110,7 @@ const FormAdInfoDetails = () => {
               />
             }
             validators={[
-              VALIDATOR_MIN_LENGTH_ARRAY(1, "Must be choose at least style")
+              VALIDATOR_MIN_LENGTH_ARRAY(1, "Must be choose at least style"),
             ]}
           />
         </div>
@@ -120,7 +125,7 @@ const FormAdInfoDetails = () => {
               type="button"
               borderOnly
               className="form-create__categorization"
-              onClick={() => dispatch(toggleShowAddForm())}
+              onClick={toggleShowAddFormCategorization}
             >
               <FontAwesomeIcon
                 className="form-create__categorization-icon"
@@ -155,7 +160,10 @@ const FormAdInfoDetails = () => {
                 fieldName="quantity"
                 validators={[
                   VALIDATOR_NUMBER("Quantity is invalid"),
-                  VALIDATOR_MAX(10000, "Quantity cannot large than 10000 unit"),
+                  VALIDATOR_MAX(
+                    100000,
+                    "Quantity cannot large than 100000 unit"
+                  ),
                 ]}
                 initialValue={0}
                 placeholder="Enter quantity"

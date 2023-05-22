@@ -11,9 +11,7 @@ import {
   toggleShowAddForm,
   toggleShowFormSize,
 } from "../../../../redux/slices/seller/product-categorization/productCategorizationSlice";
-import {
-  ButtonFields,
-} from "../../../../shared/FormElement";
+import { ButtonFields } from "../../../../shared/FormElement";
 import CategorizationTable from "../CategorizationTable/CategorizationTable";
 
 const FormAddCategorization = () => {
@@ -32,8 +30,10 @@ const FormAddCategorization = () => {
 
           <div className="col-5">
             <input
-              value={productCategorizationState.colorName}
-              onChange={(e) => dispatch(handleOnChangeColorName(e.target.value))}
+              value={productCategorizationState.colorName || ""}
+              onChange={(e) =>
+                dispatch(handleOnChangeColorName(e.target.value))
+              }
               className={`${classes.formCategorization__input} form-input__input`}
               placeholder="Example: Color ..."
               type="text"
@@ -73,8 +73,10 @@ const FormAddCategorization = () => {
 
               <div className="col-5">
                 <input
-                  value={productCategorizationState.sizeName}
-                  onChange={(e) => dispatch(handleOnChangeSizeName(e.target.value))}
+                  value={productCategorizationState.sizeName || ""}
+                  onChange={(e) =>
+                    dispatch(handleOnChangeSizeName(e.target.value))
+                  }
                   className={`${classes.formCategorization__input} form-input__input`}
                   placeholder="Example: Size ..."
                   type="text"
