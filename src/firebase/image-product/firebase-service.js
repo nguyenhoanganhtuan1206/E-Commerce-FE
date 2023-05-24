@@ -1,15 +1,11 @@
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
+import { useDispatch } from "react-redux";
 import { db, storage } from "../../config/firebaseConfig";
-import {
-  arrayUnion,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { updateImages } from "../../redux/slices/FormElement/multipleImages/multipleImagesSlice";
 
 export const useUploadFileFirebase = () => {
   const [progress, setProgress] = useState(0);
@@ -53,4 +49,20 @@ export const useUploadFileFirebase = () => {
   };
 
   return { handleUploadFile, isError, progress };
+};
+
+export const useFetchFilesFirebase = () => {
+  const dispatch = useDispatch();
+
+  const handleFetchFiles = useCallback(
+    async (fileNamePath) => {
+      const imagesRef = doc(db, "imagesProduct", fileNamePath);
+      const data = await getDoc(imagesRef);
+
+      dispatch(updateImages(data.data()));
+    },
+    [dispatch]
+  );
+
+  return [handleFetchFiles];
 };

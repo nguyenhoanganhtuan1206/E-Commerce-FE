@@ -25,8 +25,8 @@ import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
-import ProtectRoutes from "./routes/ProtectRoutes";
 import Demo from "./user/page/Demo/Demo";
+import ProtectRoutes from "./routes/ProtectRoutes";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -49,13 +49,15 @@ function App() {
         {/* Required token */}
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         {/* Required token */}
+
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
           <Route path="/my-ads" element={<MyAdsPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/post-ad" element={<PostAd />} />
+          <Route path="/product/new" element={<PostAd />} />
+          <Route path="/product/:productId/edit" element={<PostAd />} />
         </Route>
         <Route path="/chat-user" element={<ChatPageUser />} />
 
