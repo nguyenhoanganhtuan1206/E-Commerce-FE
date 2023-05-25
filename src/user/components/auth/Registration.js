@@ -45,7 +45,7 @@ const schema = yup.object({
     .string()
     .oneOf(
       [yup.ref("password")],
-      "Confirm Password must match with New Password"
+      "Confirm Password must match with Password"
     ),
 });
 
