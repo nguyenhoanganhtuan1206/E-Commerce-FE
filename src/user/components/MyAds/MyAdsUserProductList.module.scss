@@ -17,6 +17,12 @@
     background-color: #fff;
     border-radius: 10px;
   }
+
+  th {
+    &:first-child {
+      width: 20%;
+    }
+  }
 }
 
 .ProductListHeader {
