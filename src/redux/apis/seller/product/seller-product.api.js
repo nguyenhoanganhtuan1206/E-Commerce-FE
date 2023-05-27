@@ -21,9 +21,19 @@ const useSellerProductApis = createApi({
   }),
   endpoints: (builder) => {
     return {
+      fetchProductsBySellerId: builder.query({
+        providesTags: (result, error, args) => {
+          return [{ type: "ProductSeller", id: result.sellerId }];
+        },
+        query: () => {
+          return {
+            method: "GET",
+          };
+        },
+      }),
       createProduct: builder.mutation({
         invalidatesTags: (result, error, args) => {
-          return [{ type: "Seller" }];
+          return [{ type: "ProductSeller", id: result.sellerId }];
         },
         query: (data) => {
           return {
@@ -35,9 +45,25 @@ const useSellerProductApis = createApi({
           };
         },
       }),
+      updateProduct: builder.mutation({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "ProductSeller", id: result.sellerId }];
+        },
+        query: (payload) => {
+          return {
+            method: "PUT",
+            body: payload.data,
+            url: `${payload.productId}`,
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useCreateProductMutation } = useSellerProductApis;
+export const {
+  useCreateProductMutation,
+  useFetchProductsBySellerIdQuery,
+  useUpdateProductMutation,
+} = useSellerProductApis;
 export { useSellerProductApis };

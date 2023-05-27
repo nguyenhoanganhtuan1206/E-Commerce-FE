@@ -143,10 +143,6 @@ const FormAdInfoDetails = ({ methods }) => {
             <div className="col-4">
               <InputFields
                 fieldName="price"
-                validators={[
-                  VALIDATOR_NUMBER("Price is invalid"),
-                  VALIDATOR_MAX(1000000, "Price must be less than $1000000"),
-                ]}
                 initialValue={0}
                 placeholder="Enter Price"
                 type="number"
@@ -158,13 +154,6 @@ const FormAdInfoDetails = ({ methods }) => {
             <div className="col-4">
               <InputFields
                 fieldName="quantity"
-                validators={[
-                  VALIDATOR_NUMBER("Quantity is invalid"),
-                  VALIDATOR_MAX(
-                    100000,
-                    "Quantity cannot large than 100000 unit"
-                  ),
-                ]}
                 initialValue={0}
                 placeholder="Enter quantity"
                 type="number"

@@ -2,10 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isShowForm: false,
-  colorName: null,
-  sizeName: null,
+  colorName: "",
+  sizeName: "",
   formNumbers: 1,
   isShowFormSize: false,
+  isDuplicate: false,
 };
 
 const productCategorizationSlices = createSlice({
@@ -25,16 +26,41 @@ const productCategorizationSlices = createSlice({
     },
     handleOnChangeColorName: (state, action) => {
       state.colorName = action.payload;
+
+      if (!!state.colorName && !!state.sizeName) {
+        if (state.colorName.toLowerCase() === state.sizeName.toLowerCase()) {
+          state.isDuplicate = true;
+        } else {
+          state.isDuplicate = false;
+        }
+      }
     },
     handleOnChangeSizeName: (state, action) => {
       state.sizeName = action.payload;
+
+      if (!!state.colorName && !!state.sizeName) {
+        if (
+          state.colorName.toLowerCase().trim() ===
+          state.sizeName.toLowerCase().trim()
+        ) {
+          state.isDuplicate = true;
+        } else {
+          state.isDuplicate = false;
+        }
+      }
     },
     handleIncreaseFormNum: (state) => {
       state.formNumbers += 1;
     },
     handleDecreaseFormNum: (state) => {
       state.formNumbers -= 1;
-    }
+    },
+    setStateShowForm: (state, action) => {
+      state.isShowForm = action.payload;
+    },
+    setStateShowFormSize: (state, action) => {
+      state.isShowFormSize = action.payload;
+    },
   },
 });
 
@@ -45,6 +71,7 @@ export const {
   handleOnChangeColorName,
   handleIncreaseFormNum,
   handleDecreaseFormNum,
-} =
-  productCategorizationSlices.actions;
+  setStateShowForm,
+  setStateShowFormSize,
+} = productCategorizationSlices.actions;
 export const productCategorizationReducer = productCategorizationSlices.reducer;

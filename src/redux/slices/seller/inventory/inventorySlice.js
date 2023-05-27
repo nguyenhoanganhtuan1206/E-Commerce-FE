@@ -5,6 +5,7 @@ const inventorySlice = createSlice({
   initialState: {
     inventories: [
       {
+        id: null,
         colorName: "",
         colorValue: "",
         sizeName: "",
@@ -63,6 +64,7 @@ const inventorySlice = createSlice({
     },
     updateInventories: (state, action) => {
       state.inventories = action.payload.map((inventory) => ({
+        id: inventory.id || "",
         colorName: inventory.colorName || "",
         colorValue: inventory.colorValue || "",
         sizeName: inventory.sizeName || "",

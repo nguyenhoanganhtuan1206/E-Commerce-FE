@@ -44,7 +44,7 @@ const SidebarUser = () => {
         </li>
 
         <li className="sidebar-user__item">
-          <NavLink to="/post-ad" className="sidebar-user__link">
+          <NavLink to="/product/new" className="sidebar-user__link">
             <FontAwesomeIcon
               className="sidebar-user__icon"
               icon={faPlusCircle}
