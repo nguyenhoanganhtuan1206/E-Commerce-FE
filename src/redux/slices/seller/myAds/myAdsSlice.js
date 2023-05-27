@@ -10,6 +10,11 @@ const initialState = {
 const myAdsSlices = createSlice({
   name: "myAds",
   initialState,
+  reducers: {
+    resetProductData: (state) => {
+      state.productData = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductById.pending, (state) => {
@@ -26,4 +31,5 @@ const myAdsSlices = createSlice({
   },
 });
 
+export const { resetProductData } = myAdsSlices.actions;
 export const myAdsReducers = myAdsSlices.reducer;

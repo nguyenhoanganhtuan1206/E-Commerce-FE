@@ -11,6 +11,7 @@ import {
   toggleShowAddForm,
   toggleShowFormSize,
 } from "../../../../redux/slices/seller/product-categorization/productCategorizationSlice";
+import { Alert } from "../../../../shared/components";
 import { ButtonFields } from "../../../../shared/FormElement";
 import CategorizationTable from "../CategorizationTable/CategorizationTable";
 
@@ -29,15 +30,23 @@ const FormAddCategorization = () => {
           </div>
 
           <div className="col-5">
-            <input
-              value={productCategorizationState.colorName || ""}
-              onChange={(e) =>
-                dispatch(handleOnChangeColorName(e.target.value))
-              }
-              className={`${classes.formCategorization__input} form-input__input`}
-              placeholder="Example: Color ..."
-              type="text"
-            />
+            <div className={classes.formCategorization__InputGroup}>
+              <input
+                value={productCategorizationState.colorName || ""}
+                onChange={(e) =>
+                  dispatch(handleOnChangeColorName(e.target.value))
+                }
+                className={`${classes.formCategorization__input} form-input__input`}
+                placeholder="Example: Color ..."
+                type="text"
+              />
+              {productCategorizationState.isDuplicate && (
+                <Alert
+                  alertMessage="The category names must be different"
+                  error
+                />
+              )}
+            </div>
           </div>
 
           <FontAwesomeIcon
@@ -72,15 +81,24 @@ const FormAddCategorization = () => {
               </div>
 
               <div className="col-5">
-                <input
-                  value={productCategorizationState.sizeName || ""}
-                  onChange={(e) =>
-                    dispatch(handleOnChangeSizeName(e.target.value))
-                  }
-                  className={`${classes.formCategorization__input} form-input__input`}
-                  placeholder="Example: Size ..."
-                  type="text"
-                />
+                <div className={classes.formCategorization__InputGroup}>
+                  <input
+                    value={productCategorizationState.sizeName || ""}
+                    onChange={(e) =>
+                      dispatch(handleOnChangeSizeName(e.target.value))
+                    }
+                    className={`${classes.formCategorization__input} form-input__input`}
+                    placeholder="Example: Size ..."
+                    type="text"
+                  />
+
+                  {productCategorizationState.isDuplicate && (
+                    <Alert
+                      alertMessage="The category names must be different"
+                      error
+                    />
+                  )}
+                </div>
               </div>
 
               <FontAwesomeIcon

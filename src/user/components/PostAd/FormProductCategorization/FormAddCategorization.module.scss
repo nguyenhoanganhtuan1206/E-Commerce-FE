@@ -29,9 +29,12 @@
     }
   }
 
+  &__InputGroup {
+    width: 80%;
+  }
+
   &__input {
     min-height: 4rem;
-    width: 80%;
   }
 }
 
