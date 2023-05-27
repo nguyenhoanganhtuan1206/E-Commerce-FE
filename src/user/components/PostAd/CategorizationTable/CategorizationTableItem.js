@@ -124,7 +124,7 @@ const CategorizationTableItem = () => {
             <div style={{ width: "150px", textAlign: "center" }}>
               {index !== 0 && (
                 <FontAwesomeIcon
-                  onClick={() => dispatch(removeInventoryForm(inventory))}
+                  onClick={() => dispatch(removeInventoryForm(index))}
                   className={classes.categorizationTable__icon}
                   icon={faTrashAlt}
                 />

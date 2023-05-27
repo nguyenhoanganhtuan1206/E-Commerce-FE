@@ -6,6 +6,7 @@ import { handleChangePaymentMethod } from "../../../redux/slices/seller/add-prod
 
 const FormCardPaymentMethod = () => {
   const dispatch = useDispatch();
+  
   const handleCheckboxChange = useCallback((name, checked) => {
     dispatch(handleChangePaymentMethod({ name, checked }));
   }, [dispatch]);
