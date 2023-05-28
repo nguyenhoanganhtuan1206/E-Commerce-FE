@@ -57,6 +57,17 @@ const useSellerProductApis = createApi({
           };
         },
       }),
+      deleteProduct: builder.mutation({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "ProductSeller" }];
+        },
+        query: (productId) => {
+          return {
+            method: "DELETE",
+            url: `${productId}`,
+          };
+        },
+      }),
     };
   },
 });
@@ -65,5 +76,6 @@ export const {
   useCreateProductMutation,
   useFetchProductsBySellerIdQuery,
   useUpdateProductMutation,
+  useDeleteProductMutation,
 } = useSellerProductApis;
 export { useSellerProductApis };

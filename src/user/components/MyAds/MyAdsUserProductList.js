@@ -6,14 +6,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
-import { Skeleton } from "../../../shared/components";
-import { useFetchProductsBySellerIdQuery } from "../../../redux/apis/seller/product/seller-product.api";
+import { ModalWarning, Skeleton } from "../../../shared/components";
+import {
+  useDeleteProductMutation,
+  useFetchProductsBySellerIdQuery,
+} from "../../../redux/apis/seller/product/seller-product.api";
 import Pagination from "../../../shared/components/Pagination/Pagination";
 import { useCallback, useState } from "react";
 import usePaginate from "../../../shared/hooks/usePaginate";
+import { toggleShowDeleteProduct } from "../../../redux/slices/seller/sellerSlice";
+import { ButtonFields } from "../../../shared/FormElement";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const MyAdsUserProductList = () => {
   const fetchProducts = useFetchProductsBySellerIdQuery();
+  const [deleteProduct, deleteProductResults] = useDeleteProductMutation();
+
+  const dispatch = useDispatch();
+  const sellerState = useSelector((state) => state.seller);
+  const [productId, setProductId] = useState(null);
 
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,6 +40,20 @@ const MyAdsUserProductList = () => {
   const handleRedirectPage = useCallback((pageNumber) => {
     setCurrentPage(pageNumber);
   }, []);
+
+  const handleDeleteProduct = () => {
+    deleteProduct(productId)
+      .unwrap()
+      .then(() => {
+        toast.success("Deleted your product successfully!", {
+          autoClose: 2000,
+        });
+        dispatch(toggleShowDeleteProduct());
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+      });
+  };
 
   if (fetchProducts.isFetching) {
     return <Skeleton times={5} style={{ height: "7rem", width: "100%" }} />;
@@ -79,7 +105,7 @@ const MyAdsUserProductList = () => {
                     <td>
                       {data.inventories.length > 0
                         ? data.inventories.map((inventory, index) => (
-                            <p key={index}>${inventory.quantity}</p>
+                            <p key={index}>{inventory.quantity}</p>
                           ))
                         : data.quantity}
                     </td>
@@ -94,6 +120,10 @@ const MyAdsUserProductList = () => {
                       <FontAwesomeIcon
                         className={classes.ProductListIcon}
                         icon={faTrashAlt}
+                        onClick={() => {
+                          setProductId(data.id);
+                          dispatch(toggleShowDeleteProduct());
+                        }}
                       />
                     </td>
                   </tr>
@@ -107,6 +137,37 @@ const MyAdsUserProductList = () => {
             currentPage={currentPage}
             onRedirect={handleRedirectPage}
           />
+
+          {/* MODAL DELETE */}
+          <ModalWarning
+            show={sellerState.isShowDeleteProduct}
+            onCancel={() => dispatch(toggleShowDeleteProduct())}
+            headerWarning="Delete Your Product"
+            footer={
+              <div className="d-flex align-items-center justify-content-between">
+                <ButtonFields
+                  type="button"
+                  onClick={() => dispatch(toggleShowDeleteProduct())}
+                  borderOnly
+                  className="seller-form__btn"
+                >
+                  Close
+                </ButtonFields>
+                <ButtonFields
+                  onClick={handleDeleteProduct}
+                  type="button"
+                  isLoading={deleteProductResults.isLoading}
+                  subPrimary
+                  className="seller-form__btn"
+                >
+                  Confirm Delete
+                </ButtonFields>
+              </div>
+            }
+          >
+            Are you sure you want to delete this location?
+          </ModalWarning>
+          {/* MODAL DELETE */}
         </div>
       </>
     );

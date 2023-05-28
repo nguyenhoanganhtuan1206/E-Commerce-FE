@@ -7,6 +7,7 @@ const initialState = {
   messageSuccessful: null,
   isShowConfirmEmail: false,
   isShowModalFeedback: false,
+  isShowDeleteProduct: false,
 };
 
 const sellerSlices = createSlice({
@@ -18,6 +19,9 @@ const sellerSlices = createSlice({
     },
     toggleShowModalFeedback: (state) => {
       state.isShowModalFeedback = !state.isShowModalFeedback;
+    },
+    toggleShowDeleteProduct: (state) => {
+      state.isShowDeleteProduct = !state.isShowDeleteProduct;
     },
     setMessageRegisterSuccessful: (state, action) => {
       state.messageSuccessful = action.payload;
@@ -33,5 +37,6 @@ export const {
   setMessageRegisterSuccessful,
   toggleShowConfirmEmail,
   toggleShowModalFeedback,
+  toggleShowDeleteProduct
 } = sellerSlices.actions;
 export const sellerReducer = sellerSlices.reducer;

@@ -18,7 +18,6 @@ import { multipleSelectReducer } from "./slices/FormElement/MultipleSelect/multi
 import { productCategorizationReducer } from "./slices/seller/product-categorization/productCategorizationSlice";
 import { inventoryReducer } from "./slices/seller/inventory/inventorySlice";
 import { myAdsReducers } from "./slices/seller/myAds/myAdsSlice";
-import { multipleReducer } from "./slices/FormElement/multipleImages/multipleImagesSlice";
 
 enableMapSet();
 
@@ -32,7 +31,6 @@ const store = configureStore({
     multipleSelect: multipleSelectReducer,
     productCategorization: productCategorizationReducer,
     inventory: inventoryReducer,
-    multipleImages: multipleReducer,
     myAds: myAdsReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
