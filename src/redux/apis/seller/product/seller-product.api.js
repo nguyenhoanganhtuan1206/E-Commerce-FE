@@ -23,7 +23,7 @@ const useSellerProductApis = createApi({
     return {
       fetchProductsBySellerId: builder.query({
         providesTags: (result, error, args) => {
-          return [{ type: "ProductSeller", id: result.sellerId }];
+          return [{ type: "ProductSeller" }];
         },
         query: () => {
           return {
@@ -33,7 +33,7 @@ const useSellerProductApis = createApi({
       }),
       createProduct: builder.mutation({
         invalidatesTags: (result, error, args) => {
-          return [{ type: "ProductSeller", id: result.sellerId }];
+          return [{ type: "ProductSeller" }];
         },
         query: (data) => {
           return {
@@ -47,7 +47,7 @@ const useSellerProductApis = createApi({
       }),
       updateProduct: builder.mutation({
         invalidatesTags: (result, error, args) => {
-          return [{ type: "ProductSeller", id: result.sellerId }];
+          return [{ type: "ProductSeller" }];
         },
         query: (payload) => {
           return {

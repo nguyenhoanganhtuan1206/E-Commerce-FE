@@ -14,8 +14,7 @@ const inventorySlice = createSlice({
         price: 0,
       },
     ],
-    isDuplicateColorValue: false,
-    isDuplicateSizeValue: false,
+    isDuplicate: false,
   },
   reducers: {
     addInventoryForm: (state, action) => {
@@ -25,27 +24,25 @@ const inventorySlice = createSlice({
       const { index, field, value, colorName, sizeName } = action.payload;
       state.inventories[index].colorName = colorName;
       state.inventories[index].sizeName = sizeName;
-
-      const valueFormatted = value.trim().toLowerCase();
-      for (const inventory of state.inventories) {
-        if (inventory.colorValue.trim().toLowerCase() === valueFormatted) {
-          state.isDuplicateColorValue = true;
-          break;
-        } else {
-          state.isDuplicateColorValue = false;
-        }
-      }
-
-      for (const inventory of state.inventories) {
-        if (inventory.sizeValue.trim().toLowerCase() === valueFormatted) {
-          state.isDuplicateSizeValue = true;
-          break;
-        } else {
-          state.isDuplicateSizeValue = false;
-        }
-      }
-      /* Update data to array */
       state.inventories[index][field] = value;
+
+      const newColorValue = state.inventories[index].colorValue
+        .trim()
+        .toLowerCase();
+      const newSizeValue = state.inventories[index].sizeValue
+        .trim()
+        .toLowerCase();
+
+      // Check for duplicates
+      state.isDuplicate = state.inventories.some((inventory, i) => {
+        if (i !== index) {
+          return (
+            inventory.colorValue.trim().toLowerCase() === newColorValue &&
+            inventory.sizeValue.trim().toLowerCase() === newSizeValue
+          );
+        }
+        return false;
+      });
     },
     removeInventoryForm: (state, action) => {
       state.inventories.splice(action.payload, 1);
