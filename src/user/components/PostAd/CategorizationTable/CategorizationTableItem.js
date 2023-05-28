@@ -45,7 +45,7 @@ const CategorizationTableItem = () => {
                 type="text"
               />
 
-              {inventoryState.isDuplicateColorValue && (
+              {inventoryState.isDuplicate && (
                 <Alert
                   alertMessage="The categories of items must be different"
                   error
@@ -73,7 +73,7 @@ const CategorizationTableItem = () => {
                   type="text"
                 />
 
-                {inventoryState.isDuplicateSizeValue && (
+                {inventoryState.isDuplicate && (
                   <Alert
                     alertMessage="The categories of items must be different"
                     error

@@ -1,11 +1,9 @@
 import { toast } from "react-toastify";
 import { useCallback, useState } from "react";
 
-import { useDispatch } from "react-redux";
 import { db, storage } from "../../config/firebaseConfig";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { updateImages } from "../../redux/slices/FormElement/multipleImages/multipleImagesSlice";
 
 export const useUploadFileFirebase = () => {
   const [progress, setProgress] = useState(0);
@@ -39,7 +37,7 @@ export const useUploadFileFirebase = () => {
 
           await updateDoc(imagesRef, {
             imagesProduct: arrayUnion({
-              fileName: fileName,
+              fileName: fileUpload.name,
               url: downloadURL,
             }),
           });
@@ -52,17 +50,46 @@ export const useUploadFileFirebase = () => {
 };
 
 export const useFetchFilesFirebase = () => {
-  const dispatch = useDispatch();
+  const handleFetchFiles = useCallback(async (fileNamePath) => {
+    const imagesRef = doc(db, "imagesProduct", fileNamePath);
+    const data = await getDoc(imagesRef);
 
-  const handleFetchFiles = useCallback(
-    async (fileNamePath) => {
-      const imagesRef = doc(db, "imagesProduct", fileNamePath);
-      const data = await getDoc(imagesRef);
-
-      dispatch(updateImages(data.data()));
-    },
-    [dispatch]
-  );
+    return data.data();
+  }, []);
 
   return [handleFetchFiles];
+};
+
+export const useUpdateFileFirebase = () => {
+  const handleUpdateFile = useCallback(
+    async (fileNamePath, imagesProduct = []) => {
+      const imagesRef = doc(db, "imagesProduct", fileNamePath);
+
+      await updateDoc(imagesRef, { imagesProduct: imagesProduct });
+    },
+    []
+  );
+
+  return handleUpdateFile;
+};
+
+export const useDeleteFileFirebase = () => {
+  const handleDeleteFile = useCallback(async (fileNamePath, url) => {
+    const imagesRef = doc(db, "imagesProduct", fileNamePath);
+
+    const dataExisted = await getDoc(imagesRef);
+
+    if (dataExisted.exists()) {
+      const imagesData = dataExisted.data().imagesProduct;
+
+      const itemIndex = imagesData.findIndex((item) => item.url === url);
+
+      if (itemIndex !== -1) {
+        imagesData.splice(itemIndex, 1);
+      }
+      return imagesData;
+    }
+  }, []);
+
+  return handleDeleteFile;
 };

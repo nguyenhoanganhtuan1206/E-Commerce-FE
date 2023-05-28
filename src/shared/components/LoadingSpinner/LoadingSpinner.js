@@ -1,8 +1,14 @@
 import "./LoadingSpinner.scss";
 
-const LoadingSpinner = ({ option1, option2 }) => {
+const LoadingSpinner = ({ option1, option2, noOverlay }) => {
   return (
     <>
+      {noOverlay && (
+        <div className="loading-spinner__inner">
+          <div className="lds-dual-ring"></div>
+        </div>
+      )}
+
       {option1 && (
         <div className="loading-spinner__overlay">
           <div className="loading-spinner__inner">
