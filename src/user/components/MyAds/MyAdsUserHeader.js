@@ -17,9 +17,21 @@ const MyAdsUserHeader = () => {
       <ul className={classes.MyAdsHeaderList}>
         {[
           { section: MY_ADS_ALL_PRODUCT, label: "All Product" },
-          { section: MY_ADS_IN_STOCK, label: "In stock", badge: 1 },
-          { section: MY_ADS_OUT_OF_STOCK, label: "Out of stock", badge: 1 },
-          { section: MY_ADS_APPROVAL, label: "Approval", badge: 1 },
+          {
+            section: MY_ADS_IN_STOCK,
+            label: "In stock",
+            badge: myAdsState.badgeInStock,
+          },
+          {
+            section: MY_ADS_OUT_OF_STOCK,
+            label: "Out of stock",
+            badge: myAdsState.badgeOutOfStock,
+          },
+          {
+            section: MY_ADS_APPROVAL,
+            label: "Approval",
+            badge: myAdsState.badgeApproval,
+          },
         ].map(({ section, label, badge }) => (
           <li
             key={section}
@@ -30,9 +42,7 @@ const MyAdsUserHeader = () => {
             }`}
           >
             {label}
-            {badge && (
-              <span className={classes.MyAdsHeaderItem__badge}>{badge}</span>
-            )}
+            <span className={classes.MyAdsHeaderItem__badge}>{badge}</span>
           </li>
         ))}
       </ul>

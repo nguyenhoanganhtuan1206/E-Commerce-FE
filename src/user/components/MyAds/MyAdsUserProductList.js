@@ -1,6 +1,9 @@
 import classes from "./MyAdsUserProductList.module.scss";
 
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
@@ -15,17 +18,17 @@ import {
   useFetchProductsWithOutOfStockQuery,
 } from "../../../redux/apis/seller/product/seller-product.api";
 import Pagination from "../../../shared/components/Pagination/Pagination";
-import { useCallback, useEffect, useState } from "react";
 import usePaginate from "../../../shared/hooks/usePaginate";
 import { toggleShowDeleteProduct } from "../../../redux/slices/seller/sellerSlice";
 import { ButtonFields } from "../../../shared/FormElement";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {
   MY_ADS_ALL_PRODUCT,
   MY_ADS_APPROVAL,
   MY_ADS_IN_STOCK,
   MY_ADS_OUT_OF_STOCK,
+  fetchBadgeForApproval,
+  fetchBadgeForInStock,
+  fetchBadgeForOutOfStock,
 } from "../../../redux/slices/seller/myAds/myAdsSlice";
 
 const MyAdsUserProductList = () => {
@@ -48,6 +51,10 @@ const MyAdsUserProductList = () => {
   let isFetchingData = false;
 
   const handleFetchDataBySection = () => {
+    dispatch(fetchBadgeForInStock(fetchProductWithInStock.data.length));
+    dispatch(fetchBadgeForOutOfStock(fetchProductOutOfStock.data.length));
+    dispatch(fetchBadgeForApproval(fetchProductWithApproval.data.length));
+
     switch (myAdsState.myAdCurrentSection) {
       case MY_ADS_ALL_PRODUCT:
         isFetchingData = fetchProducts.isFetching;

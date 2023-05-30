@@ -11,6 +11,9 @@ const initialState = {
   isLoading: false,
   error: null,
   myAdCurrentSection: MY_ADS_ALL_PRODUCT,
+  badgeInStock: 0,
+  badgeOutOfStock: 0,
+  badgeApproval: 0,
 };
 
 const myAdsSlices = createSlice({
@@ -22,6 +25,15 @@ const myAdsSlices = createSlice({
     },
     switchAdSection: (state, action) => {
       state.myAdCurrentSection = action.payload;
+    },
+    fetchBadgeForInStock: (state, action) => {
+      state.badgeInStock = action.payload;
+    },
+    fetchBadgeForOutOfStock: (state, action) => {
+      state.badgeOutOfStock = action.payload;
+    },
+    fetchBadgeForApproval: (state, action) => {
+      state.badgeApproval = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -40,5 +52,11 @@ const myAdsSlices = createSlice({
   },
 });
 
-export const { resetProductData, switchAdSection } = myAdsSlices.actions;
+export const {
+  resetProductData,
+  switchAdSection,
+  fetchBadgeForApproval,
+  fetchBadgeForInStock,
+  fetchBadgeForOutOfStock,
+} = myAdsSlices.actions;
 export const myAdsReducers = myAdsSlices.reducer;
