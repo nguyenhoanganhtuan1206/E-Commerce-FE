@@ -9,29 +9,78 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { ModalWarning, Skeleton } from "../../../shared/components";
 import {
   useDeleteProductMutation,
+  useFetchProductWithApprovalQuery,
+  useFetchProductWithInStockQuery,
   useFetchProductsBySellerIdQuery,
+  useFetchProductsWithOutOfStockQuery,
 } from "../../../redux/apis/seller/product/seller-product.api";
 import Pagination from "../../../shared/components/Pagination/Pagination";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import usePaginate from "../../../shared/hooks/usePaginate";
 import { toggleShowDeleteProduct } from "../../../redux/slices/seller/sellerSlice";
 import { ButtonFields } from "../../../shared/FormElement";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  MY_ADS_ALL_PRODUCT,
+  MY_ADS_APPROVAL,
+  MY_ADS_IN_STOCK,
+  MY_ADS_OUT_OF_STOCK,
+} from "../../../redux/slices/seller/myAds/myAdsSlice";
 
 const MyAdsUserProductList = () => {
   const fetchProducts = useFetchProductsBySellerIdQuery();
+  const fetchProductOutOfStock = useFetchProductsWithOutOfStockQuery();
+  const fetchProductWithApproval = useFetchProductWithApprovalQuery();
+  const fetchProductWithInStock = useFetchProductWithInStockQuery();
   const [deleteProduct, deleteProductResults] = useDeleteProductMutation();
 
   const dispatch = useDispatch();
   const sellerState = useSelector((state) => state.seller);
+  const myAdsState = useSelector((state) => state.myAds);
   const [productId, setProductId] = useState(null);
 
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [capacityPage, setCapacityPage] = useState(6);
   const { paginate } = usePaginate();
-  const storage = paginate(fetchProducts.data, currentPage, capacityPage);
+
+  let isFetchingData = false;
+
+  const handleFetchDataBySection = () => {
+    switch (myAdsState.myAdCurrentSection) {
+      case MY_ADS_ALL_PRODUCT:
+        isFetchingData = fetchProducts.isFetching;
+        return fetchProducts.data;
+
+      case MY_ADS_OUT_OF_STOCK:
+        isFetchingData = fetchProductOutOfStock.isFetching;
+        return fetchProductOutOfStock.data;
+
+      case MY_ADS_APPROVAL:
+        isFetchingData = fetchProductWithApproval.isFetching;
+        return fetchProductWithApproval.data;
+
+      case MY_ADS_IN_STOCK:
+        isFetchingData = fetchProductWithInStock.isFetching;
+        return fetchProductWithInStock.data;
+
+      default:
+        isFetchingData = fetchProducts.isFetching;
+        return fetchProducts.data;
+    }
+  };
+
+  useEffect(() => {
+    handleFetchDataBySection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [myAdsState.myAdCurrentSection]);
+
+  const storage = paginate(
+    handleFetchDataBySection() || [],
+    currentPage,
+    capacityPage
+  );
 
   const handleRedirectEditorForm = (productId) => {
     navigate(`/product/${productId}/edit`);
@@ -55,7 +104,7 @@ const MyAdsUserProductList = () => {
       });
   };
 
-  if (fetchProducts.isFetching) {
+  if (isFetchingData) {
     return <Skeleton times={5} style={{ height: "7rem", width: "100%" }} />;
   } else if (fetchProducts.error) {
     return <div>Something went wrong</div>;
@@ -76,59 +125,61 @@ const MyAdsUserProductList = () => {
             </thead>
 
             <tbody>
-              {storage.map((data, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{data.name}</td>
-                    <td>
-                      {data.categories.map((category, index) => (
-                        <p key={index}>{category}</p>
-                      ))}
-                    </td>
-                    <td>
-                      {Object.entries(data.inventories)
-                        .sort((a, b) => a[1].colorValue - b[1].colorValue)
-                        .map((inventory, index) => (
-                          <p key={index}>
-                            {inventory[1].colorValue}, {inventory[1].sizeValue}
-                          </p>
+              {storage.length > 0 &&
+                storage.map((data, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{data.name}</td>
+                      <td>
+                        {data.categories.map((category, index) => (
+                          <p key={index}>{category}</p>
                         ))}
-                    </td>
-                    <td>
-                      {data.inventories.length > 0
-                        ? data.inventories.map((inventory, index) => (
-                            <p key={index}>${inventory.price.toFixed(2)}</p>
-                          ))
-                        : `$${data.price.toFixed(2)}`}
-                    </td>
+                      </td>
+                      <td>
+                        {Object.entries(data.inventories)
+                          .sort((a, b) => a[1].colorValue - b[1].colorValue)
+                          .map((inventory, index) => (
+                            <p key={index}>
+                              {inventory[1].colorValue},{" "}
+                              {inventory[1].sizeValue}
+                            </p>
+                          ))}
+                      </td>
+                      <td>
+                        {data.inventories.length > 0
+                          ? data.inventories.map((inventory, index) => (
+                              <p key={index}>${inventory.price.toFixed(2)}</p>
+                            ))
+                          : `$${data.price.toFixed(2)}`}
+                      </td>
 
-                    <td>
-                      {data.inventories.length > 0
-                        ? data.inventories.map((inventory, index) => (
-                            <p key={index}>{inventory.quantity}</p>
-                          ))
-                        : data.quantity}
-                    </td>
+                      <td>
+                        {data.inventories.length > 0
+                          ? data.inventories.map((inventory, index) => (
+                              <p key={index}>{inventory.quantity}</p>
+                            ))
+                          : data.quantity}
+                      </td>
 
-                    <td className="d-flex align-items-center">
-                      <FontAwesomeIcon
-                        className={classes.ProductListIcon}
-                        icon={faPenAlt}
-                        onClick={() => handleRedirectEditorForm(data.id)}
-                      />
+                      <td className="d-flex align-items-center">
+                        <FontAwesomeIcon
+                          className={classes.ProductListIcon}
+                          icon={faPenAlt}
+                          onClick={() => handleRedirectEditorForm(data.id)}
+                        />
 
-                      <FontAwesomeIcon
-                        className={classes.ProductListIcon}
-                        icon={faTrashAlt}
-                        onClick={() => {
-                          setProductId(data.id);
-                          dispatch(toggleShowDeleteProduct());
-                        }}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
+                        <FontAwesomeIcon
+                          className={classes.ProductListIcon}
+                          icon={faTrashAlt}
+                          onClick={() => {
+                            setProductId(data.id);
+                            dispatch(toggleShowDeleteProduct());
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
           <Pagination

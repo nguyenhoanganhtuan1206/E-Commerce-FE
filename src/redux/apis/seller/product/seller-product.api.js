@@ -68,6 +68,39 @@ const useSellerProductApis = createApi({
           };
         },
       }),
+      fetchProductsWithOutOfStock: builder.query({
+        providesTags: (result, error, args) => {
+          return [{ type: "ProductSeller" }];
+        },
+        query: () => {
+          return {
+            url: "out-of-stock",
+            method: "GET",
+          };
+        },
+      }),
+      fetchProductWithInStock: builder.query({
+        providesTags: (result, error, arg) => {
+          return [{ type: "ProductSeller" }];
+        },
+        query: () => {
+          return {
+            url: "in-stock",
+            method: "GET",
+          };
+        },
+      }),
+      fetchProductWithApproval: builder.query({
+        providesTags: (result, error, arg) => {
+          return [{ type: "ProductSeller" }];
+        },
+        query: () => {
+          return {
+            url: "approval",
+            method: "GET",
+          };
+        },
+      }),
     };
   },
 });
@@ -77,5 +110,8 @@ export const {
   useFetchProductsBySellerIdQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useFetchProductsWithOutOfStockQuery,
+  useFetchProductWithInStockQuery,
+  useFetchProductWithApprovalQuery,
 } = useSellerProductApis;
 export { useSellerProductApis };
