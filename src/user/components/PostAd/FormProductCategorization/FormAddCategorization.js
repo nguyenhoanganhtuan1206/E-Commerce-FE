@@ -114,7 +114,9 @@ const FormAddCategorization = () => {
       <div className="w-100">
         <div className="row mt-3">
           <div className="col-2">
-            <h3 className={classes.ListCategorization__title}>List Categorization (*)</h3>
+            <h3 className={classes.ListCategorization__title}>
+              List Categorization (*)
+            </h3>
           </div>
 
           <div className="col-12 mt-3">
