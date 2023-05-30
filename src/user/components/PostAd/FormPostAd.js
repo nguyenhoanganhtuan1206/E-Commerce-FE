@@ -22,18 +22,17 @@ import FormAdInfoDetails from "./FormAdInfoDetails";
 import FormAdInfoAddition from "./FormAdInfoAddition";
 import FormAdInfoBasic from "./FormAdInfoBasic";
 import { ButtonFields } from "../../../shared/FormElement";
-import {
-  useFetchFilesFirebase,
-  useUploadFileFirebase,
-} from "../../../firebase/image-product/firebase-service";
 import { LoadingSpinner } from "../../../shared/components";
 import { resetProductData } from "../../../redux/slices/seller/myAds/myAdsSlice";
+import {
+  useUpdateFileFirebase,
+  useUploadFileFirebase,
+} from "../../../firebase/image-product/firebase-service";
 import {
   handleDecreaseStep,
   handleIncreaseStep,
   handleResetStep,
 } from "../../../redux/slices/seller/add-product/addProductSlice";
-import { resetImages } from "../../../redux/slices/FormElement/multipleImages/multipleImagesSlice";
 import {
   handleOnChangeColorName,
   handleOnChangeSizeName,
@@ -45,6 +44,7 @@ const FormPostAd = () => {
   const methods = useForm({
     mode: "all",
   });
+
   const params = useParams("productId");
   const navigate = useNavigate();
 
@@ -65,8 +65,8 @@ const FormPostAd = () => {
   const [doFetchProductById, isLoadingFetchProductById] =
     useThunk(fetchProductById);
 
-  const [handleFetchFiles] = useFetchFilesFirebase();
   const { handleUploadFile, isError } = useUploadFileFirebase();
+  const handleUpdateFile = useUpdateFileFirebase();
 
   const onClickNextStep = useCallback(() => {
     if (formStepState.currentStepForm < 3 || methods.formState.formIsValid) {
@@ -87,6 +87,7 @@ const FormPostAd = () => {
   const handleFetchedData = useCallback(() => {
     if (!!myAdsState.productData) {
       methods.reset(myAdsState.productData);
+
       if (myAdsState.productData.inventories.length > 0) {
         dispatch(setStateShowForm(true));
         dispatch(
@@ -111,13 +112,11 @@ const FormPostAd = () => {
   useEffect(() => {
     if (params.productId) {
       fetchData();
-      handleFetchFiles(params.productId);
     } else {
       dispatch(resetProductData());
-      dispatch(resetImages());
     }
     dispatch(handleResetStep());
-  }, [params.productId, fetchData, handleFetchFiles, dispatch]);
+  }, [params.productId, fetchData, dispatch]);
 
   useEffect(() => {
     handleFetchedData();
@@ -125,8 +124,8 @@ const FormPostAd = () => {
 
   const onSubmit = useCallback(
     async (data) => {
-      if (!data.images || data.images.length < 5) {
-        toast.error("Please select at least 5 images");
+      if (!data.images || data.images.length < 1) {
+        toast.error("Please select at least 1 images");
 
         return;
       }

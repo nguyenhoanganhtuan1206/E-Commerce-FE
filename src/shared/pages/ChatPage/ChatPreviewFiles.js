@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from "react";
+import { React, useCallback } from "react";
 
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -73,4 +73,4 @@ const ChatPreviewFiles = ({
   );
 };
 
-export default memo(ChatPreviewFiles);
+export default ChatPreviewFiles;

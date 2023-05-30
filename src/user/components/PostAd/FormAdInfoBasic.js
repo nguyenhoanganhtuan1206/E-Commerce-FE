@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import useThunk from "../../../shared/hooks/useThunk";
 import LoadingSpinner from "../../../shared/components/LoadingSpinner/LoadingSpinner";
@@ -20,7 +21,10 @@ import { fetchBrands } from "../../../redux/thunks/admin/brand/brandThunk";
 import { fetchCategoryVariants } from "../../../redux/thunks/admin/variant/variantThunk";
 
 const FormAdInfoBasic = () => {
+  const params = useParams();
   const fetchAllState = useSelector((state) => state.fetchAll);
+
+  const multipleImagesState = useSelector((state) => state.multipleImages);
 
   const [doFetchCategories, isLoadingCategories] = useThunk(fetchCategory);
   const [doFetchBrands, isLoadingBrands] = useThunk(fetchBrands);
@@ -98,6 +102,12 @@ const FormAdInfoBasic = () => {
 
           <UploadMultipleImages
             fieldName="images"
+            // initialValue={
+            //   !!multipleImagesState.images
+            //     ? multipleImagesState.images.imagesProduct
+            //     : []
+            // }
+            currentProductId={params.productId}
             validators={[
               VALIDATOR_REQUIRED("Images product cannot be empty"),
               VALIDATOR_MIN("At least 5 images for product", 1),

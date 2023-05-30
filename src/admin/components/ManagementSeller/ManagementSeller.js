@@ -4,12 +4,12 @@ import "./ManagementSeller.scss";
 import "../DataTable/DataTable.scss";
 import "./ModalSellerDetail.scss";
 
+import { useState } from "react";
 import ModalSellerDetail from "./ModalSellerDetail";
 import { Skeleton } from "../../../shared/components";
 import { userColumns } from "../../pages/ManagementSellerPage/data/data_sellers";
 import { ButtonFields } from "../../../shared/FormElement";
 import { useFetchListSellersQuery } from "../../../redux/apis/user/seller/seller-register.api";
-import { useState } from "react";
 
 const ManagementSeller = () => {
   const listSellers = useFetchListSellersQuery();

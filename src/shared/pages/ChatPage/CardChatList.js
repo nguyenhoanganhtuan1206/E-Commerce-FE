@@ -1,4 +1,3 @@
-import { memo } from "react";
 import CardChatItem from "./CardChatItem";
 
 const CardChatList = () => {
@@ -16,4 +15,4 @@ const CardChatList = () => {
   );
 };
 
-export default memo(CardChatList);
+export default CardChatList;

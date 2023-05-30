@@ -2,7 +2,6 @@ import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import ChatPage from "../../../shared/pages/ChatPage/ChatPage";
 import { MainComponentUser } from "../../components";
-import { memo } from "react";
 
 const ChatPageUser = (props) => {
   return (
@@ -28,4 +27,4 @@ const ChatPageUser = (props) => {
   );
 };
 
-export default memo(ChatPageUser);
+export default ChatPageUser;
