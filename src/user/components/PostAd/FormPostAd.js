@@ -24,10 +24,7 @@ import FormAdInfoBasic from "./FormAdInfoBasic";
 import { ButtonFields } from "../../../shared/FormElement";
 import { LoadingSpinner } from "../../../shared/components";
 import { resetProductData } from "../../../redux/slices/seller/myAds/myAdsSlice";
-import {
-  useUpdateFileFirebase,
-  useUploadFileFirebase,
-} from "../../../firebase/image-product/firebase-service";
+import { useUploadFileFirebase } from "../../../firebase/image-product/firebase-service";
 import {
   handleDecreaseStep,
   handleIncreaseStep,
@@ -66,7 +63,6 @@ const FormPostAd = () => {
     useThunk(fetchProductById);
 
   const { handleUploadFile, isError } = useUploadFileFirebase();
-  const handleUpdateFile = useUpdateFileFirebase();
 
   const onClickNextStep = useCallback(() => {
     if (formStepState.currentStepForm < 3 || methods.formState.formIsValid) {

@@ -95,7 +95,6 @@ const UploadMultipleImages = ({
               storedImagesMap.delete(file.name);
             } else {
               storedImagesMap.delete(file[0]);
-              // handleDeleteFile(currentProductId, file[1]);
             }
             onChange(updatedImages);
           };
@@ -148,7 +147,6 @@ const UploadMultipleImages = ({
                       {!isLoading &&
                         value.length > 0 &&
                         value.map((url, index) => {
-                          console.log("url", url);
                           let objectUrl;
                           if (url instanceof File) {
                             objectUrl = URL.createObjectURL(url);
