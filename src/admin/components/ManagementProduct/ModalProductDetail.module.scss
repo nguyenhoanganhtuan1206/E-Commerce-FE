@@ -1,0 +1,16 @@
+.ModalProductDetail__ImagesProduct {
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.ModalProductDetail__Image {
+  width: 18rem;
+  height: 12rem;
+  object-fit: cover;
+  border-radius: 5px;
+
+  &:not(:last-child) {
+    margin-right: 1.2rem;
+  }
+}

@@ -14,3 +14,4 @@ export { default as ModalWarning } from "./Modal/ModalWarning";
 export { default as ModalSuccess } from "./Modal/ModalSuccess";
 export { default as Skeleton } from "./Skeleton/Skeleton";
 export { default as Pagination } from "./Pagination/Pagination";
+export { default as TagProduct } from "./TagProduct/TagProduct";
