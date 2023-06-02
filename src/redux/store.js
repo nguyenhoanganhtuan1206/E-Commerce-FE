@@ -40,6 +40,7 @@ const store = configureStore({
     [useSellerProductApis.reducerPath]: useSellerProductApis.reducer,
     [useProductApis.reducerPath]: useProductApis.reducer,
     [useProductStyleApis.reducerPath]: useProductStyleApis.reducer,
+    [useProductApis.reducerPath]: useProductApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false })
@@ -49,7 +50,8 @@ const store = configureStore({
       .concat(userLocationsApi.middleware)
       .concat(useSellerRegisterApi.middleware)
       .concat(useSellerProductApis.middleware)
-      .concat(useProductStyleApis.middleware);
+      .concat(useProductStyleApis.middleware)
+      .concat(useProductApis.middleware);
   },
 });
 

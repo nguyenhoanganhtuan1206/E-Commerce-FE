@@ -1,49 +1,27 @@
-import "./Table.scss";
+import { useCallback, useState } from "react";
+import classes from "./Table.module.scss";
+import usePaginate from "../../hooks/usePaginate";
+import Pagination from "../Pagination/Pagination";
+import { useSelector } from "react-redux";
 
-const Table = (props) => {
-  /*
-  ? tableActions is all actions will create it yourself such as edit, delete,...
-  */
+const Table = ({ data = [], children }) => {
 
-  const {
-    header = [],
-    data = [],
-    theadPrimary,
-    tableStriped,
-    tableBordered,
-    tableActions,
-  } = props;
-
-  const classes = `table 
-  ${theadPrimary && "thead-primary"}
-  ${tableStriped && "table-striped"}
-  ${tableBordered && "table-bordered"}
-  ${tableActions}`;
-
-  const keys = Object.keys(data[0]);
 
   return (
-    <div className="table-responsive">
-      <table className={`${classes}`}>
-        <thead>
+    <div className={`${classes.ProductListTable} table-responsive`}>
+      <table className={`table`}>
+        <thead className={classes.ProductListHeader}>
           <tr>
-            {header.map((headerCell, index) => (
-              <th key={index}>{headerCell}</th>
-            ))}
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Categorization</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
           </tr>
         </thead>
 
-        <tbody>
-          {data.map((row, index) => (
-            <tr key={index}>
-              {keys.map((key, keyIndex) => (
-                <td key={keyIndex}>{row[key]}</td>
-              ))}
-            </tr>
-          ))}
-
-          {tableActions && <tr>{tableActions}</tr>}
-        </tbody>
+        <tbody>{children}</tbody>
       </table>
     </div>
   );

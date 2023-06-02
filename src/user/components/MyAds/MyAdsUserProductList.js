@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
-import { ModalWarning, Skeleton } from "../../../shared/components";
+import { ModalWarning, Skeleton, Pagination } from "../../../shared/components";
 import {
   useDeleteProductMutation,
   useFetchProductWithApprovalQuery,
@@ -17,7 +17,6 @@ import {
   useFetchProductsBySellerIdQuery,
   useFetchProductsWithOutOfStockQuery,
 } from "../../../redux/apis/seller/product/seller-product.api";
-import Pagination from "../../../shared/components/Pagination/Pagination";
 import usePaginate from "../../../shared/hooks/usePaginate";
 import { toggleShowDeleteProduct } from "../../../redux/slices/seller/sellerSlice";
 import { ButtonFields } from "../../../shared/FormElement";
@@ -147,8 +146,7 @@ const MyAdsUserProductList = () => {
                           .sort((a, b) => a[1].colorValue - b[1].colorValue)
                           .map((inventory, index) => (
                             <p key={index}>
-                              {inventory[1].colorValue},{" "}
-                              {inventory[1].sizeValue}
+                              {inventory[1].colorValue},{inventory[1].sizeValue}
                             </p>
                           ))}
                       </td>

@@ -1,4 +1,9 @@
 @import "../../sass/main.scss";
+@import "../../sass/abstracts/mixins";
+
+:root {
+  --height-thead: 50px;
+}
 
 button,
 input,
@@ -86,3 +91,49 @@ a {
     opacity: 1;
   }
 }
+
+/* Styles table */
+.table__customize {
+  padding: 1.6rem;
+
+  &__Header {
+    display: flex;
+    align-items: center;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid var(--color-border);
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  th {
+    &:first-child {
+      width: 20%;
+    }
+  }
+
+  thead {
+    height: calc(var(--height-thead) + 2px);
+    line-height: var(--height-thead);
+  }
+
+  &-icon {
+    @include circle(1.4rem, 1.4rem);
+
+    padding: 0.8rem;
+    margin-top: -0.1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+
+    &:first-child {
+      margin-right: 0.8rem;
+    }
+  }
+}
+/* Styles table */
