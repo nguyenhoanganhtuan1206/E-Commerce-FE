@@ -50,9 +50,21 @@ const MyAdsUserProductList = () => {
   let isFetchingData = false;
 
   const handleFetchDataBySection = () => {
-    dispatch(fetchBadgeForInStock(fetchProductWithInStock.data.length));
-    dispatch(fetchBadgeForOutOfStock(fetchProductOutOfStock.data.length));
-    dispatch(fetchBadgeForApproval(fetchProductWithApproval.data.length));
+    dispatch(
+      fetchBadgeForInStock(
+        fetchProductWithInStock.data ? fetchProductWithInStock.data.length : 0
+      )
+    );
+    dispatch(
+      fetchBadgeForOutOfStock(
+        fetchProductOutOfStock.data ? fetchProductOutOfStock.data.length : 0
+      )
+    );
+    dispatch(
+      fetchBadgeForApproval(
+        fetchProductWithApproval.data ? fetchProductWithApproval.data.length : 0
+      )
+    );
 
     switch (myAdsState.myAdCurrentSection) {
       case MY_ADS_ALL_PRODUCT:
