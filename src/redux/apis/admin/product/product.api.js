@@ -36,9 +36,33 @@ const useProductApis = createApi({
           };
         },
       }),
+      approvalProduct: builder.mutation({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "SellerProducts", id: result.sellerId }];
+        },
+        query: (productId) => {
+          return {
+            method: "PUT",
+            url: `${productId}/approval`,
+          };
+        },
+      }),
+      sendFeedbackAboutProduct: builder.mutation({
+        query: (payload) => {
+          return {
+            method: "POST",
+            url: `${payload.id}/feedback`,
+            body: payload.data,
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useFetchProductsQuery } = useProductApis;
+export const {
+  useFetchProductsQuery,
+  useApprovalProductMutation,
+  useSendFeedbackAboutProductMutation,
+} = useProductApis;
 export { useProductApis };

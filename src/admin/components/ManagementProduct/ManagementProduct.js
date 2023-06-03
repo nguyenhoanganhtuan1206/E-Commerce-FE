@@ -10,6 +10,7 @@ import { Pagination, Skeleton } from "../../../shared/components";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
 import ModalProductDetail from "./ModalProductDetail";
+import { ButtonFields } from "../../../shared/FormElement";
 
 const ManagementProduct = () => {
   const listProducts = useFetchProductsQuery();
@@ -107,19 +108,14 @@ const ManagementProduct = () => {
                           </td>
 
                           <td className="d-flex align-items-center">
-                            <FontAwesomeIcon
-                              className="table__customize-icon"
-                              icon={faPenAlt}
+                            <ButtonFields
+                              primary
                               onClick={() =>
                                 dispatch(toggleShowModalUpdate(data.id))
                               }
-                            />
-
-                            <FontAwesomeIcon
-                              className="table__customize-icon"
-                              icon={faTrashAlt}
-                              onClick={() => {}}
-                            />
+                            >
+                              View Details
+                            </ButtonFields>
                           </td>
                         </tr>
                       );
