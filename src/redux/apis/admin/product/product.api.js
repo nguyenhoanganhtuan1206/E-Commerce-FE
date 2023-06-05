@@ -23,8 +23,8 @@ const useProductApis = createApi({
     return {
       fetchProducts: builder.query({
         providesTags: (result, error, args) => {
-          const tags = result.map((seller) => {
-            return { type: "SellerProducts", id: seller.sellerId };
+          const tags = result.map((product) => {
+            return { type: "SellerProducts", id: product.seller.id };
           });
           tags.push({ type: "Product" });
 

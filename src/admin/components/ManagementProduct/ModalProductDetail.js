@@ -11,7 +11,10 @@ import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
 import CardPaymentMethodPattern from "../../../shared/FormElement/CardPaymentMethod/CardPaymentMethodPattern";
 import { useFetchFilesFirebase } from "../../../firebase/image-product/firebase-service";
-import { useSendFeedbackAboutProductMutation } from "../../../redux/apis/admin/product/product.api";
+import {
+  useApprovalProductMutation,
+  useSendFeedbackAboutProductMutation,
+} from "../../../redux/apis/admin/product/product.api";
 import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
@@ -31,6 +34,8 @@ const ModalProductDetail = () => {
 
   const [handleFetchFiles] = useFetchFilesFirebase();
 
+  const [approvalProduct, approvalProductResults] =
+    useApprovalProductMutation();
   const [doSendFeedback, sendFeedbackResults] =
     useSendFeedbackAboutProductMutation();
   const [doFetchProductById, isLoadingFetchProductById] =
@@ -50,6 +55,20 @@ const ModalProductDetail = () => {
         .catch(() => {});
     }
   }, [doFetchProductById, handleFetchFiles, modalProductState.idParams]);
+
+  const handleApprovalProduct = () => {
+    if (productDetailState.productData) {
+      approvalProduct(productDetailState.productData.id)
+        .unwrap()
+        .then(() => {
+          toast.success("Approved this product successfully!", {
+            autoClose: 2000,
+          });
+          dispatch(toggleShowModalUpdate());
+        })
+        .catch((error) => toast.error(error.data.message));
+    }
+  };
 
   const onSubmit = (data) => {
     if (productDetailState.productData) {
@@ -100,7 +119,13 @@ const ModalProductDetail = () => {
               Feedback
             </ButtonFields>
 
-            <ButtonFields type="button" className="ml-5" primary>
+            <ButtonFields
+              onClick={handleApprovalProduct}
+              type="button"
+              className="ml-5"
+              isLoading={approvalProductResults.isLoading}
+              primary
+            >
               Approval Product
             </ButtonFields>
           </div>

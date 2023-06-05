@@ -1,15 +1,12 @@
 import { useCallback, useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 
 import usePaginate from "../../../shared/hooks/usePaginate";
+import ModalProductDetail from "./ModalProductDetail";
 import { useFetchProductsQuery } from "../../../redux/apis/admin/product/product.api";
 import { Pagination, Skeleton } from "../../../shared/components";
-import { useDispatch, useSelector } from "react-redux";
 import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
-import ModalProductDetail from "./ModalProductDetail";
 import { ButtonFields } from "../../../shared/FormElement";
 
 const ManagementProduct = () => {
