@@ -27,6 +27,7 @@ const useSellerProductApis = createApi({
         },
         query: () => {
           return {
+            url: "/user",
             method: "GET",
           };
         },

@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FormProvider, useForm } from "react-hook-form";
@@ -20,7 +22,6 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRED,
 } from "../../../shared/util/validators";
-import { toast } from "react-toastify";
 
 const ModalProductDetail = () => {
   const dispatch = useDispatch();

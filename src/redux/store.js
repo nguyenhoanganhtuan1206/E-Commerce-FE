@@ -9,7 +9,7 @@ import { userLocationsApi } from "./apis/user/location/user-locations.api";
 import { locationReducer } from "./slices/user/location/locationSlice";
 import { useSellerRegisterApi } from "./apis/user/seller/seller-register.api";
 import { sellerReducer } from "./slices/seller/sellerSlice";
-import { fetchAllReducer } from "./slices/admin/fetchAll/fetchAllSlice";
+import { fetchAllReducer } from "./slices/fetchAll/fetchAllSlice";
 import { useSellerProductApis } from "./apis/seller/product/seller-product.api";
 import { useProductApis } from "./apis/admin/product/product.api";
 import { addProductReducer } from "./slices/seller/add-product/addProductSlice";

@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCategory } from "../../../thunks/admin/category/categoryThunk";
-import { fetchCategoryVariants } from "../../../thunks/admin/variant/variantThunk";
-import { fetchBrands } from "../../../thunks/admin/brand/brandThunk";
-import { fetchProductStyles } from "../../../thunks/admin/product-style/productStyleThunk";
+import { fetchCategory } from "../../thunks/admin/category/categoryThunk";
+import { fetchCategoryVariants } from "../../thunks/admin/variant/variantThunk";
+import { fetchBrands } from "../../thunks/admin/brand/brandThunk";
+import { fetchProductStyles } from "../../thunks/admin/product-style/productStyleThunk";
+import { fetchProducts } from "../../thunks/products/productThunks";
 
 const initialState = {
+  products: {
+    isLoading: false,
+    isError: false,
+    data: [],
+  },
   categories: {
     isLoading: false,
     isError: false,
@@ -81,6 +87,19 @@ const fetchAllSlices = createSlice({
       .addCase(fetchProductStyles.fulfilled, (state, action) => {
         state.productStyles.isLoading = false;
         state.productStyles.data = action.payload;
+      });
+
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.products.isLoading = true;
+      })
+      .addCase(fetchProducts.rejected, (state) => {
+        state.products.isLoading = false;
+        state.products.isError = false;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products.isLoading = false;
+        state.products.data = action.payload;
       });
   },
 });

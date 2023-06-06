@@ -9,8 +9,6 @@ const CardProduct = (props) => {
   return (
     <div className="card-product">
       <div className="card-product__header">
-        
-
         <img
           src="https://plus.unsplash.com/premium_photo-1661765352605-6d3f5a80f286?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1172&q=80"
           alt="Imag"

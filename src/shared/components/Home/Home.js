@@ -8,6 +8,7 @@ import { faLocationPin, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Header } from "../../Layouts";
 import { DUMMY_PRODUCTS } from "../../../data/dummy_data";
 import SearchNavbar from "../SearchNavbar/SearchNavbar";
+import { HomeProductList } from "../../../product/components";
 
 const Home = () => {
   return (
@@ -44,8 +45,9 @@ const Home = () => {
 
         <div className="container">
           <div className="latest__product-container">
-            <div className="row">
-              {DUMMY_PRODUCTS.map((product, index) => {
+            <div className="row w-100">
+              <HomeProductList />
+              {/* {DUMMY_PRODUCTS.map((product, index) => {
                 return (
                   <div key={index} className="col-4">
                     <div className="latest__item">
@@ -152,7 +154,7 @@ const Home = () => {
                     </div>
                   </div>
                 );
-              })}
+              })} */}
             </div>
           </div>
         </div>
