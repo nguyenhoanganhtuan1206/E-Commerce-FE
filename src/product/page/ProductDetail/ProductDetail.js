@@ -65,7 +65,7 @@ const ProductDetail = () => {
 
             {/* Product Detail Section */}
             <ProductDetailsSection
-              infoProduct={productDetailState.productData}
+              productData={productDetailState.productData}
             />
             {/* Product Detail Section */}
 
