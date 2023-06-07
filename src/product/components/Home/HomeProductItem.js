@@ -35,8 +35,6 @@ const HomeProductItem = ({
     }
   }, [handleFetchProfile, productId]);
 
-  console.log(Array.from(imagesProduct.values())[0]);
-
   return (
     <div className="latest__item">
       <div className="latest__header">
@@ -62,7 +60,7 @@ const HomeProductItem = ({
       </div>
 
       <div className="latest-body">
-        <Link to="/product" className="latest-product__name">
+        <Link to={`${productId}/details`} className="latest-product__name">
           {productName}
         </Link>
 
@@ -73,7 +71,7 @@ const HomeProductItem = ({
         <p className="d-flex latest-product__update">
           Categories:
           {categories.map((categoryName, index) => (
-            <span className="ml-2">
+            <span key={index} className="ml-2">
               {categoryName}
               {index + 1 !== categories.length && ", "}
             </span>
@@ -88,7 +86,7 @@ const HomeProductItem = ({
         <p className="latest-product__update">
           Product Styles:
           {productStyles.map((productStyleName, index) => (
-            <span className="ml-2">
+            <span key={index} className="ml-2">
               {productStyleName}
               {index + 1 !== productStyles.length && ", "}
             </span>

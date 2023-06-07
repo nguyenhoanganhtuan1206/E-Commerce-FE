@@ -38,7 +38,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
-        <Route path="/product" element={<ProductDetail />} />
+        <Route path="/:productId/details" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
         <Route path="/demo" element={<Demo />} />
         {/* Routes permit all */}
