@@ -6,7 +6,7 @@ import "../ProductDetail.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
-import { TagProduct } from "../../../../shared/components";
+import { ButtonQuantity, TagProduct } from "../../../../shared/components";
 import ButtonFields from "../../../../shared/FormElement/ButtonFields/ButtonFields";
 
 const ProductDetailInfo = (props) => {
@@ -92,9 +92,14 @@ const ProductDetailInfo = (props) => {
           <span className="product-info__text-normal--bold mr-4">
             Quantity:
           </span>
-          {!!props.productData.inventory
-            ? props.productData.inventory.quantity
-            : props.productData.quantity} available products
+          <ButtonQuantity quantity={1} />
+
+          <span className="ml-3">
+            {!!props.productData.inventory
+              ? props.productData.inventory.quantity
+              : props.productData.quantity}{" "}
+            available products
+          </span>
         </p>
 
         <div className="d-flex">
