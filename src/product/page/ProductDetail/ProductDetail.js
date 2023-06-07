@@ -1,6 +1,12 @@
 import "./ProductDetail.scss";
 
-import { Breadcrumbs } from "../../../shared/components";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+
+import useThunk from "../../../shared/hooks/useThunk";
+import { fetchProductById } from "../../../redux/thunks/seller/product/productThunk";
+import { Breadcrumbs, LoadingSpinner } from "../../../shared/components";
 import SwiperSlider from "../../../shared/components/SwiperSlider/SwiperSlider";
 import { Header } from "../../../shared/Layouts";
 import {
@@ -18,35 +24,57 @@ const imagesLink = [
 ];
 
 const ProductDetail = () => {
+  const params = useParams();
+  const productDetailState = useSelector((state) => state.myAds);
+
+  const [doFetchProductById, isLoadingFetchProductById] =
+    useThunk(fetchProductById);
+
+  useEffect(() => {
+    if (params.productId) {
+      doFetchProductById(params.productId);
+    }
+  }, [doFetchProductById, params.productId]);
+
   return (
     <>
-      <Header />
+      {productDetailState.isLoading && <LoadingSpinner option1 />}
 
-      <Breadcrumbs title="Ad Details" nextPages={["Home"]} />
+      {!productDetailState.isLoading && productDetailState.productData && (
+        <>
+          <Header />
 
-      <div className="product-detail">
-        <div className="container">
-          <div className="row wide product-detail__container">
-            <div className="col-6">
-              <SwiperSlider images={imagesLink} />
-            </div>
+          <Breadcrumbs title="Ad Details" nextPages={["Home"]} />
 
-            <div className="col-6">
-              <div className="product-detail__info">
-                <ProductDetailInfo />
+          <div className="product-detail">
+            <div className="container">
+              <div className="row wide product-detail__container">
+                <div className="col-6">
+                  <SwiperSlider images={imagesLink} />
+                </div>
+
+                <div className="col-6">
+                  <div className="product-detail__info">
+                    <ProductDetailInfo
+                      productData={productDetailState.productData}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+
+            {/* Product Detail Section */}
+            <ProductDetailsSection
+              infoProduct={productDetailState.productData}
+            />
+            {/* Product Detail Section */}
+
+            {/* Product Comments Section */}
+            <CommentsProduct infoProduct={productDetailState.productData} />
+            {/* Product Comments Section */}
           </div>
-        </div>
-
-        {/* Product Detail Section */}
-        <ProductDetailsSection />
-        {/* Product Detail Section */}
-
-        {/* Product Comments Section */}
-        <CommentsProduct />
-        {/* Product Comments Section */}
-      </div>
+        </>
+      )}
     </>
   );
 };

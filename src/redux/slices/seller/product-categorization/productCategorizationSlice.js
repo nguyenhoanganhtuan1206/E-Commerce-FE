@@ -61,6 +61,10 @@ const productCategorizationSlices = createSlice({
     setStateShowFormSize: (state, action) => {
       state.isShowFormSize = action.payload;
     },
+    resetCategorizationForm: (state) => {
+      state.colorName = "";
+      state.sizeName = "";
+    },
   },
 });
 
@@ -73,5 +77,6 @@ export const {
   handleDecreaseFormNum,
   setStateShowForm,
   setStateShowFormSize,
+  resetCategorizationForm,
 } = productCategorizationSlices.actions;
 export const productCategorizationReducer = productCategorizationSlices.reducer;

@@ -33,6 +33,7 @@ import {
 import {
   handleOnChangeColorName,
   handleOnChangeSizeName,
+  resetCategorizationForm,
   setStateShowForm,
   setStateShowFormSize,
 } from "../../../redux/slices/seller/product-categorization/productCategorizationSlice";
@@ -110,6 +111,8 @@ const FormPostAd = () => {
       fetchData();
     } else {
       dispatch(resetProductData());
+      dispatch(resetInventoryForm());
+      dispatch(resetCategorizationForm());
     }
     dispatch(handleResetStep());
   }, [params.productId, fetchData, dispatch]);
