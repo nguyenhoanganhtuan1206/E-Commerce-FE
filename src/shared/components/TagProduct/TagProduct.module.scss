@@ -1,11 +1,13 @@
 .TagProduct {
   border: 1px solid var(--color-border);
+  color: #000;
+  min-width: 5rem;
   padding: 0.8rem 1.2rem;
   font-size: 1.4rem;
   border-radius: 4px;
   position: relative;
 
-  &:not(:first-child) {
+  &:not(:first-of-type) {
     margin-left: 1.2rem;
   }
 
@@ -32,4 +34,38 @@
   background-color: #fff;
 
   z-index: 99;
+}
+
+.TagProduct__Name {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.TagProductIsActive {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  font-weight: 600;
+}
+
+.TagProductCheckedIcon {
+  font-size: 1rem;
+  margin-left: 0.8rem;
+  color: var(--color-primary);
+  font-weight: 700;
+  display: none;
+
+  &__Active {
+    display: block;
+  }
+}
+
+.TagProductDisabled {
+  cursor: default !important;
+  color: rgba(0, 0, 0, 0.26);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.26);
+    border: 1px solid var(--color-border);
+  }
 }
