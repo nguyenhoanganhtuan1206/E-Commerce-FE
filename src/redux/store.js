@@ -19,6 +19,7 @@ import { productCategorizationReducer } from "./slices/seller/product-categoriza
 import { inventoryReducer } from "./slices/seller/inventory/inventorySlice";
 import { myAdsReducers } from "./slices/seller/myAds/myAdsSlice";
 import { commonSliceReducer } from "./slices/commonSlices.js/commoneSlice";
+import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice";
 
 enableMapSet();
 
@@ -34,6 +35,7 @@ const store = configureStore({
     inventory: inventoryReducer,
     myAds: myAdsReducers,
     commonSlice: commonSliceReducer,
+    inventoryDetail: inventoryDetailReducer,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
