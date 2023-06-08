@@ -11,3 +11,4 @@ export { default as SellerSignUpDetail } from "./SellerSignUp/SellerSignUpDetail
 export { default as FormConfirmEmail } from "./ForgetPassword/FormConfirmEmail";
 export { default as FormResetPassword } from "./ForgetPassword/FormResetPassword";
 export { default as UserLocationEditor } from "./UserLocationEditor/UserLocationEditor";
+export { default as CartHeader } from "./CartHeader/CartHeader";

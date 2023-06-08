@@ -2,7 +2,9 @@ import "./PopperWrapper.scss";
 
 const PopperWrapper = (props) => {
   return (
-    <div className={`popper-wrapper ${props.className}`}>{props.children}</div>
+    <div style={props.style} className={`popper-wrapper ${props.className}`}>
+      {props.children}
+    </div>
   );
 };
 

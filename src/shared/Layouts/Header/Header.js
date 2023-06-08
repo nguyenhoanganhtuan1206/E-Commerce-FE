@@ -1,5 +1,6 @@
 import "./Header.scss";
 
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRightToBracket,
@@ -7,10 +8,11 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { Link } from "react-router-dom";
+
 import { AvatarUser, PopperWrapper } from "../../components";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
+import { CartHeader } from "../../../user/components";
 
 const Header = () => {
   const authContext = useContext(AuthContext);
@@ -34,30 +36,6 @@ const Header = () => {
                   className="header__nav-link header__nav-link--active"
                 >
                   Home
-                </Link>
-              </li>
-
-              <li className="header__nav-item">
-                <Link to="/categories" className="header__nav-link">
-                  Categories
-                </Link>
-              </li>
-
-              <li className="header__nav-item">
-                <Link href="#" className="header__nav-link">
-                  Categories
-                </Link>
-              </li>
-
-              <li className="header__nav-item">
-                <Link to="/" href="#" className="header__nav-link">
-                  Pages
-                </Link>
-              </li>
-
-              <li className="header__nav-item">
-                <Link to="/" href="#" className="header__nav-link">
-                  Blog
                 </Link>
               </li>
             </ul>
@@ -86,67 +64,85 @@ const Header = () => {
               )}
 
               {authContext.isLoggedIn && (
-                <li className="header__action-item header__action-item--have-menu">
-                  <AvatarUser circle />
-                  <span className="header__action-item__name">
-                    {authContext.username}
-                  </span>
+                <>
+                  <li className="header__action-item header__action-item--have-menu">
+                    <AvatarUser circle />
+                    <span className="header__action-item__name">
+                      {authContext.username}
+                    </span>
 
-                  <div className="header__menu-user">
-                    <PopperWrapper className="header__menu-user-popper">
-                      <ul className="header__menu-user-list">
-                        {authContext.roles.includes("ROLE_ADMIN") && (
-                          <Link
-                            to="/admin"
+                    <div className="header__menu-user">
+                      <PopperWrapper className="header__menu-user-popper">
+                        <ul className="header__menu-user-list">
+                          {authContext.roles.includes("ROLE_ADMIN") && (
+                            <Link
+                              to="/admin"
+                              className="header__menu-user-item"
+                            >
+                              <FontAwesomeIcon
+                                className="header__menu-user__icon"
+                                icon={faUser}
+                              />
+
+                              <span>Admin Page</span>
+                            </Link>
+                          )}
+
+                          {!authContext.roles.includes("ROLE_ADMIN") && (
+                            <Link
+                              to="/dashboard-user"
+                              className="header__menu-user-item"
+                            >
+                              <FontAwesomeIcon
+                                className="header__menu-user__icon"
+                                icon={faUser}
+                              />
+
+                              <span>My Account</span>
+                            </Link>
+                          )}
+
+                          {!authContext.roles.includes("ROLE_ADMIN") && (
+                            <Link className="header__menu-user-item">
+                              <FontAwesomeIcon
+                                className="header__menu-user__icon"
+                                icon={faCartShopping}
+                              />
+                              <span>My Order</span>
+                            </Link>
+                          )}
+
+                          <li
+                            onClick={authContext.logout}
                             className="header__menu-user-item"
                           >
                             <FontAwesomeIcon
                               className="header__menu-user__icon"
-                              icon={faUser}
+                              icon={faRightFromBracket}
                             />
+                            <span>Log out</span>
+                          </li>
+                        </ul>
+                      </PopperWrapper>
+                    </div>
+                  </li>
 
-                            <span>Admin Page</span>
-                          </Link>
-                        )}
+                  <li className="header__action-item header__cart">
+                    <FontAwesomeIcon
+                      className="header__cart-icon"
+                      icon={faCartShopping}
+                    />
 
-                        {!authContext.roles.includes("ROLE_ADMIN") && (
-                          <Link
-                            to="/dashboard-user"
-                            className="header__menu-user-item"
-                          >
-                            <FontAwesomeIcon
-                              className="header__menu-user__icon"
-                              icon={faUser}
-                            />
-
-                            <span>My Account</span>
-                          </Link>
-                        )}
-
-                        {!authContext.roles.includes("ROLE_ADMIN") && (
-                          <Link className="header__menu-user-item">
-                            <FontAwesomeIcon
-                              className="header__menu-user__icon"
-                              icon={faCartShopping}
-                            />
-                            <span>My Order</span>
-                          </Link>
-                        )}
-
-                        <li
-                          onClick={authContext.logout}
-                          className="header__menu-user-item"
-                        >
-                          <FontAwesomeIcon
-                            className="header__menu-user__icon"
-                            icon={faRightFromBracket}
-                          />
-                          <span>Log out</span>
-                        </li>
-                      </ul>
-                    </PopperWrapper>
-                  </div>
-                </li>
+                    <div className="header__cart-list">
+                      <PopperWrapper
+                        style={{ cursor: "default" }}
+                        className="header__cart-popper"
+                      >
+                        <CartHeader />
+                      </PopperWrapper>
+                    </div>
+                  </li>
+                </>
               )}
             </ul>
           </div>

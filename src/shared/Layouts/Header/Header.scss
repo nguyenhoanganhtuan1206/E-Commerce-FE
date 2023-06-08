@@ -190,3 +190,54 @@
 }
 
 /* MENU FOR USER */
+
+/* CART */
+.header__cart {
+  @include circle(1.8rem, 1.8rem);
+
+  font-size: 1.8rem;
+  padding: 2.2rem;
+
+  position: relative;
+
+  &:hover {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+
+  &:hover .header__cart-list {
+    display: block;
+  }
+}
+
+.header__cart-list {
+  @include scaleAndClose(0.5, 1.1, 1);
+
+  position: absolute;
+  top: 120%;
+  right: 0;
+
+  width: 40rem;
+  transform-origin: top right;
+  animation: fadeIn 0.2s ease-in, scaleAndClose 0.25s ease-in-out forwards;
+  transition: all 0.25s;
+  // display: none;
+
+  z-index: 99;
+
+  &::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 1rem;
+    top: -10px;
+    left: 0;
+    cursor: pointer;
+  }
+}
+
+.header__cart-popper {
+  padding: 2rem;
+  color: #000;
+}
+/* CART */

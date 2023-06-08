@@ -1,0 +1,90 @@
+@import "../../../shared/sass/abstracts/mixins";
+
+:root {
+  --height-image-cart: 9rem;
+  --width-image-cart: 11rem;
+}
+
+.Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--color-border);
+
+  &Text {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
+.CartItem {
+  display: flex;
+  align-items: center;
+  height: var(--height-image-cart);
+  width: 100%;
+  margin-top: 1.4rem;
+
+  position: relative;
+}
+
+.CartInfo {
+  margin-left: 1.2rem;
+}
+
+.CartName {
+  @include limitedLines(2, 24.5rem);
+  font-size: 1.8rem !important;
+}
+
+.CartIcon {
+  @include circle(1.6rem, 1.6rem);
+  padding: 0.4rem;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  &:hover {
+    color: #fff;
+    background-color: var(--color-primary);
+  }
+}
+
+.CartPrice {
+  font-size: 1.4rem;
+  margin: 1.4rem 0 0 0;
+  color: var(--font-color-2);
+}
+
+.CartImageProduct {
+  height: var(--height-image-cart);
+  width: var(--width-image-cart);
+  border-radius: 5px;
+  border: 1px solid var(--color-border-1);
+  object-fit: cover;
+}
+
+.CartBottom {
+  margin-top: 1.2rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--color-border-1);
+}
+
+.CartTotal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+
+  span {
+    font-size: 1.6rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
