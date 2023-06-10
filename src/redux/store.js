@@ -20,6 +20,7 @@ import { inventoryReducer } from "./slices/seller/inventory/inventorySlice";
 import { myAdsReducers } from "./slices/seller/myAds/myAdsSlice";
 import { commonSliceReducer } from "./slices/commonSlices.js/commoneSlice";
 import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice";
+import { useCartApis } from "./apis/cart/cart.api";
 
 enableMapSet();
 
@@ -45,6 +46,7 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [useProductStyleApis.reducerPath]: useProductStyleApis.reducer,
     [useProductApis.reducerPath]: useProductApis.reducer,
+    [useCartApis.reducerPath]: useCartApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false })
@@ -55,7 +57,8 @@ const store = configureStore({
       .concat(useSellerRegisterApi.middleware)
       .concat(useSellerProductApis.middleware)
       .concat(useProductStyleApis.middleware)
-      .concat(useProductApis.middleware);
+      .concat(useProductApis.middleware)
+      .concat(useCartApis.middleware);
   },
 });
 

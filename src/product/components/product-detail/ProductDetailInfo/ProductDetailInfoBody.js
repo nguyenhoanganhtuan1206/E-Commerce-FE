@@ -1,12 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./ProductDetailInfoBody.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import useThunk from "../../../../shared/hooks/useThunk";
+import { useAddToCartMutation } from "../../../../redux/apis/cart/cart.api";
+import { AuthContext } from "../../../../context/auth-context";
 import { ButtonQuantity, TagProduct } from "../../../../shared/components";
 import { ButtonFields } from "../../../../shared/FormElement";
 import {
@@ -17,19 +21,27 @@ import {
 import {
   onSelectColorValue,
   onSelectSizeValue,
+  resetInventoryData,
 } from "../../../../redux/slices/inventory/inventoryDetailSlice";
 
 const ProductDetailInfoBody = ({ productData = null }) => {
+  console.log("productData", productData);
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
   const inventoryDetailState = useSelector((state) => state.inventoryDetail);
   const dispatch = useDispatch();
+
   const [statusColorValue, setStatusColorValue] = useState(false);
   const [statusSizeValue, setStatusSizeValue] = useState(false);
+  const [isEmptyCart, setIsEmptyCart] = useState(false);
 
   const [doFetchSizeValueByColorValue] = useThunk(fetchSizeValuesByColorValue);
   const [doFetchColorValueBySizeValue] = useThunk(fetchColorValuesBySizeValue);
   const [doFetchInventoryDetailByParams] = useThunk(
     fetchInventoryDetailByParams
   );
+
+  const [addToCart, addToCartResults] = useAddToCartMutation();
 
   const handleSelectColorValue = useCallback(
     (colorValue) => {
@@ -77,12 +89,52 @@ const ProductDetailInfoBody = ({ productData = null }) => {
     ]
   );
 
+  const userLoggedIn = () => {
+    if (!authContext.isLoggedIn) {
+      navigate("/login");
+    }
+  };
+
+  const handleAddProductToCart = () => {
+    userLoggedIn();
+    if (
+      !inventoryDetailState.colorValueSelected ||
+      !inventoryDetailState.sizeValueSelected
+    ) {
+      setIsEmptyCart(true);
+      return;
+    }
+
+    if (productData.inventory) {
+      addToCart({ inventoryId: inventoryDetailState.inventoryDetailData.id })
+        .unwrap()
+        .then(() => {
+          toast.success("Added this product to your cart successfully", {
+            autoClose: 2000,
+          });
+          dispatch(resetInventoryData());
+        })
+        .catch((error) => toast.error(error.data.message));
+    }
+
+    setIsEmptyCart(false);
+  };
+
   useEffect(() => {
-    doFetchInventoryDetailByParams({
-      productId: productData.id,
-      sizeValue: inventoryDetailState.sizeValueSelected,
-      colorValue: inventoryDetailState.colorValueSelected,
-    });
+    dispatch(resetInventoryData());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (
+      inventoryDetailState.sizeValueSelected &&
+      inventoryDetailState.colorValueSelected
+    ) {
+      doFetchInventoryDetailByParams({
+        productId: productData.id,
+        sizeValue: inventoryDetailState.sizeValueSelected,
+        colorValue: inventoryDetailState.colorValueSelected,
+      });
+    }
   }, [
     doFetchInventoryDetailByParams,
     inventoryDetailState.colorValueSelected,
@@ -120,8 +172,8 @@ const ProductDetailInfoBody = ({ productData = null }) => {
           </React.Fragment>
         ))}
       </p>
-      
-      <div className={classes.ProductDetailInfoBodyError}>
+
+      <div className={isEmptyCart && classes.ProductDetailInfoBodyError}>
         {!!productData.inventory && (
           <>
             <p className="product-info__sub-info product-info__text-normal mt-2">
@@ -200,13 +252,21 @@ const ProductDetailInfoBody = ({ productData = null }) => {
           </span>
         </p>
 
-        <p className={classes.ProductDetailInfoBodyErrorText}>
-          Please choose product categorization
-        </p>
+        {isEmptyCart && (
+          <p className={classes.ProductDetailInfoBodyErrorText}>
+            Please choose product categorization
+          </p>
+        )}
       </div>
 
       <div className="d-flex">
-        <ButtonFields className="product-info__btn" primary fullWidth>
+        <ButtonFields
+          onClick={handleAddProductToCart}
+          className="product-info__btn"
+          primary
+          fullWidth
+          isLoading={addToCartResults.isLoading}
+        >
           Add To Cart
         </ButtonFields>
 

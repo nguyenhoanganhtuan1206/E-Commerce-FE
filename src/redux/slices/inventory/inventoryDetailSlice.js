@@ -17,6 +17,11 @@ const inventoryDetailSlices = createSlice({
   name: "inventoryDetail",
   initialState,
   reducers: {
+    resetInventoryData: (state) => {
+      state.colorValueSelected = null;
+      state.sizeValueSelected = null;
+      state.inventoryDetailData = null;
+    },
     onSelectColorValue: (state, action) => {
       state.colorValueSelected = action.payload;
     },
@@ -39,6 +44,6 @@ const inventoryDetailSlices = createSlice({
   },
 });
 
-export const { onSelectColorValue, onSelectSizeValue } =
+export const { onSelectColorValue, onSelectSizeValue, resetInventoryData } =
   inventoryDetailSlices.actions;
 export const inventoryDetailReducer = inventoryDetailSlices.reducer;
