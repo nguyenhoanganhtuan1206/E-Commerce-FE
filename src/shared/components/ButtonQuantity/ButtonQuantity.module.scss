@@ -32,3 +32,8 @@
     border-left: 1px solid var(--color-border);
   }
 }
+
+.ButtonQuantity__Disabled {
+  cursor: default;
+  color: rgba(0, 0, 0, 0.26);
+}

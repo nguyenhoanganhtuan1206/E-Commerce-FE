@@ -23,13 +23,14 @@ import {
   onSelectSizeValue,
   resetInventoryData,
 } from "../../../../redux/slices/inventory/inventoryDetailSlice";
+import { setQuantity } from "../../../../redux/slices/cart/cartSlice";
 
 const ProductDetailInfoBody = ({ productData = null }) => {
-  console.log("productData", productData);
-  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  const inventoryDetailState = useSelector((state) => state.inventoryDetail);
+  const authContext = useContext(AuthContext);
+
   const dispatch = useDispatch();
+  const inventoryDetailState = useSelector((state) => state.inventoryDetail);
 
   const [statusColorValue, setStatusColorValue] = useState(false);
   const [statusSizeValue, setStatusSizeValue] = useState(false);
@@ -122,6 +123,7 @@ const ProductDetailInfoBody = ({ productData = null }) => {
 
   useEffect(() => {
     dispatch(resetInventoryData());
+    dispatch(setQuantity(1));
   }, [dispatch]);
 
   useEffect(() => {
@@ -240,7 +242,14 @@ const ProductDetailInfoBody = ({ productData = null }) => {
           <span className="product-info__text-normal--bold mr-4">
             Quantity:
           </span>
-          <ButtonQuantity quantity={1} />
+          <ButtonQuantity
+            quantity={1}
+            maxQuantity={
+              inventoryDetailState.inventoryDetailData
+                ? inventoryDetailState.inventoryDetailData.quantity
+                : 0
+            }
+          />
 
           <span className="ml-3">
             {inventoryDetailState.inventoryDetailData
