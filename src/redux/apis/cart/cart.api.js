@@ -4,7 +4,7 @@ import pause from "../../../utils/pause";
 const useCartApis = createApi({
   reducerPath: "cart",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/cart",
+    baseUrl: "http://localhost:8080/api/v1/carts",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
@@ -33,9 +33,21 @@ const useCartApis = createApi({
           };
         },
       }),
+      fetchCartByCurrentUserId: builder.query({
+        providesTags: () => {
+          return [{ type: "CartProduct" }];
+        },
+        query: () => {
+          return {
+            url: "details",
+            method: "GET",
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useAddToCartMutation } = useCartApis;
+export const { useAddToCartMutation, useFetchCartByCurrentUserIdQuery } =
+  useCartApis;
 export { useCartApis };

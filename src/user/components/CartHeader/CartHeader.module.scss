@@ -19,6 +19,13 @@
   }
 }
 
+.CartList {
+  @include scrollbarWithColorPrimary();
+  max-height: 45vh;
+  height: 100%;
+  overflow-y: auto;
+}
+
 .CartItem {
   display: flex;
   align-items: center;
@@ -30,6 +37,7 @@
 }
 
 .CartInfo {
+  height: 100%;
   margin-left: 1.2rem;
 }
 
@@ -52,9 +60,8 @@
   }
 }
 
-.CartPrice {
+.CartInfoText {
   font-size: 1.4rem;
-  margin: 1.4rem 0 0 0;
   color: var(--font-color-2);
 }
 
