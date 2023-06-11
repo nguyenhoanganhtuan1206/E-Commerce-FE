@@ -60,8 +60,7 @@ const FormPostAd = () => {
   const [createProduct, createProductResults] = useCreateProductMutation();
   const [updateProduct, updateProductResults] = useUpdateProductMutation();
 
-  const [doFetchProductById, isLoadingFetchProductById] =
-    useThunk(fetchProductById);
+  const [doFetchProductById] = useThunk(fetchProductById);
 
   const { handleUploadFile, isError } = useUploadFileFirebase();
 
@@ -118,8 +117,10 @@ const FormPostAd = () => {
   }, [params.productId, fetchData, dispatch]);
 
   useEffect(() => {
-    handleFetchedData();
-  }, [myAdsState.productData, handleFetchedData]);
+    if (params.productId) {
+      handleFetchedData();
+    }
+  }, [myAdsState.productData, handleFetchedData, dispatch, params.productId]);
 
   const onSubmit = useCallback(
     async (data) => {

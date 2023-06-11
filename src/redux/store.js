@@ -22,6 +22,7 @@ import { commonSliceReducer } from "./slices/commonSlices.js/commoneSlice";
 import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice";
 import { useCartApis } from "./apis/cart/cart.api";
 import { cartReducers } from "./slices/cart/cartSlice";
+import { commonProductReducer } from "./slices/product/commonProductSlice";
 
 enableMapSet();
 
@@ -39,6 +40,7 @@ const store = configureStore({
     commonSlice: commonSliceReducer,
     inventoryDetail: inventoryDetailReducer,
     cartSlice: cartReducers,
+    commonProduct: commonProductReducer,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,

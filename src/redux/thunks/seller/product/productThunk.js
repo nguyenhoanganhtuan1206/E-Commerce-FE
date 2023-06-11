@@ -11,3 +11,14 @@ export const fetchProductById = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchProductDetailById = createAsyncThunk(
+  "product/fetchProductDetailById",
+  async (productId) => {
+    const response = await apiClient.get(
+      `/products/${productId}/productDetail`
+    );
+
+    return response.data;
+  }
+);

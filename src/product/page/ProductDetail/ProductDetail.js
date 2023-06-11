@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import useThunk from "../../../shared/hooks/useThunk";
-import { fetchProductById } from "../../../redux/thunks/seller/product/productThunk";
+import {
+  fetchProductById,
+  fetchProductDetailById,
+} from "../../../redux/thunks/seller/product/productThunk";
 import { Breadcrumbs, LoadingSpinner } from "../../../shared/components";
 import SwiperSlider from "../../../shared/components/SwiperSlider/SwiperSlider";
 import { Header } from "../../../shared/Layouts";
@@ -25,56 +28,58 @@ const imagesLink = [
 
 const ProductDetail = () => {
   const params = useParams();
-  const productDetailState = useSelector((state) => state.myAds);
+  const productDetailState = useSelector((state) => state.commonProduct);
 
-  const [doFetchProductById, isLoadingFetchProductById] =
-    useThunk(fetchProductById);
+  const [doFetchProductDetailById] = useThunk(fetchProductDetailById);
 
   useEffect(() => {
     if (params.productId) {
-      doFetchProductById(params.productId);
+      doFetchProductDetailById(params.productId);
     }
-  }, [doFetchProductById, params.productId]);
+  }, [doFetchProductDetailById, params.productId]);
 
   return (
     <>
       {productDetailState.isLoading && <LoadingSpinner option1 />}
 
-      {!productDetailState.isLoading && productDetailState.productData && (
-        <>
-          <Header />
+      {!productDetailState.isLoading &&
+        productDetailState.productDetailData && (
+          <>
+            <Header />
 
-          <Breadcrumbs title="Ad Details" nextPages={["Home"]} />
+            <Breadcrumbs title="Ad Details" nextPages={["Home"]} />
 
-          <div className="product-detail">
-            <div className="container">
-              <div className="row wide product-detail__container">
-                <div className="col-6">
-                  <SwiperSlider images={imagesLink} />
-                </div>
+            <div className="product-detail">
+              <div className="container">
+                <div className="row wide product-detail__container">
+                  <div className="col-6">
+                    <SwiperSlider images={imagesLink} />
+                  </div>
 
-                <div className="col-6">
-                  <div className="product-detail__info">
-                    <ProductDetailInfo
-                      productData={productDetailState.productData}
-                    />
+                  <div className="col-6">
+                    <div className="product-detail__info">
+                      <ProductDetailInfo
+                        productData={productDetailState.productDetailData}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Product Detail Section */}
+              <ProductDetailsSection
+                productData={productDetailState.productDetailData}
+              />
+              {/* Product Detail Section */}
+
+              {/* Product Comments Section */}
+              <CommentsProduct
+                infoProduct={productDetailState.productDetailData}
+              />
+              {/* Product Comments Section */}
             </div>
-
-            {/* Product Detail Section */}
-            <ProductDetailsSection
-              productData={productDetailState.productData}
-            />
-            {/* Product Detail Section */}
-
-            {/* Product Comments Section */}
-            <CommentsProduct infoProduct={productDetailState.productData} />
-            {/* Product Comments Section */}
-          </div>
-        </>
-      )}
+          </>
+        )}
     </>
   );
 };
