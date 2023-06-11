@@ -8,7 +8,7 @@ const cartSlices = createSlice({
   name: "cartSlice",
   initialState,
   reducers: {
-    setQuantity: (state, action) => {
+    setCartQuantity: (state, action) => {
       state.quantity = action.payload;
     },
     toggleIncreaseQuantity: (state) => {
@@ -20,6 +20,6 @@ const cartSlices = createSlice({
   },
 });
 
-export const { toggleDecreaseQuantity, toggleIncreaseQuantity, setQuantity } =
+export const { toggleDecreaseQuantity, toggleIncreaseQuantity, setCartQuantity } =
   cartSlices.actions;
 export const cartReducers = cartSlices.reducer;

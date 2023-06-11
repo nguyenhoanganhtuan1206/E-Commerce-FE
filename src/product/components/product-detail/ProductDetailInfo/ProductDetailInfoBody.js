@@ -23,7 +23,7 @@ import {
   onSelectSizeValue,
   resetInventoryData,
 } from "../../../../redux/slices/inventory/inventoryDetailSlice";
-import { setQuantity } from "../../../../redux/slices/cart/cartSlice";
+import { setCartQuantity } from "../../../../redux/slices/cart/cartSlice";
 
 const ProductDetailInfoBody = ({ productData = null }) => {
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const ProductDetailInfoBody = ({ productData = null }) => {
 
   const dispatch = useDispatch();
   const inventoryDetailState = useSelector((state) => state.inventoryDetail);
+  const quantityCartState = useSelector((state) => state.cartSlice);
 
   const [statusColorValue, setStatusColorValue] = useState(false);
   const [statusSizeValue, setStatusSizeValue] = useState(false);
@@ -107,13 +108,20 @@ const ProductDetailInfoBody = ({ productData = null }) => {
     }
 
     if (productData.inventory) {
-      addToCart({ inventoryId: inventoryDetailState.inventoryDetailData.id })
+      addToCart({
+        inventoryId: inventoryDetailState.inventoryDetailData.id,
+        quantity: quantityCartState.quantity,
+      })
         .unwrap()
         .then(() => {
           toast.success("Added this product to your cart successfully", {
             autoClose: 2000,
           });
+
+          setStatusColorValue(false);
+          setStatusSizeValue(false);
           dispatch(resetInventoryData());
+          dispatch(setCartQuantity(1));
         })
         .catch((error) => toast.error(error.data.message));
     }
@@ -123,7 +131,7 @@ const ProductDetailInfoBody = ({ productData = null }) => {
 
   useEffect(() => {
     dispatch(resetInventoryData());
-    dispatch(setQuantity(1));
+    dispatch(setCartQuantity(1));
   }, [dispatch]);
 
   useEffect(() => {

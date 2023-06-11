@@ -1,16 +1,16 @@
 import classes from "./ButtonQuantity.module.scss";
 
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import {
-  setQuantity,
+  setCartQuantity,
   toggleDecreaseQuantity,
   toggleIncreaseQuantity,
 } from "../../../redux/slices/cart/cartSlice";
-import { useEffect } from "react";
 
 const ButtonQuantity = ({ maxQuantity = 0 }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const ButtonQuantity = ({ maxQuantity = 0 }) => {
       inventoryDetailState.inventoryDetailData &&
       cartQuantityState.quantity > maxQuantity
     ) {
-      dispatch(setQuantity(inventoryDetailState.inventoryDetailData.quantity));
+      dispatch(setCartQuantity(inventoryDetailState.inventoryDetailData.quantity));
       return;
     }
 
