@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { db } from "../../../config/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./CartHeader.module.scss";
 
 import { ButtonFields } from "../../../shared/FormElement";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import { useFetchCartByCurrentUserIdQuery } from "../../../redux/apis/cart/cart.api";
+import CartImageProductHeader from "./CartImageProductHeader";
 
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
+
   return (
     <>
       {fetchCartByCurrentUserId.data && (
@@ -30,10 +36,8 @@ const CartHeader = () => {
               return (
                 <React.Fragment key={index}>
                   <div className={classes.CartItem}>
-                    <img
-                      src="https://images.unsplash.com/photo-1683267894199-4d45c90b6c1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
-                      alt="ac"
-                      className={classes.CartImageProduct}
+                    <CartImageProductHeader
+                      productId={cartItem.inventory.product.id}
                     />
 
                     <div className={classes.CartInfo}>
