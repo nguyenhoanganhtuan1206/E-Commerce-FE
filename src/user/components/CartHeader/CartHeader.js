@@ -1,8 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-
-import { db } from "../../../config/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
@@ -10,11 +7,23 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 import classes from "./CartHeader.module.scss";
 
 import { ButtonFields } from "../../../shared/FormElement";
-import { useFetchCartByCurrentUserIdQuery } from "../../../redux/apis/cart/cart.api";
+import {
+  useDeleteCartByIdMutation,
+  useFetchCartByCurrentUserIdQuery,
+} from "../../../redux/apis/cart/cart.api";
 import CartImageProductHeader from "./CartImageProductHeader";
+import { toast } from "react-toastify";
 
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
+  const [deleteCartById, deleteCartByIdResults] = useDeleteCartByIdMutation();
+
+  const handleDeleteProduct = (cartId) => {
+    deleteCartById(cartId)
+      .unwrap()
+      .then(() => toast.success("Removed this product from your cart"))
+      .catch((error) => toast.error(error.data.message));
+  };
 
   return (
     <>
@@ -57,6 +66,7 @@ const CartHeader = () => {
                     </div>
 
                     <FontAwesomeIcon
+                      onClick={() => handleDeleteProduct(cartItem.id)}
                       className={classes.CartIcon}
                       icon={faClose}
                     />

@@ -44,10 +44,24 @@ const useCartApis = createApi({
           };
         },
       }),
+      deleteCartById: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "CartProduct" }];
+        },
+        query: (productId) => {
+          return {
+            url: `${productId}`,
+            method: "DELETE",
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useAddToCartMutation, useFetchCartByCurrentUserIdQuery } =
-  useCartApis;
+export const {
+  useAddToCartMutation,
+  useFetchCartByCurrentUserIdQuery,
+  useDeleteCartByIdMutation,
+} = useCartApis;
 export { useCartApis };

@@ -47,7 +47,7 @@ function App() {
           element={<ConfirmEmailPage />}
         />
         {/* Required token */}
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/reset-password/:code" element={<ResetPasswordPage />} />
         {/* Required token */}
 
         {/* Routes logged in and all roles */}
