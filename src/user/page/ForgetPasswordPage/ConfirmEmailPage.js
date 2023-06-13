@@ -1,6 +1,5 @@
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
-import { MainComponentUser } from "../../components";
 import { FormConfirmEmail } from "../../components";
 
 const ConfirmEmailPage = () => {
@@ -14,9 +13,9 @@ const ConfirmEmailPage = () => {
       <Breadcrumbs title="Home" nextPages={["Forget Password"]} />
       {/* BreadCrumbs */}
 
-      <MainComponentUser>
+      <div className="mt-5">
         <FormConfirmEmail />
-      </MainComponentUser>
+      </div>
     </>
   );
 };

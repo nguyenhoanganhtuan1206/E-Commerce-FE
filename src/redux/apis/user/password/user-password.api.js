@@ -24,9 +24,17 @@ const userPasswordApis = createApi({
       resetPassword: builder.mutation({
         query: (payload) => {
           return {
-            url: `/reset-password?token=${payload.token}`,
-            body: payload.data,
+            url: `/reset-password`,
+            body: payload,
             method: "PUT",
+          };
+        },
+      }),
+      verifyCodeResetPassword: builder.query({
+        query: (code) => {
+          return {
+            url: `check-expiration-code?code=${code}`,
+            method: "GET",
           };
         },
       }),
@@ -34,6 +42,9 @@ const userPasswordApis = createApi({
   },
 });
 
-export const { useForgetPasswordMutation, useResetPasswordMutation } =
-  userPasswordApis;
+export const {
+  useForgetPasswordMutation,
+  useResetPasswordMutation,
+  useVerifyCodeResetPasswordQuery,
+} = userPasswordApis;
 export { userPasswordApis };

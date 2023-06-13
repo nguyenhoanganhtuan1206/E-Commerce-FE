@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
 
 import * as yup from "yup";
@@ -7,7 +9,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useResetPasswordMutation } from "../../../redux/apis/user/password/user-password.api";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
-import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
   newPassword: yup
@@ -23,7 +24,7 @@ const schema = yup.object({
     ),
 });
 
-const FormResetPassword = ({ token }) => {
+const FormResetPassword = ({ code = null }) => {
   const methods = useForm({ resolver: yupResolver(schema), mode: "onChange" });
   const navigate = useNavigate();
 
@@ -32,15 +33,15 @@ const FormResetPassword = ({ token }) => {
 
   const onSubmit = useCallback(
     async (data) => {
-      doResetPassword({ token, data })
+      doResetPassword({ code, newPassword: data.newPassword })
         .unwrap()
         .then(() => {
-          toast.success("Change Password Successfully!");
+          toast.success("Changed Password Successfully!");
         })
         .catch((error) => setError(error.data.message));
       navigate("/login");
     },
-    [doResetPassword, navigate, token]
+    [doResetPassword, navigate, code]
   );
 
   return (
