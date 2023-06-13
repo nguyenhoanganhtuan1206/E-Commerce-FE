@@ -9,14 +9,8 @@ import { ButtonFields } from "../../../shared/FormElement";
 
 const ResetPasswordPage = () => {
   const code = useParams().code;
-  console.log("code", code);
 
-  const verifyCodeResetPassword = useVerifyCodeResetPasswordQuery();
-
-  console.log(
-    "verifyCodeResetPassword.isError",
-    verifyCodeResetPassword.isError
-  );
+  const verifyCodeResetPassword = useVerifyCodeResetPasswordQuery(code);
 
   return (
     <>

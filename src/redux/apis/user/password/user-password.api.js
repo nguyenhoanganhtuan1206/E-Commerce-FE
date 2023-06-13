@@ -33,7 +33,7 @@ const userPasswordApis = createApi({
       verifyCodeResetPassword: builder.query({
         query: (code) => {
           return {
-            url: `check-expiration-code?code=${code}`,
+            url: `check-expiration-code?${code}`,
             method: "GET",
           };
         },
