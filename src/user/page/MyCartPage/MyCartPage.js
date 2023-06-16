@@ -1,6 +1,7 @@
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
-import { MainComponentUser, MyCart } from "../../components";
+import { MainComponentUser } from "../../components";
+import MyCartList from '../../components/MyCart/MyCartList';
 
 const MyCartPage = (props) => {
   return (
@@ -18,7 +19,7 @@ const MyCartPage = (props) => {
           <h3 className="main-content--user__header">My Cart</h3>
 
           <div className="main-content--user__body">
-            <MyCart />
+            <MyCartList />
           </div>
         </div>
       </MainComponentUser>

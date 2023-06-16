@@ -186,12 +186,13 @@ const ProductDetailInfoBody = ({ productData = null }) => {
       <div className={isEmptyCart && classes.ProductDetailInfoBodyError}>
         {!!productData.inventory && (
           <>
-            <p className="product-info__sub-info product-info__text-normal mt-2">
+            <div className="product-info__sub-info product-info__text-normal mt-2">
               <span className="product-info__text-normal--bold mr-4">
                 {productData.inventory.colorName}:
               </span>
-              {productData.inventory.colorValues.map((color) => (
+              {productData.inventory.colorValues.map((color, index) => (
                 <TagProduct
+                  key={index}
                   isActive={
                     statusColorValue &&
                     inventoryDetailState.colorValueSelected === color
@@ -213,9 +214,9 @@ const ProductDetailInfoBody = ({ productData = null }) => {
                   }
                 />
               ))}
-            </p>
+            </div>
 
-            <p className="product-info__sub-info product-info__text-normal mt-2">
+            <div className="product-info__sub-info product-info__text-normal mt-2">
               <span className="product-info__text-normal--bold mr-4">
                 {productData.inventory.sizeName}:
               </span>
@@ -242,11 +243,11 @@ const ProductDetailInfoBody = ({ productData = null }) => {
                   }
                 />
               ))}
-            </p>
+            </div>
           </>
         )}
 
-        <p className="product-info__sub-info product-info__text-normal mt-4">
+        <div className="product-info__sub-info product-info__text-normal mt-4">
           <span className="product-info__text-normal--bold mr-4">
             Quantity:
           </span>
@@ -267,7 +268,7 @@ const ProductDetailInfoBody = ({ productData = null }) => {
               : productData.quantity}{" "}
             available products
           </span>
-        </p>
+        </div>
 
         {isEmptyCart && (
           <p className={classes.ProductDetailInfoBodyErrorText}>
