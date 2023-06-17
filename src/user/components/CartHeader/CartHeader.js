@@ -7,13 +7,13 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 import classes from "./CartHeader.module.scss";
 
+import { Skeleton } from "../../../shared/components";
 import { ButtonFields } from "../../../shared/FormElement";
 import {
   useDeleteCartByIdMutation,
   useFetchCartByCurrentUserIdQuery,
 } from "../../../redux/apis/cart/cart.api";
 import CartImageProductHeader from "./CartImageProductHeader";
-import { Skeleton } from "../../../shared/components";
 
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
@@ -98,7 +98,9 @@ const CartHeader = () => {
               </div>
             </div>
 
-            <ButtonFields primary>Checkout</ButtonFields>
+            <ButtonFields to="/my-cart" primary>
+              Checkout
+            </ButtonFields>
           </>
         )}
       </>

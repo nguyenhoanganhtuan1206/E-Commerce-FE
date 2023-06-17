@@ -77,7 +77,6 @@ const UploadMultipleImages = ({
             value = [];
 
             inputSliced.forEach((url) => {
-              console.log("storedImagesMap", storedImagesMap.get(url.name));
               if (!storedImagesMap.has(url.name)) {
                 setStoredImagesMap(
                   ...storedImagesMap,

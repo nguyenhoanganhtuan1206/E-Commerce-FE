@@ -23,7 +23,11 @@ import {
   onSelectSizeValue,
   resetInventoryData,
 } from "../../../../redux/slices/inventory/inventoryDetailSlice";
-import { setCartQuantity } from "../../../../redux/slices/cart/cartSlice";
+import {
+  setCartQuantity,
+  toggleDecreaseQuantity,
+  toggleIncreaseQuantity,
+} from "../../../../redux/slices/cart/cartSlice";
 
 const ProductDetailInfoBody = ({ productData = null }) => {
   const navigate = useNavigate();
@@ -32,6 +36,7 @@ const ProductDetailInfoBody = ({ productData = null }) => {
   const dispatch = useDispatch();
   const inventoryDetailState = useSelector((state) => state.inventoryDetail);
   const quantityCartState = useSelector((state) => state.cartSlice);
+  const cartQuantityState = useSelector((state) => state.cartSlice);
 
   const [statusColorValue, setStatusColorValue] = useState(false);
   const [statusSizeValue, setStatusSizeValue] = useState(false);
@@ -91,6 +96,44 @@ const ProductDetailInfoBody = ({ productData = null }) => {
     ]
   );
 
+  const handleFetchInventoryDetailByParams = useCallback(() => {
+    if (
+      inventoryDetailState.sizeValueSelected &&
+      inventoryDetailState.colorValueSelected
+    ) {
+      doFetchInventoryDetailByParams({
+        productId: productData.id,
+        sizeValue: inventoryDetailState.sizeValueSelected,
+        colorValue: inventoryDetailState.colorValueSelected,
+      });
+    }
+  }, [
+    doFetchInventoryDetailByParams,
+    inventoryDetailState.colorValueSelected,
+    inventoryDetailState.sizeValueSelected,
+    productData.id,
+  ]);
+
+  const handleDecreaseQuantity = () => {
+    if (cartQuantityState.quantity === 1) {
+      return;
+    }
+
+    dispatch(toggleDecreaseQuantity());
+  };
+
+  const handleIncreaseQuantity = () => {
+    const maxQuantity = inventoryDetailState.inventoryDetailData
+      ? inventoryDetailState.inventoryDetailData.quantity
+      : 0;
+
+    if (cartQuantityState.quantity === maxQuantity) {
+      return;
+    }
+
+    dispatch(toggleIncreaseQuantity());
+  };
+
   const userLoggedIn = () => {
     if (!authContext.isLoggedIn) {
       navigate("/login");
@@ -129,28 +172,44 @@ const ProductDetailInfoBody = ({ productData = null }) => {
     setIsEmptyCart(false);
   };
 
+  const handleCartQuantityWithInventoryDetails = useCallback(() => {
+    const maxQuantity = inventoryDetailState.inventoryDetailData
+      ? inventoryDetailState.inventoryDetailData.quantity
+      : 0;
+
+    if (
+      inventoryDetailState.inventoryDetailData &&
+      cartQuantityState.quantity > maxQuantity
+    ) {
+      dispatch(
+        setCartQuantity(inventoryDetailState.inventoryDetailData.quantity)
+      );
+      return;
+    }
+  }, [
+    cartQuantityState.quantity,
+    dispatch,
+    inventoryDetailState.inventoryDetailData,
+  ]);
+
+  const handleCartQuantityWithoutInventory = useCallback(() => {
+    // !TODO: do some logic with this case
+  }, []);
+
+  useEffect(() => {
+    handleCartQuantityWithInventoryDetails();
+
+    //! TODO: fetch with quantity product without inventory
+  }, [handleCartQuantityWithInventoryDetails]);
+
   useEffect(() => {
     dispatch(resetInventoryData());
     dispatch(setCartQuantity(1));
   }, [dispatch]);
 
   useEffect(() => {
-    if (
-      inventoryDetailState.sizeValueSelected &&
-      inventoryDetailState.colorValueSelected
-    ) {
-      doFetchInventoryDetailByParams({
-        productId: productData.id,
-        sizeValue: inventoryDetailState.sizeValueSelected,
-        colorValue: inventoryDetailState.colorValueSelected,
-      });
-    }
-  }, [
-    doFetchInventoryDetailByParams,
-    inventoryDetailState.colorValueSelected,
-    inventoryDetailState.sizeValueSelected,
-    productData.id,
-  ]);
+    handleFetchInventoryDetailByParams();
+  }, [handleFetchInventoryDetailByParams]);
 
   return (
     <div className="product-info__body">
@@ -252,12 +311,9 @@ const ProductDetailInfoBody = ({ productData = null }) => {
             Quantity:
           </span>
           <ButtonQuantity
-            quantity={1}
-            maxQuantity={
-              inventoryDetailState.inventoryDetailData
-                ? inventoryDetailState.inventoryDetailData.quantity
-                : 0
-            }
+            currentQuantity={cartQuantityState.quantity}
+            onIncreaseQuantity={handleIncreaseQuantity}
+            onDecreaseQuantity={handleDecreaseQuantity}
           />
 
           <span className="ml-3">
