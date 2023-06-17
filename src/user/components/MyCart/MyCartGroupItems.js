@@ -6,20 +6,20 @@ import "./MyCartGroupItems.scss";
 import CartProductItem from "./CartProductItem";
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
 
-const MyCartGroupItems = (props) => {
+const MyCartGroupItems = ({ carts = [] }) => {
   return (
     <div className="mycart__group">
       <div className="mycart__group-header">
-        <span className="mycart-text--bold">
+        <p className="mycart-text--bold m-0">
           Product Owner:
-          <span className="mycart-text--bold ml-3">ANH TUAN</span>
-        </span>
+          <span className="mycart-text--bold ml-3">Tuan</span>
+        </p>
       </div>
 
       <div className="mycart__group-items-list">
-        <CartProductItem />
-        <CartProductItem />
-        <CartProductItem />
+        {carts.map((cartItem, index) => {
+          return <CartProductItem key={index} cartItem={cartItem} />;
+        })}
       </div>
 
       <div className="mycart__group-footer">
@@ -29,7 +29,11 @@ const MyCartGroupItems = (props) => {
 
         <p className="mycart__group-total-price">
           Total Price:
-          <span>$904</span>
+          <span>
+            {`$${carts
+              .reduce((total, item) => total + item.totalPrice, 0)
+              .toFixed(2)}`}
+          </span>
         </p>
       </div>
     </div>

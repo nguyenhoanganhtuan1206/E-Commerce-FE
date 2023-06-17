@@ -9,18 +9,24 @@ import { Skeleton } from "../../../shared/components";
 const MyCartList = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
 
-  if (fetchCartByCurrentUserId.isFetching) {
+  const addCartToMap = (carts = []) => {
+    const currentCart = new Map();
+
+    carts.forEach((cartItem, index) => {
+      if (!currentCart.has(cartItem.sellerId)) {
+        currentCart.set(cartItem.sellerId, []);
+      }
+      currentCart.get(cartItem.sellerId).push(cartItem);
+    });
+    return currentCart;
+  };
+
+  if (fetchCartByCurrentUserId.isLoading) {
     return <Skeleton times={6} style={{ height: "7rem", width: "100%" }} />;
   } else {
-    fetchCartByCurrentUserId.data.map((cartItem) => {
-      console.log("cartItem", cartItem);
-      return (
-        <>
-          <MyCartGroupItems />
-          <MyCartGroupItems />
-        </>
-      );
-    });
+    return Array.from(addCartToMap(fetchCartByCurrentUserId.data)).map(
+      ([sellerId, carts]) => <MyCartGroupItems key={sellerId} carts={carts} />
+    );
   }
 };
 

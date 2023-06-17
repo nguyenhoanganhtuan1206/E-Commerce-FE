@@ -8,12 +8,14 @@
 
 .ButtonQuantityNumber {
   text-align: center;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 1.4rem;
 }
 
 .ButtonQuantityIcon {
   height: 3.2rem;
   width: 3.2rem;
+  font-size: 1.3rem;
 
   display: flex;
   align-items: center;
@@ -22,6 +24,11 @@
 
   &:hover {
     opacity: 0.8;
+  }
+
+  &:active, 
+  &:focus {
+    background-color: var(--color-border);
   }
 
   &__Left {

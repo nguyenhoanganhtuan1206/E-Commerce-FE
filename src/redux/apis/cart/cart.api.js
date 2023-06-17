@@ -1,12 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import pause from "../../../utils/pause";
 
 const useCartApis = createApi({
   reducerPath: "cart",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/v1/carts",
     fetchFn: async (...args) => {
-      await pause(600);
       return fetch(...args);
     },
     prepareHeaders: (headers) => {
@@ -55,6 +53,28 @@ const useCartApis = createApi({
           };
         },
       }),
+      increaseQuantity: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "CartProduct" }];
+        },
+        query: (cartId) => {
+          return {
+            url: `${cartId}/increase-quantity`,
+            method: "PUT",
+          };
+        },
+      }),
+      decreaseQuantity: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "CartProduct" }];
+        },
+        query: (cartId) => {
+          return {
+            url: `${cartId}/decrease-quantity`,
+            method: "PUT",
+          };
+        },
+      }),
     };
   },
 });
@@ -63,5 +83,7 @@ export const {
   useAddToCartMutation,
   useFetchCartByCurrentUserIdQuery,
   useDeleteCartByIdMutation,
+  useIncreaseQuantityMutation,
+  useDecreaseQuantityMutation,
 } = useCartApis;
 export { useCartApis };
