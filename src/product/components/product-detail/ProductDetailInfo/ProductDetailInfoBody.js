@@ -143,8 +143,9 @@ const ProductDetailInfoBody = ({ productData = null }) => {
   const handleAddProductToCart = () => {
     userLoggedIn();
     if (
-      !inventoryDetailState.colorValueSelected ||
-      !inventoryDetailState.sizeValueSelected
+      productData.inventory &&
+      (!inventoryDetailState.colorValueSelected ||
+        !inventoryDetailState.sizeValueSelected)
     ) {
       setIsEmptyCart(true);
       return;
@@ -167,9 +168,23 @@ const ProductDetailInfoBody = ({ productData = null }) => {
           dispatch(setCartQuantity(1));
         })
         .catch((error) => toast.error(error.data.message));
-    }
+      setIsEmptyCart(false);
+    } else {
+      addToCart({
+        productId: productData.id,
+        quantity: quantityCartState.quantity,
+      })
+        .unwrap()
+        .then(() => {
+          toast.success("Added this product to your cart successfully", {
+            autoClose: 2000,
+          });
 
-    setIsEmptyCart(false);
+          dispatch(resetInventoryData());
+          dispatch(setCartQuantity(1));
+        })
+        .catch((error) => toast.error(error.data.message));
+    }
   };
 
   const handleCartQuantityWithInventoryDetails = useCallback(() => {
