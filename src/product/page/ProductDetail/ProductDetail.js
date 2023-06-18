@@ -47,7 +47,10 @@ const ProductDetail = () => {
           <>
             <Header />
 
-            <Breadcrumbs title="Ad Details" nextPages={["Home"]} />
+            <Breadcrumbs
+              currentPage="Ad Details"
+              nextPages={[{ title: "Home", link: "/" }]}
+            />
 
             <div className="product-detail">
               <div className="container">

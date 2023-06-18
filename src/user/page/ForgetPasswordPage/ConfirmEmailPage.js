@@ -10,7 +10,10 @@ const ConfirmEmailPage = () => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Home" nextPages={["Forget Password"]} />
+      <Breadcrumbs
+        currentPage="Home"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
       {/* BreadCrumbs */}
 
       <div className="mt-5">

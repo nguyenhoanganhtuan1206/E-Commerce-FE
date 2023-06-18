@@ -14,7 +14,7 @@ const AuthorDetailSection = (props) => {
         <>
           <h4 className="product-info__text-heading">Author</h4>
 
-          <p className="product-info__text-normal mt-2">
+          <div className="product-info__text-normal mt-2">
             <div className="product-info__author">
               <AvatarUser className="product-info__author-img" circle />
 
@@ -31,7 +31,7 @@ const AuthorDetailSection = (props) => {
                 <Link>See All Ads</Link>
               </div>
             </div>
-          </p>
+          </div>
 
           <ButtonFields primary>
             <EmailIcon className="mr-3" style={{ fontSize: "1.8rem" }} />

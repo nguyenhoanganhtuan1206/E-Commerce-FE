@@ -1,7 +1,7 @@
 .bread-crumbs {
   background-color: var(--color-primary-2);
-  color: #fff;
   padding: 4.5rem 0;
+  color: #fff;
 
   &__group {
     display: flex;
@@ -21,11 +21,9 @@
   }
 
   &__item {
-    span,
-    a {
-      font-size: 1.5rem;
-      font-weight: 500;
-    }
+    font-size: 1.5rem !important;
+    font-weight: 500 !important;
+    color: #fff !important;
   }
 
   &__icon {

@@ -12,7 +12,10 @@ const DashboardUserPage = () => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Dashboard" nextPages={["Home"]} />
+      <Breadcrumbs
+        currentPage="Dashboard"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
       {/* BreadCrumbs */}
 
       <MainComponentUser>

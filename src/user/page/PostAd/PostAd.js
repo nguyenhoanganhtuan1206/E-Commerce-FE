@@ -26,7 +26,10 @@ const PostAd = () => {
     <>
       <Header />
 
-      <Breadcrumbs title="Post An" nextPages={["Home"]} />
+      <Breadcrumbs
+        currentPage="Post Ad"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
       <MainComponentUser>
         <div className="main-content--user">
           <h3 className="main-content--user__header">

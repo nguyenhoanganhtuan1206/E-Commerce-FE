@@ -16,7 +16,10 @@ const ProfileUserPage = () => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Profile Settings" nextPages={["Home"]} />
+      <Breadcrumbs
+        currentPage="Profile Settings"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
       {/* BreadCrumbs */}
 
       <MainComponentUser>

@@ -15,6 +15,7 @@ import {
   ProfileUserPage,
   ConfirmEmailPage,
   ResetPasswordPage,
+  OrderPaymentPage,
 } from "./user/page";
 import {
   AdminHome,
@@ -58,6 +59,7 @@ function App() {
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/product/new" element={<PostAd />} />
           <Route path="/product/:productId/edit" element={<PostAd />} />
+          <Route path="/order-payment" element={<OrderPaymentPage />} />
         </Route>
         <Route path="/chat-user" element={<ChatPageUser />} />
 

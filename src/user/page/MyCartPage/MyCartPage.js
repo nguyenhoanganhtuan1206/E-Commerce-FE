@@ -1,7 +1,7 @@
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
 import { MainComponentUser } from "../../components";
-import MyCartList from '../../components/MyCart/MyCartList';
+import MyCartList from "../../components/MyCart/MyCartList";
 
 const MyCartPage = (props) => {
   return (
@@ -11,7 +11,10 @@ const MyCartPage = (props) => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Home" nextPages={["My Cart"]} />
+      <Breadcrumbs
+        currentPage="Home"
+        nextPages={[{ title: "My Cart", link: "/my-cart" }]}
+      />
       {/* BreadCrumbs */}
 
       <MainComponentUser>

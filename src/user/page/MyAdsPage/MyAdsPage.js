@@ -10,7 +10,10 @@ const MyAdsPage = () => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Home" nextPages={["My Ads"]} />
+      <Breadcrumbs
+        currentPage="Home"
+        nextPages={[{ title: "MyAds", link: "/my-ads" }]}
+      />
       {/* BreadCrumbs */}
 
       <MainComponentUser>

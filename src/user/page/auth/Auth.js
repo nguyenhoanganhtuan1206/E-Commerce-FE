@@ -6,7 +6,10 @@ const Auth = ({ heading, children }) => {
   return (
     <>
       <Header />
-      <Breadcrumbs title="Login" nextPages={["Home"]} />
+      <Breadcrumbs
+        currentPage="Login"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
 
       <div className="auth">
         <div className="auth-form">

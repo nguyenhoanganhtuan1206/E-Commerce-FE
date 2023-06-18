@@ -12,7 +12,10 @@ const FilterProducts = (props) => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Categories" nextPages={["Home"]} />
+      <Breadcrumbs
+        currentPage="Categories"
+        nextPages={[{ title: "Home", link: "/" }]}
+      />
       {/* BreadCrumbs */}
 
       <div className="filter-products">

@@ -19,7 +19,10 @@ const ResetPasswordPage = () => {
       {/* Header */}
 
       {/* BreadCrumbs */}
-      <Breadcrumbs title="Home" nextPages={["Forget Password"]} />
+      <Breadcrumbs
+        currentPage="Home"
+        nextPages={[{ title: "Login", link: "/login" }]}
+      />
       {/* BreadCrumbs */}
 
       {verifyCodeResetPassword.isError ? (
@@ -34,7 +37,11 @@ const ResetPasswordPage = () => {
               {verifyCodeResetPassword.error.data.message}
             </p>
 
-            <ButtonFields type="button" to="/reset-password/confirm-email" subPrimary>
+            <ButtonFields
+              type="button"
+              to="/reset-password/confirm-email"
+              subPrimary
+            >
               Return Confirm Email
             </ButtonFields>
           </div>

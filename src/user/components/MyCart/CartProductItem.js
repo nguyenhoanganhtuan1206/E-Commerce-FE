@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import "./MyCart.scss";
 import "./CartProductItem.scss";
@@ -7,16 +7,25 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
-import { ButtonQuantity, ModalWarning } from "../../../shared/components";
+import {
+  ButtonQuantity,
+  LoadingSpinner,
+  ModalWarning,
+} from "../../../shared/components";
 import {
   useDecreaseQuantityMutation,
   useIncreaseQuantityMutation,
   useDeleteCartByIdMutation,
 } from "../../../redux/apis/cart/cart.api";
 import { ButtonFields } from "../../../shared/FormElement";
+import { useFetchFilesFirebase } from "../../../firebase/image-product/firebase-service";
 
 const CartProductItem = ({ cartItem }) => {
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
+  const [imagesProduct, setImagesProduct] = useState(new Map());
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+
+  const [handleFetchProfile] = useFetchFilesFirebase(cartItem.product.id);
   const [doIncreaseQuantity, doIncreaseQuantityResults] =
     useIncreaseQuantityMutation();
   const [doDecreaseQuantity, doDecreaseQuantityResults] =
@@ -56,16 +65,36 @@ const CartProductItem = ({ cartItem }) => {
       .catch((error) => toast.error(error.data.message));
   };
 
+  useEffect(() => {
+    if (cartItem.product.id) {
+      setIsLoadingImage(true);
+      handleFetchProfile(cartItem.product.id)
+        .then((res) => {
+          const map = new Map();
+
+          res.imagesProduct.forEach((item) => {
+            map.set(item.fileName, item.url);
+          });
+          setImagesProduct(map);
+        })
+        .finally(() => setIsLoadingImage(false));
+    }
+  }, [cartItem.product.id, handleFetchProfile]);
+
   return (
     <div className="cart__item">
       <div className="cart__item-group">
-        <div className="cart__item-box">
-          <img
-            className="cart__item-box__img"
-            src="https://images.pexels.com/photos/5081971/pexels-photo-5081971.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt={cartItem.product.name}
-          />
-        </div>
+        {isLoadingImage && <LoadingSpinner noOverlay />}
+        
+        {!isLoadingImage && (
+          <div className="cart__item-box">
+            <img
+              className="cart__item-box__img"
+              src={Array.from(imagesProduct.values())[0]}
+              alt={cartItem.product.name}
+            />
+          </div>
+        )}
 
         <div className="cart__item-info">
           <p className="mycart-text__name">{cartItem.product.name}</p>
@@ -82,7 +111,7 @@ const CartProductItem = ({ cartItem }) => {
 
           {cartItem.product.inventory ? (
             <p className="mycart-text--light mycart-text--small">
-              Inventory:
+              Categorization:
               <span className="mycart-text--bold ml-2">
                 {cartItem.product.inventory.colorValue},{" "}
                 {cartItem.product.inventory.sizeValue}

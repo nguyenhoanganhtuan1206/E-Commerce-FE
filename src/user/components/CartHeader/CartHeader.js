@@ -50,7 +50,6 @@ const CartHeader = () => {
 
             <div className={classes.CartList}>
               {fetchCartByCurrentUserId.data.map((cartItem, index) => {
-                console.log("cartItem", cartItem);
                 return (
                   <React.Fragment key={index}>
                     <div className={classes.CartItem}>
