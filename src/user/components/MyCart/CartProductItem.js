@@ -17,8 +17,10 @@ import { ButtonFields } from "../../../shared/FormElement";
 
 const CartProductItem = ({ cartItem }) => {
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
-  const [doIncreaseQuantity] = useIncreaseQuantityMutation();
-  const [doDecreaseQuantity] = useDecreaseQuantityMutation();
+  const [doIncreaseQuantity, doIncreaseQuantityResults] =
+    useIncreaseQuantityMutation();
+  const [doDecreaseQuantity, doDecreaseQuantityResults] =
+    useDecreaseQuantityMutation();
   const [doDeleteCart] = useDeleteCartByIdMutation();
 
   const maxQuantity = cartItem.product.inventory
@@ -37,7 +39,7 @@ const CartProductItem = ({ cartItem }) => {
   };
 
   const handleDecreaseQuantity = () => {
-    if (cartItem.quantity < 0) {
+    if (cartItem.quantity === 1) {
       return;
     }
 
@@ -97,6 +99,10 @@ const CartProductItem = ({ cartItem }) => {
         maxQuantity={maxQuantity}
         onIncreaseQuantity={handleIncreaseQuantity}
         onDecreaseQuantity={handleDecreaseQuantity}
+        disabled={
+          doIncreaseQuantityResults.isLoading ||
+          doDecreaseQuantityResults.isLoading
+        }
       />
 
       <p className="cart__product-item__text mycart-text--bold">{`$${cartItem.totalPrice.toFixed(

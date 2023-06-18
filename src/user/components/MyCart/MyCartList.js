@@ -13,10 +13,10 @@ const MyCartList = () => {
     const currentCart = new Map();
 
     carts.forEach((cartItem, index) => {
-      if (!currentCart.has(cartItem.sellerId)) {
-        currentCart.set(cartItem.sellerId, []);
+      if (!currentCart.has(cartItem.seller.id)) {
+        currentCart.set(cartItem.seller.id, []);
       }
-      currentCart.get(cartItem.sellerId).push(cartItem);
+      currentCart.get(cartItem.seller.id).push(cartItem);
     });
     return currentCart;
   };
@@ -25,7 +25,7 @@ const MyCartList = () => {
     return <Skeleton times={6} style={{ height: "7rem", width: "100%" }} />;
   } else {
     return Array.from(addCartToMap(fetchCartByCurrentUserId.data)).map(
-      ([sellerId, carts]) => <MyCartGroupItems key={sellerId} carts={carts} />
+      ([seller, carts]) => <MyCartGroupItems key={seller.id} carts={carts} />
     );
   }
 };

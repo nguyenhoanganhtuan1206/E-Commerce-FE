@@ -28,6 +28,10 @@ const CartHeader = () => {
 
   if (fetchCartByCurrentUserId.isFetching || deleteCartByIdResults.isLoading) {
     return <Skeleton times={3} height="4rem" />;
+  } else if (fetchCartByCurrentUserId.data.length === 0) {
+    return (
+      <p className={`${classes.HeaderText} text-center`}>Your cart is empty</p>
+    );
   } else {
     return (
       <>
@@ -46,6 +50,7 @@ const CartHeader = () => {
 
             <div className={classes.CartList}>
               {fetchCartByCurrentUserId.data.map((cartItem, index) => {
+                console.log("cartItem", cartItem);
                 return (
                   <React.Fragment key={index}>
                     <div className={classes.CartItem}>
@@ -57,22 +62,18 @@ const CartHeader = () => {
                         </Link>
 
                         {cartItem.product.inventory && (
-                          <>
-                            <p className={classes.CartInfoText}>
-                              {cartItem.product.inventory.colorValue},{" "}
-                              {cartItem.product.inventory.sizeValue}
-                            </p>
-
-                            <p className={classes.CartInfoText}>
-                              {cartItem.quantity} x{" "}
-                              {cartItem.product.inventory
-                                ? `$${cartItem.product.inventory.price.toFixed(
-                                    2
-                                  )}`
-                                : `$${cartItem.product.price.toFixed(2)}`}
-                            </p>
-                          </>
+                          <p className={classes.CartInfoText}>
+                            {cartItem.product.inventory.colorValue},{" "}
+                            {cartItem.product.inventory.sizeValue}
+                          </p>
                         )}
+
+                        <p className={classes.CartInfoText}>
+                          {cartItem.quantity} x{" "}
+                          {cartItem.product.inventory
+                            ? `$${cartItem.product.inventory.price.toFixed(2)}`
+                            : `$${cartItem.product.price.toFixed(2)}`}
+                        </p>
                       </div>
 
                       <FontAwesomeIcon

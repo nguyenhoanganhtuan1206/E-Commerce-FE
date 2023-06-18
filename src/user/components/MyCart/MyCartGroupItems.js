@@ -12,7 +12,9 @@ const MyCartGroupItems = ({ carts = [] }) => {
       <div className="mycart__group-header">
         <p className="mycart-text--bold m-0">
           Product Owner:
-          <span className="mycart-text--bold ml-3">Tuan</span>
+          <span className="mycart-text--bold ml-3">
+            {carts[0].seller.sellerName}
+          </span>
         </p>
       </div>
 

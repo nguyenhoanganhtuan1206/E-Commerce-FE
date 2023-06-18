@@ -19,11 +19,7 @@ import {
   InputFields,
   MultipleSelectFields,
 } from "../../../shared/FormElement";
-import {
-  VALIDATOR_MAX,
-  VALIDATOR_MIN_LENGTH_ARRAY,
-  VALIDATOR_NUMBER,
-} from "../../../shared/util/validators";
+import { VALIDATOR_MIN_LENGTH_ARRAY } from "../../../shared/util/validators";
 import {
   useFetchProductStylesBySellerIdQuery,
   useDeleteProductStyleMutation,
@@ -42,10 +38,8 @@ const FormAdInfoDetails = ({ methods }) => {
   const [doFetchCategories, isLoadingCategories] = useThunk(fetchCategory);
 
   const fetchProductStylesState = useFetchProductStylesBySellerIdQuery();
-  const [addProductStyle, addProductStyleResults] =
-    useAddProductStyleMutation();
-  const [doDeleteProductStyle, deleteProductStyleResults] =
-    useDeleteProductStyleMutation();
+  const [addProductStyle] = useAddProductStyleMutation();
+  const [doDeleteProductStyle] = useDeleteProductStyleMutation();
 
   const isLoading = isLoadingCategories || isLoadingProductStyles;
 

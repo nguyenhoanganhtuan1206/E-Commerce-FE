@@ -15,7 +15,7 @@
   justify-content: center;
   &--primary {
     background-color: var(--color-primary);
-    color: #fff;
+    color: #fff !important;
 
     &:hover {
       background-color: var(--color-primary-2) !important;
