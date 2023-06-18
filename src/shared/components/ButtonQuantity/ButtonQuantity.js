@@ -8,25 +8,30 @@ const ButtonQuantity = ({
   maxQuantity = 1,
   onIncreaseQuantity,
   onDecreaseQuantity,
+  disabled = false,
 }) => {
   return (
     <div className={classes.ButtonQuantity}>
       <div
         className={`${classes.ButtonQuantityIcon} ${
-          currentQuantity === 0 && classes.ButtonQuantity__Disabled
+          (disabled || currentQuantity === 1) &&
+          classes.ButtonQuantity__Disabled
         } ${classes.ButtonQuantityIcon__Left}`}
+        onClick={onDecreaseQuantity}
       >
-        <FontAwesomeIcon icon={faMinus} onClick={onDecreaseQuantity} />
+        <FontAwesomeIcon icon={faMinus} />
       </div>
 
       <span className={classes.ButtonQuantityNumber}>{currentQuantity}</span>
 
       <div
         className={`${classes.ButtonQuantityIcon} ${
-          currentQuantity === maxQuantity && classes.ButtonQuantity__Disabled
+          (disabled || currentQuantity === maxQuantity) &&
+          classes.ButtonQuantity__Disabled
         } ${classes.ButtonQuantityIcon__Right}`}
+        onClick={onIncreaseQuantity}
       >
-        <FontAwesomeIcon icon={faPlus} onClick={onIncreaseQuantity} />
+        <FontAwesomeIcon icon={faPlus} />
       </div>
     </div>
   );
