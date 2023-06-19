@@ -1,6 +1,6 @@
 import { Breadcrumbs } from "../../../shared/components";
 import { Header } from "../../../shared/Layouts";
-import { MainComponentUser } from "../../components";
+import { OrderPayment } from "../../components";
 
 const MyCartPage = (props) => {
   return (
@@ -11,21 +11,14 @@ const MyCartPage = (props) => {
 
       {/* BreadCrumbs */}
       <Breadcrumbs
-        title="Order Payment"
+        currentPage="Order Payment"
         nextPages={[
           { title: "Home", link: "/" },
           { title: "My Cart", link: "/my-cart" },
         ]}
       />
       {/* BreadCrumbs */}
-
-      <MainComponentUser>
-        <div className="main-content--user">
-          <h3 className="main-content--user__header">Order Payment</h3>
-
-          <div className="main-content--user__body"></div>
-        </div>
-      </MainComponentUser>
+      <OrderPayment />
     </>
   );
 };

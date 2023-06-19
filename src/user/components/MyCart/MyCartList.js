@@ -12,7 +12,7 @@ const MyCartList = () => {
   const addCartToMap = (carts = []) => {
     const currentCart = new Map();
 
-    carts.forEach((cartItem, index) => {
+    carts.forEach((cartItem) => {
       if (!currentCart.has(cartItem.seller.id)) {
         currentCart.set(cartItem.seller.id, []);
       }

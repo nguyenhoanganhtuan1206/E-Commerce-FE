@@ -1,0 +1,90 @@
+.SummaryHeader {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+
+.OrderItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3rem;
+
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 1.4rem;
+  padding-bottom: 1.4rem;
+
+  &__Image {
+    height: 9rem;
+    width: 11rem;
+    border-radius: 5px;
+    border: 1px solid var(--color-border);
+    object-fit: cover;
+  }
+
+  &__Group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  &__Detail {
+    margin-left: 1.2rem;
+  }
+
+  &__Quantity {
+    color: var(--color-grey-dark-2);
+    margin-left: 1.6rem;
+    text-align: center;
+  }
+
+  span {
+    flex: 1;
+  }
+}
+
+.SummaryItem {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.SummaryGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:first-child {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  span {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+}
+
+.SummaryItemWarning {
+  font-style: italic;
+  color: var(--color-primary);
+  margin-top: 1rem;
+}
+
+.SummaryBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.2rem 0 1.2rem 0;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 1.6rem;
+  font-weight: 700;
+
+  p {
+    margin: 0;
+  }
+}

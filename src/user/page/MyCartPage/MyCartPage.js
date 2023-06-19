@@ -3,7 +3,7 @@ import { Header } from "../../../shared/Layouts";
 import { MainComponentUser } from "../../components";
 import MyCartList from "../../components/MyCart/MyCartList";
 
-const MyCartPage = (props) => {
+const MyCartPage = () => {
   return (
     <>
       {/* Header */}
