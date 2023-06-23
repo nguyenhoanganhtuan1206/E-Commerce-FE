@@ -75,6 +75,17 @@ const useCartApis = createApi({
           };
         },
       }),
+      fetchCartsBySellerId: builder.query({
+        providesTags: () => {
+          return [{ type: "CartProduct" }];
+        },
+        query: (sellerId) => {
+          return {
+            url: `${sellerId}/user/cart-details`,
+            method: "GET",
+          };
+        },
+      }),
     };
   },
 });
@@ -85,5 +96,6 @@ export const {
   useDeleteCartByIdMutation,
   useIncreaseQuantityMutation,
   useDecreaseQuantityMutation,
+  useFetchCartsBySellerIdQuery,
 } = useCartApis;
 export { useCartApis };

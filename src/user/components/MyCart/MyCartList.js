@@ -25,7 +25,9 @@ const MyCartList = () => {
     return <Skeleton times={6} style={{ height: "7rem", width: "100%" }} />;
   } else {
     return Array.from(addCartToMap(fetchCartByCurrentUserId.data)).map(
-      ([seller, carts]) => <MyCartGroupItems key={seller.id} carts={carts} />
+      ([sellerId, carts]) => (
+        <MyCartGroupItems key={sellerId} sellerId={sellerId} carts={carts} />
+      )
     );
   }
 };

@@ -59,7 +59,7 @@ function App() {
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/product/new" element={<PostAd />} />
           <Route path="/product/:productId/edit" element={<PostAd />} />
-          <Route path="/order-payment" element={<OrderPaymentPage />} />
+          <Route path="/:sellerId/order-payment" element={<OrderPaymentPage />} />
         </Route>
         <Route path="/chat-user" element={<ChatPageUser />} />
 
