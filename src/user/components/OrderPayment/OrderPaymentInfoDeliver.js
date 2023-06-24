@@ -1,6 +1,14 @@
+import { useDispatch, useSelector } from "react-redux";
 import classes from "./OrderPaymentInfoDeliver.module.scss";
+import ModalChangeAddressOrderPayment from "./ModalChangeAddressOrderPayment";
+import { toggleShowModalChangeAddress } from "../../../redux/slices/cart/cartSlice";
+import { useFetchLocationsQuery } from "../../../redux/apis/user/location/user-locations.api";
 
 const OrderPaymentInfoDeliver = ({ userInfo }) => {
+  const dispatch = useDispatch();
+  const orderPaymentSliceState = useSelector((state) => state.cartSlice);
+  const fetchLocationByUserId = useFetchLocationsQuery(userInfo.id);
+
   return (
     <>
       <h3 className={classes.HeadingText}>Shipping & Billing Information</h3>
@@ -23,15 +31,17 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
 
         <div className={classes.UserDetail__Group}>
           <h3 className={classes.UserDetail__Title}>Address (*)</h3>
-          {userInfo.locations
-            .filter((locationItem) => locationItem)
-            .map((filteredLocation, index) => (
-              <span>
-                {filteredLocation.province}, {filteredLocation.district},{" "}
-                {filteredLocation.commune}
-              </span>
-            ))}
+          {!fetchLocationByUserId.isFetching &&
+            fetchLocationByUserId.data
+              .filter((locationItem) => locationItem.defaultLocation)
+              .map((filteredLocation, index) => (
+                <span>
+                  {filteredLocation.province}, {filteredLocation.district},{" "}
+                  {filteredLocation.commune}
+                </span>
+              ))}
           <span
+            onClick={() => dispatch(toggleShowModalChangeAddress(userInfo.id))}
             className="ml-3"
             style={{
               color: "var(--color-primary)",
@@ -65,6 +75,10 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
         />
       </div> */}
       </div>
+
+      {orderPaymentSliceState.userIdModalChangeAddress && (
+        <ModalChangeAddressOrderPayment />
+      )}
     </>
   );
 };

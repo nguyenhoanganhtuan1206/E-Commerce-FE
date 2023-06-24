@@ -9,9 +9,9 @@ const OrderSummary = ({ carts = [] }) => {
       </div>
 
       <ul className={classes.OrderList}>
-        {carts.map((cartItem) => {
+        {carts.map((cartItem, index) => {
           return (
-            <li className={classes.OrderItem}>
+            <li key={index} className={classes.OrderItem}>
               <div className={classes.OrderItem__Group}>
                 <img
                   className={classes.OrderItem__Image}

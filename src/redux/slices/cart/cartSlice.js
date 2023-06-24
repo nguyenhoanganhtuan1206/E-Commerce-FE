@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   quantity: 1,
+  userIdModalChangeAddress: null,
+  isShowModalChangeAddress: false,
 };
 
 const cartSlices = createSlice({
@@ -17,9 +19,20 @@ const cartSlices = createSlice({
     toggleDecreaseQuantity: (state) => {
       state.quantity -= 1;
     },
+    toggleShowModalChangeAddress: (state, action) => {
+      state.isShowModalChangeAddress = !state.isShowModalChangeAddress;
+
+      if (state.isShowModalChangeAddress) {
+        state.userIdModalChangeAddress = action.payload;
+      }
+    },
   },
 });
 
-export const { toggleDecreaseQuantity, toggleIncreaseQuantity, setCartQuantity } =
-  cartSlices.actions;
+export const {
+  toggleDecreaseQuantity,
+  toggleIncreaseQuantity,
+  setCartQuantity,
+  toggleShowModalChangeAddress,
+} = cartSlices.actions;
 export const cartReducers = cartSlices.reducer;
