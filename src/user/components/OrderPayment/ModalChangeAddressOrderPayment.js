@@ -2,6 +2,7 @@ import classes from "./ModalChangeAddressOrderPayment.module.scss";
 
 import { Radio } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { memo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +17,7 @@ import {
 } from "../../../redux/apis/user/location/user-locations.api";
 import { toggleShowModalChangeAddress } from "../../../redux/slices/cart/cartSlice";
 import { toggleModalAdd } from "../../../redux/slices/user/location/locationSlice";
-import { toast } from "react-toastify";
+
 
 const ModalChangeAddressOrderPayment = () => {
   const orderPaymentSliceState = useSelector((state) => state.cartSlice);
