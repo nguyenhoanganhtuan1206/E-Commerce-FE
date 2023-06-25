@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 const initialState = {
   isShowFormCreateNewProductStyle: false,
+  paymentMethod: null,
   paymentMethods: [],
   currentStepForm: 1,
 };
@@ -15,7 +16,7 @@ const addProductSlices = createSlice({
       state.isShowFormCreateNewProductStyle =
         !state.isShowFormCreateNewProductStyle;
     },
-    handleChangePaymentMethod: (state, action) => {
+    handleSelectMultiplePaymentMethod: (state, action) => {
       if (action.payload.checked) {
         state.paymentMethods = [...state.paymentMethods, action.payload.name];
       } else {
@@ -23,6 +24,9 @@ const addProductSlices = createSlice({
           (value) => value !== action.payload.name
         );
       }
+    },
+    handleSelectChangePaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
     },
     handleIncreaseStep: (state) => {
       if (state.currentStepForm < 3) {
@@ -40,15 +44,16 @@ const addProductSlices = createSlice({
     },
     handleResetStep: (state) => {
       state.currentStepForm = 1;
-    }
+    },
   },
 });
 
 export const {
   toggleShowFormCreateNewProductStyle,
-  handleChangePaymentMethod,
+  handleSelectMultiplePaymentMethod,
+  handleSelectChangePaymentMethod,
   handleDecreaseStep,
   handleIncreaseStep,
-  handleResetStep
+  handleResetStep,
 } = addProductSlices.actions;
 export const addProductReducer = addProductSlices.reducer;

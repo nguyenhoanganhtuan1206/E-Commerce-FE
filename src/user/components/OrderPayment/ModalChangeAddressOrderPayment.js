@@ -104,7 +104,6 @@ const ModalChangeAddressOrderPayment = () => {
                         id={locationItem.id}
                         value={locationItem.id}
                         name="radio-buttons"
-                        inputProps={{ "aria-label": "A" }}
                         sx={{
                           "& .MuiSvgIcon-root": {
                             fontSize: 22,

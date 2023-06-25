@@ -1,16 +1,7 @@
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import { CardPaymentMethod } from "../../../shared/FormElement";
 
-import { useDispatch } from "react-redux";
-import { handleChangePaymentMethod } from "../../../redux/slices/seller/add-product/addProductSlice";
-
 const FormCardPaymentMethod = () => {
-  const dispatch = useDispatch();
-  
-  const handleCheckboxChange = useCallback((name, checked) => {
-    dispatch(handleChangePaymentMethod({ name, checked }));
-  }, [dispatch]);
-
   return (
     <div className="row">
       <div className="col-6">
@@ -19,7 +10,7 @@ const FormCardPaymentMethod = () => {
           imgSrc={"https://www.coolmate.me/images/COD.svg"}
           title="Cash On Delivery"
           subTitle="Payment when received your order"
-          onCheckboxChange={handleCheckboxChange}
+          multiple
         />
       </div>
       <div className="col-6">
@@ -27,7 +18,7 @@ const FormCardPaymentMethod = () => {
           fieldName="paypal"
           imgSrc={"https://cdn-icons-png.flaticon.com/512/174/174861.png"}
           title="Payment With Paypal"
-          onCheckboxChange={handleCheckboxChange}
+          multiple
         />
       </div>
     </div>

@@ -44,7 +44,7 @@ const OrderSummary = ({ carts = [] }) => {
 
                       <div className="d-flex align-items-center">
                         {cartItem.product.categories.map((category, index) => (
-                          <span style={{ flex: "0" }}>
+                          <span key={index} style={{ flex: "0" }}>
                             {category.categoryName}
                             {index + 1 !== cartItem.product.categories.length &&
                               ", "}

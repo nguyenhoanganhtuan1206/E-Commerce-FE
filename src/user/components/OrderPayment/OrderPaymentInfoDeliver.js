@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./OrderPaymentInfoDeliver.module.scss";
+
 import ModalChangeAddressOrderPayment from "./ModalChangeAddressOrderPayment";
 import { toggleShowModalChangeAddress } from "../../../redux/slices/cart/cartSlice";
 import { useFetchLocationsQuery } from "../../../redux/apis/user/location/user-locations.api";
+import { CardPaymentMethod } from "../../../shared/FormElement";
 
 const OrderPaymentInfoDeliver = ({ userInfo }) => {
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
             fetchLocationByUserId.data
               .filter((locationItem) => locationItem.defaultLocation)
               .map((filteredLocation, index) => (
-                <span>
+                <span key={index}>
                   {filteredLocation.province}, {filteredLocation.district},{" "}
                   {filteredLocation.commune}
                 </span>
@@ -57,23 +59,21 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
       <h3 className={`${classes.HeadingText} mt-3`}>Payment Method</h3>
 
       <div className={`${classes.UserDetail} row`}>
-        {/* <div className="col-6">
-        <CardPaymentMethod
-          fieldName="cod"
-          imgSrc={"https://www.coolmate.me/images/COD.svg"}
-          title="Cash On Delivery"
-          subTitle="Payment when received your order"
-          // onCheckboxChange={handleCheckboxChange}
-        />
-      </div>
-      <div className="col-6">
-        <CardPaymentMethod
-          fieldName="paypal"
-          imgSrc={"https://cdn-icons-png.flaticon.com/512/174/174861.png"}
-          title="Payment With Paypal"
-          // onCheckboxChange={handleCheckboxChange}
-        />
-      </div> */}
+        <div className="col-6">
+          <CardPaymentMethod
+            fieldName="cod"
+            imgSrc={"https://www.coolmate.me/images/COD.svg"}
+            title="Cash On Delivery"
+            subTitle="Payment when received your order"
+          />
+        </div>
+        <div className="col-6">
+          <CardPaymentMethod
+            fieldName="paypal"
+            imgSrc={"https://cdn-icons-png.flaticon.com/512/174/174861.png"}
+            title="Payment With Paypal"
+          />
+        </div>
       </div>
 
       {orderPaymentSliceState.userIdModalChangeAddress && (
