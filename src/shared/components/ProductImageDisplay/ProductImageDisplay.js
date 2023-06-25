@@ -1,9 +1,8 @@
-import classes from "./CartHeader.module.scss";
 import { memo, useEffect, useState } from "react";
 
 import { useFetchFilesFirebase } from "../../../firebase/image-product/firebase-service";
 
-const CartImageProductHeader = ({ productId = null }) => {
+const ProductImageDisplay = ({ productId = null, className }) => {
   const [handleFetchProfile] = useFetchFilesFirebase(productId);
   const [imagesProduct, setImagesProduct] = useState(new Map());
 
@@ -24,9 +23,9 @@ const CartImageProductHeader = ({ productId = null }) => {
     <img
       src={Array.from(imagesProduct.values())[0]}
       alt={Array.from(imagesProduct.values())[1]}
-      className={classes.CartImageProductHeader}
+      className={className}
     />
   );
 };
 
-export default memo(CartImageProductHeader);
+export default memo(ProductImageDisplay);

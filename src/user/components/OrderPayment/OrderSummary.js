@@ -1,7 +1,20 @@
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
+import { ProductImageDisplay } from "../../../shared/components";
 import classes from "./OrderSummary.module.scss";
 
 const OrderSummary = ({ carts = [] }) => {
+  const calculateTotalPriceOrder = () => {
+    const totalPrice = carts.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
+    if (totalPrice >= 300) {
+      return totalPrice;
+    }
+
+    return totalPrice + 20;
+  };
+
   return (
     <>
       <div className={classes.SummaryHeader}>
@@ -13,10 +26,9 @@ const OrderSummary = ({ carts = [] }) => {
           return (
             <li key={index} className={classes.OrderItem}>
               <div className={classes.OrderItem__Group}>
-                <img
+                <ProductImageDisplay
+                  productId={cartItem.product.id}
                   className={classes.OrderItem__Image}
-                  src="https://images.pexels.com/photos/4050426/pexels-photo-4050426.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt="abc"
                 />
 
                 <div className={classes.OrderItem__Detail}>
@@ -60,7 +72,10 @@ const OrderSummary = ({ carts = [] }) => {
       <div className={classes.SummaryItem}>
         <div className={classes.SummaryGroup}>
           <p>Subtotal</p>
-          <span>$120</span>
+          <span>{`$${carts.reduce(
+            (total, item) => total + item.totalPrice,
+            0
+          )}`}</span>
         </div>
 
         <div className={classes.SummaryGroup}>
@@ -75,11 +90,7 @@ const OrderSummary = ({ carts = [] }) => {
       <div className={classes.SummaryBottom}>
         <p>Total ({carts.length} items)</p>
 
-        <p>
-          {`$${carts
-            .reduce((total, item) => total + item.totalPrice, 0)
-            .toFixed(2)}`}
-        </p>
+        <p>{`$${calculateTotalPriceOrder().toFixed(2)}`}</p>
       </div>
       <ButtonFields primary fullWidth>
         Checkout

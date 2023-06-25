@@ -16,3 +16,4 @@ export { default as Skeleton } from "./Skeleton/Skeleton";
 export { default as Pagination } from "./Pagination/Pagination";
 export { default as TagProduct } from "./TagProduct/TagProduct";
 export { default as ButtonQuantity } from "./ButtonQuantity/ButtonQuantity";
+export { default as ProductImageDisplay } from "./ProductImageDisplay/ProductImageDisplay";

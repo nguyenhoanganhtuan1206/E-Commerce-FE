@@ -3,12 +3,9 @@ import { Link } from "react-router-dom";
 
 import classes from "./CartHeader.module.scss";
 
-import { Skeleton } from "../../../shared/components";
+import { ProductImageDisplay, Skeleton } from "../../../shared/components";
 import { ButtonFields } from "../../../shared/FormElement";
-import {
-  useFetchCartByCurrentUserIdQuery,
-} from "../../../redux/apis/cart/cart.api";
-import CartImageProductHeader from "./CartImageProductHeader";
+import { useFetchCartByCurrentUserIdQuery } from "../../../redux/apis/cart/cart.api";
 
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
@@ -40,7 +37,10 @@ const CartHeader = () => {
                 return (
                   <React.Fragment key={index}>
                     <div className={classes.CartItem}>
-                      <CartImageProductHeader productId={cartItem.product.id} />
+                      <ProductImageDisplay
+                        productId={cartItem.product.id}
+                        className={classes.CartImageProductHeader}
+                      />
 
                       <div className={classes.CartInfo}>
                         <Link className={classes.CartName}>
