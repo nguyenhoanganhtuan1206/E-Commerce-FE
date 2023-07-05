@@ -294,8 +294,9 @@ const ProductDetailInfoBody = ({ productData = null }) => {
               <span className="product-info__text-normal--bold mr-4">
                 {productData.inventory.sizeName}:
               </span>
-              {productData.inventory.sizeValues.map((size) => (
+              {productData.inventory.sizeValues.map((size, index) => (
                 <TagProduct
+                  key={index}
                   isActive={
                     statusSizeValue &&
                     inventoryDetailState.sizeValueSelected === size

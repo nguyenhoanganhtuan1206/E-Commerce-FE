@@ -8,7 +8,6 @@ const OrderPayment = () => {
   const params = useParams();
 
   const fetchCartsBySellerId = useFetchCartsBySellerIdQuery(params.sellerId);
-  console.log(fetchCartsBySellerId.data);
 
   return (
     <>

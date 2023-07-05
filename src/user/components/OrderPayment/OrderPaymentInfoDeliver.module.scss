@@ -17,6 +17,15 @@
     min-width: 14rem;
   }
 
+  &__FormChange {
+    border: none;
+    min-width: 12rem;
+    width: 100%;
+    outline: none;
+
+    border-bottom: 2px solid #000;
+  }
+
   &__Group {
     display: flex;
     align-items: center;

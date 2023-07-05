@@ -23,6 +23,7 @@ import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice"
 import { useCartApis } from "./apis/cart/cart.api";
 import { cartReducers } from "./slices/cart/cartSlice";
 import { commonProductReducer } from "./slices/product/commonProductSlice";
+import { usePaymentOrder } from "./apis/user/paymentOrder/paymentOrder.api";
 
 enableMapSet();
 
@@ -50,6 +51,7 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [useProductStyleApis.reducerPath]: useProductStyleApis.reducer,
     [useProductApis.reducerPath]: useProductApis.reducer,
+    [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -62,6 +64,7 @@ const store = configureStore({
       .concat(useSellerProductApis.middleware)
       .concat(useProductStyleApis.middleware)
       .concat(useProductApis.middleware)
+      .concat(usePaymentOrder.middleware)
       .concat(useCartApis.middleware);
   },
 });

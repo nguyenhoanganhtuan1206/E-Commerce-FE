@@ -126,22 +126,24 @@ const Header = () => {
                       </PopperWrapper>
                     </div>
                   </li>
+                  
+                  {!authContext.roles.includes("ROLE_ADMIN") && (
+                    <li className="header__action-item header__cart">
+                      <FontAwesomeIcon
+                        className="header__cart-icon"
+                        icon={faCartShopping}
+                      />
 
-                  <li className="header__action-item header__cart">
-                    <FontAwesomeIcon
-                      className="header__cart-icon"
-                      icon={faCartShopping}
-                    />
-
-                    <div className="header__cart-list">
-                      <PopperWrapper
-                        style={{ cursor: "default" }}
-                        className="header__cart-popper"
-                      >
-                        <CartHeader />
-                      </PopperWrapper>
-                    </div>
-                  </li>
+                      <div className="header__cart-list">
+                        <PopperWrapper
+                          style={{ cursor: "default" }}
+                          className="header__cart-popper"
+                        >
+                          <CartHeader />
+                        </PopperWrapper>
+                      </div>
+                    </li>
+                  )}
                 </>
               )}
             </ul>

@@ -61,7 +61,10 @@ const CartProductItem = ({ cartItem }) => {
   const handleDeleteCart = () => {
     doDeleteCart(cartItem.id)
       .unwrap()
-      .then(() => toast.success("Deleted this product successfully!"))
+      .then(() => {
+        toast.success("Deleted this product successfully!");
+        setIsShowModalDelete(false);
+      })
       .catch((error) => toast.error(error.data.message));
   };
 
@@ -85,7 +88,7 @@ const CartProductItem = ({ cartItem }) => {
     <div className="cart__item">
       <div className="cart__item-group">
         {isLoadingImage && <LoadingSpinner noOverlay />}
-        
+
         {!isLoadingImage && (
           <div className="cart__item-box">
             <img

@@ -1,8 +1,26 @@
-import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
-import { ProductImageDisplay } from "../../../shared/components";
 import classes from "./OrderSummary.module.scss";
 
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+
+import { ProductImageDisplay } from "../../../shared/components";
+import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
+import {
+  PAYMENT_WITH_COD,
+  PAYMENT_WITH_PAYPAL,
+} from "../../../shared/FormElement/CardPaymentMethod/CardPaymentMethod";
+import { useState } from "react";
+import { useCreatePaymentMutation } from "../../../redux/apis/user/paymentOrder/paymentOrder.api";
+
 const OrderSummary = ({ carts = [] }) => {
+  const [isShowPaymentPaypal, setIsShowPaymentPaypal] = useState(false);
+
+  const paymentMethodState = useSelector((state) => state.addProduct);
+  const [createPaymentOrder, createPaymentOrderResults] =
+    useCreatePaymentMutation();
+
   const calculateTotalPriceOrder = () => {
     const totalPrice = carts.reduce(
       (total, item) => total + item.totalPrice,
@@ -13,6 +31,42 @@ const OrderSummary = ({ carts = [] }) => {
     }
 
     return totalPrice + 20;
+  };
+
+  const handleCheckoutCart = () => {
+    if (!paymentMethodState.paymentMethod) {
+      toast.error("You have to select payment method!");
+      return;
+    }
+
+    if (paymentMethodState.paymentMethod === PAYMENT_WITH_PAYPAL) {
+      setIsShowPaymentPaypal(true);
+    }
+
+    if (paymentMethodState.paymentMethod === PAYMENT_WITH_COD) {
+      setIsShowPaymentPaypal(false);
+      callApiForPayment();
+    }
+  };
+
+  const handlePaymentWithPaypalSuccess = () => {
+    callApiForPayment();
+  };
+
+  const callApiForPayment = () => {
+    const cartIds = carts.map((item) => {
+      return item.id;
+    });
+
+    if (cartIds.length > 0 && paymentMethodState.paymentMethod) {
+      createPaymentOrder({
+        cartIds,
+        paymentMethod: paymentMethodState.paymentMethod,
+      })
+        .unwrap()
+        .then(() => toast.success("Your order payment successfully!"))
+        .catch((error) => toast.error(error.data.message));
+    }
   };
 
   return (
@@ -92,9 +146,49 @@ const OrderSummary = ({ carts = [] }) => {
 
         <p>{`$${calculateTotalPriceOrder().toFixed(2)}`}</p>
       </div>
-      <ButtonFields primary fullWidth>
+      <ButtonFields
+        onClick={handleCheckoutCart}
+        type="button"
+        primary
+        fullWidth
+        isLoading={createPaymentOrderResults.isLoading}
+      >
         Checkout
       </ButtonFields>
+
+      {isShowPaymentPaypal && (
+        <PayPalScriptProvider
+          options={{
+            clientId:
+              "AUjn8BFrx9T7F--2MqLonAaLr33qQVFHo3Pn43lbJhFmSCz8JgAdi4IDs0pl1rUMzAnJm5GLhGngWPYz",
+          }}
+        >
+          <PayPalButtons
+            className="mt-3"
+            createOrder={(data, actions) => {
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      value: calculateTotalPriceOrder(),
+                    },
+                  },
+                ],
+              });
+            }}
+            onApprove={(data, actions) => {
+              return actions.order.capture().then((details) => {
+                handlePaymentWithPaypalSuccess(details, data);
+              });
+            }}
+            onError={() =>
+              toast.error(
+                "Something went wrong payment with Paypal! Please try again"
+              )
+            }
+          />
+        </PayPalScriptProvider>
+      )}
     </>
   );
 };
