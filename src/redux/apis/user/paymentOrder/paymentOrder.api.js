@@ -22,16 +22,13 @@ const usePaymentOrder = createApi({
   endpoints: (builder) => {
     return {
       createPayment: builder.mutation({
-        invalidatesTags: (result, error, args) => {
+        invalidatesTags: () => {
           return [{ type: "PaymentOrder" }];
         },
         query: (payload) => {
           return {
             method: "POST",
-            body: {
-              cartIds: payload.cartIds,
-              paymentMethod: payload.paymentMethod,
-            },
+            body: payload,
           };
         },
       }),

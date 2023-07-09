@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 
 import useThunk from "../../../shared/hooks/useThunk";
 import {
-  fetchProductById,
   fetchProductDetailById,
 } from "../../../redux/thunks/seller/product/productThunk";
 import { Breadcrumbs, LoadingSpinner } from "../../../shared/components";

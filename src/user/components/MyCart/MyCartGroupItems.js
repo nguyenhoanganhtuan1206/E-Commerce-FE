@@ -27,7 +27,7 @@ const MyCartGroupItems = ({ sellerId = null, carts = [] }) => {
           </div>
 
           <div className="mycart__group-footer">
-            <ButtonFields to={`/${sellerId}/order-payment`} className="mycart__payment-btn">
+            <ButtonFields to={`seller/${sellerId}/order-payment`} className="mycart__payment-btn">
               Order Payment
             </ButtonFields>
 

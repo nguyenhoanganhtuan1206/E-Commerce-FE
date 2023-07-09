@@ -18,6 +18,7 @@ const OrderSummary = ({ carts = [] }) => {
   const [isShowPaymentPaypal, setIsShowPaymentPaypal] = useState(false);
 
   const paymentMethodState = useSelector((state) => state.addProduct);
+  const orderPaymentSliceState = useSelector((state) => state.cartSlice);
   const [createPaymentOrder, createPaymentOrderResults] =
     useCreatePaymentMutation();
 
@@ -58,13 +59,24 @@ const OrderSummary = ({ carts = [] }) => {
       return item.id;
     });
 
+    const { paymentMethod } = paymentMethodState;
+    const { username, address, phoneNumber, emailAddress, location } =
+      orderPaymentSliceState.userInfoDelivery;
+
     if (cartIds.length > 0 && paymentMethodState.paymentMethod) {
       createPaymentOrder({
         cartIds,
-        paymentMethod: paymentMethodState.paymentMethod,
+        paymentMethod,
+        username,
+        address,
+        phoneNumber,
+        emailAddress,
+        location,
       })
         .unwrap()
-        .then(() => toast.success("Your order payment successfully!"))
+        .then(() => {
+          toast.success("Your order payment successfully!");
+        })
         .catch((error) => toast.error(error.data.message));
     }
   };

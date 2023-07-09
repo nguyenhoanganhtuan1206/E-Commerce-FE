@@ -55,11 +55,11 @@ function App() {
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
           <Route path="/my-ads" element={<MyAdsPage />} />
-          <Route path="/my-cart" element={<MyCartPage />} />
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/product/new" element={<PostAd />} />
           <Route path="/product/:productId/edit" element={<PostAd />} />
-          <Route path="/:sellerId/order-payment" element={<OrderPaymentPage />} />
+          <Route path="/my-cart" element={<MyCartPage />} />
+          <Route path="/my-cart/seller/:sellerId/order-payment" element={<OrderPaymentPage />} />
         </Route>
         <Route path="/chat-user" element={<ChatPageUser />} />
 

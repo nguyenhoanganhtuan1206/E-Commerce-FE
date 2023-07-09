@@ -18,7 +18,6 @@ import {
 import { toggleShowModalChangeAddress } from "../../../redux/slices/cart/cartSlice";
 import { toggleModalAdd } from "../../../redux/slices/user/location/locationSlice";
 
-
 const ModalChangeAddressOrderPayment = () => {
   const orderPaymentSliceState = useSelector((state) => state.cartSlice);
   const dispatch = useDispatch();
@@ -127,9 +126,11 @@ const ModalChangeAddressOrderPayment = () => {
                             {locationItem.district}
                           </p>
 
-                          <div className={classes.DefaultLocation}>
-                            Default Location
-                          </div>
+                          {locationItem.defaultLocation && (
+                            <div className={classes.DefaultLocation}>
+                              Default Location
+                            </div>
+                          )}
                         </div>
                       </div>
                     </li>

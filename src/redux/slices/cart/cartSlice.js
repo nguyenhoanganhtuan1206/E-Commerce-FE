@@ -4,6 +4,7 @@ const initialState = {
   quantity: 1,
   userIdModalChangeAddress: null,
   isShowModalChangeAddress: false,
+  userInfoDelivery: null,
 };
 
 const cartSlices = createSlice({
@@ -26,6 +27,9 @@ const cartSlices = createSlice({
         state.userIdModalChangeAddress = action.payload;
       }
     },
+    updateProfileUserDelivery: (state, action) => {
+      state.userInfoDelivery = action.payload;
+    },
   },
 });
 
@@ -34,5 +38,6 @@ export const {
   toggleIncreaseQuantity,
   setCartQuantity,
   toggleShowModalChangeAddress,
+  updateProfileUserDelivery
 } = cartSlices.actions;
 export const cartReducers = cartSlices.reducer;
