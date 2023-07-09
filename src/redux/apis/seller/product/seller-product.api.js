@@ -22,7 +22,7 @@ const useSellerProductApis = createApi({
   endpoints: (builder) => {
     return {
       fetchProductsBySellerId: builder.query({
-        providesTags: (result, error, args) => {
+        providesTags: (s) => {
           return [{ type: "ProductSeller" }];
         },
         query: () => {
@@ -33,7 +33,7 @@ const useSellerProductApis = createApi({
         },
       }),
       createProduct: builder.mutation({
-        invalidatesTags: (result, error, args) => {
+        invalidatesTags: (s) => {
           return [{ type: "ProductSeller" }];
         },
         query: (data) => {
@@ -47,7 +47,7 @@ const useSellerProductApis = createApi({
         },
       }),
       updateProduct: builder.mutation({
-        invalidatesTags: (result, error, args) => {
+        invalidatesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: (payload) => {
@@ -59,7 +59,7 @@ const useSellerProductApis = createApi({
         },
       }),
       deleteProduct: builder.mutation({
-        invalidatesTags: (result, error, args) => {
+        invalidatesTags: (s) => {
           return [{ type: "ProductSeller" }];
         },
         query: (productId) => {
@@ -70,7 +70,7 @@ const useSellerProductApis = createApi({
         },
       }),
       fetchProductsWithOutOfStock: builder.query({
-        providesTags: (result, error, args) => {
+        providesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: () => {
@@ -81,7 +81,7 @@ const useSellerProductApis = createApi({
         },
       }),
       fetchProductWithInStock: builder.query({
-        providesTags: (result, error, arg) => {
+        providesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: () => {
@@ -92,7 +92,7 @@ const useSellerProductApis = createApi({
         },
       }),
       fetchProductWithApproval: builder.query({
-        providesTags: (result, error, arg) => {
+        providesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: () => {

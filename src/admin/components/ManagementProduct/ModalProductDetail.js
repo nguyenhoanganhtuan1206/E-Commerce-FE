@@ -39,8 +39,7 @@ const ModalProductDetail = () => {
     useApprovalProductMutation();
   const [doSendFeedback, sendFeedbackResults] =
     useSendFeedbackAboutProductMutation();
-  const [doFetchProductById, isLoadingFetchProductById] =
-    useThunk(fetchProductById);
+  const [doFetchProductById] = useThunk(fetchProductById);
 
   useEffect(() => {
     if (modalProductState.idParams) {
@@ -86,6 +85,8 @@ const ModalProductDetail = () => {
         .catch((error) => toast.error(error.data.message));
     }
   };
+
+  console.log("productDetailState.productData", productDetailState.productData);
 
   return (
     <>
@@ -149,7 +150,7 @@ const ModalProductDetail = () => {
             </div>
 
             <div className="modal-seller__detail-group">
-              <h3 className="modal-seller__detail-title">Categories :</h3>
+              <h3 className="modal-seller__detail-title mr-3">Categories :</h3>
               {productDetailState.productData.categories.map(
                 (categoryName, index) => (
                   <TagProduct key={index} name={categoryName} />
@@ -165,7 +166,7 @@ const ModalProductDetail = () => {
             </div>
 
             <div className="modal-seller__detail-group">
-              <h3 className="modal-seller__detail-title">Product Styles :</h3>
+              <h3 className="modal-seller__detail-title mr-3">Product Styles :</h3>
               {productDetailState.productData.productStyles.map(
                 (productStyle, index) => (
                   <TagProduct key={index} name={productStyle} />

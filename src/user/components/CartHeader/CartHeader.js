@@ -12,7 +12,10 @@ const CartHeader = () => {
 
   if (fetchCartByCurrentUserId.isFetching) {
     return <Skeleton times={3} height="4rem" />;
-  } else if (!fetchCartByCurrentUserId.data) {
+  } else if (
+    !fetchCartByCurrentUserId.data ||
+    fetchCartByCurrentUserId.data.length === 0
+  ) {
     return (
       <p className={`${classes.HeaderText} text-center`}>Your cart is empty</p>
     );

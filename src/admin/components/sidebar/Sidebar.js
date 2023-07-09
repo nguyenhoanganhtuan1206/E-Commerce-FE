@@ -14,8 +14,12 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import "./Sidebar.scss";
 import { Link } from "react-router-dom";
 import { Group } from "@mui/icons-material";
+import { useContext } from "react";
+import { AuthContext } from "../../../context/auth-context";
 
 const Sidebar = () => {
+  const authContext = useContext(AuthContext);
+
   return (
     <div className="admin-sidebar">
       <div className="admin-sidebar__top">
@@ -100,7 +104,10 @@ const Sidebar = () => {
             <span className="admin-sidebar__center-text">Profile</span>
           </li>
 
-          <li className="admin-sidebar__center-item">
+          <li
+            onClick={authContext.logout}
+            className="admin-sidebar__center-item"
+          >
             <ExitToAppIcon className="icon" />
             <span className="admin-sidebar__center-text">Logout</span>
           </li>

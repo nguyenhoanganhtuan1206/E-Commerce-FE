@@ -41,10 +41,6 @@ const Navbar = () => {
           <div className="navbar-admin__item">
             <ListOutlined className="navbar-admin__icon" />
           </div>
-
-          <div className="navbar-admin__item">
-            <AvatarUser circle className="navbar-admin__avatar" />
-          </div>
         </div>
       </div>
     </div>
