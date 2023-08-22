@@ -24,10 +24,18 @@ const MyCartList = () => {
   if (fetchCartByCurrentUserId.isLoading) {
     return <Skeleton times={6} style={{ height: "7rem", width: "100%" }} />;
   } else {
-    return Array.from(addCartToMap(fetchCartByCurrentUserId.data)).map(
-      ([sellerId, carts]) => (
-        <MyCartGroupItems key={sellerId} sellerId={sellerId} carts={carts} />
-      )
+    if (fetchCartByCurrentUserId.data.size > 0) {
+      return Array.from(addCartToMap(fetchCartByCurrentUserId.data)).map(
+        ([sellerId, carts]) => (
+          <MyCartGroupItems key={sellerId} sellerId={sellerId} carts={carts} />
+        )
+      );
+    }
+
+    return (
+      <p className="m-0" style={{ textAlign: "center", fontSize: "1.4rem" }}>
+        Your cart is empty
+      </p>
     );
   }
 };

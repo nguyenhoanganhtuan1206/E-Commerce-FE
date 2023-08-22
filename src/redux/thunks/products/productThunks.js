@@ -14,3 +14,14 @@ export const fetchProducts = createAsyncThunk(
     return response.data;
   }
 );
+
+export const fetchProductsWithDifferentSeller = createAsyncThunk(
+  "products/fetchProductsWithDifferentSeller",
+  async () => {
+    await pause(700);
+
+    const response = await apiClient.get("products/different-seller");
+
+    return response.data;
+  }
+);

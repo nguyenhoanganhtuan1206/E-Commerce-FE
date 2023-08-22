@@ -22,7 +22,7 @@ const useSellerProductApis = createApi({
   endpoints: (builder) => {
     return {
       fetchProductsBySellerId: builder.query({
-        providesTags: (s) => {
+        providesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: () => {
@@ -33,7 +33,7 @@ const useSellerProductApis = createApi({
         },
       }),
       createProduct: builder.mutation({
-        invalidatesTags: (s) => {
+        invalidatesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: (data) => {
@@ -59,7 +59,7 @@ const useSellerProductApis = createApi({
         },
       }),
       deleteProduct: builder.mutation({
-        invalidatesTags: (s) => {
+        invalidatesTags: () => {
           return [{ type: "ProductSeller" }];
         },
         query: (productId) => {

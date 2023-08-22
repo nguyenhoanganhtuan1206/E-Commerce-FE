@@ -16,7 +16,7 @@ export const fetchProductDetailById = createAsyncThunk(
   "product/fetchProductDetailById",
   async (productId) => {
     const response = await apiClient.get(
-      `/products/${productId}/productDetail`
+      `/products/${productId}/detail`
     );
 
     return response.data;

@@ -13,6 +13,7 @@ import { AvatarUser, PopperWrapper } from "../../components";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
 import { CartHeader } from "../../../user/components";
+import { LogoImage } from "../../../assets/image/exportImage";
 
 const Header = () => {
   const authContext = useContext(AuthContext);
@@ -22,11 +23,7 @@ const Header = () => {
       <div className="container">
         <div className="header__container">
           <Link to="/" className="header-logo__box">
-            <img
-              className="header-logo__photo"
-              src="https://demo.graygrids.com/themes/classigrids-demo/assets/images/logo/logo.svg"
-              alt="logo"
-            />
+            <img className="header-logo__photo" src={LogoImage} alt="logo" />
           </Link>
           <nav className="header__nav">
             <ul className="header__nav-list">
@@ -126,7 +123,7 @@ const Header = () => {
                       </PopperWrapper>
                     </div>
                   </li>
-                  
+
                   {!authContext.roles.includes("ROLE_ADMIN") && (
                     <li className="header__action-item header__cart">
                       <FontAwesomeIcon

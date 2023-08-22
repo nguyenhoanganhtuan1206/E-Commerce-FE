@@ -1,19 +1,31 @@
-import { useEffect } from "react";
-import classes from "./HomeProduct.module.scss";
+import { useContext, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import HomeProductItem from "./HomeProductItem";
 import useThunk from "../../../shared/hooks/useThunk";
-import { fetchProducts } from "../../../redux/thunks/products/productThunks";
+import {
+  fetchProducts,
+  fetchProductsWithDifferentSeller,
+} from "../../../redux/thunks/products/productThunks";
 import { LoadingSpinner } from "../../../shared/components";
+import { AuthContext } from "../../../context/auth-context";
 
 const HomeProductList = () => {
-  const [doFetchProducts, isLoadingFetchProducts] = useThunk(fetchProducts);
+  const authContext = useContext(AuthContext);
+  const [doFetchProducts] = useThunk(fetchProducts);
+  const [doFetchProductsWithDifferentSeller] = useThunk(
+    fetchProductsWithDifferentSeller
+  );
   const productsState = useSelector((state) => state.fetchAll);
 
   useEffect(() => {
+    if (authContext.isLoggedIn && !authContext.roles.includes("ROLE_ADMIN")) {
+      doFetchProductsWithDifferentSeller();
+      return;
+    }
+
     doFetchProducts();
-  }, [doFetchProducts]);
+  }, [authContext, doFetchProducts, doFetchProductsWithDifferentSeller]);
 
   return (
     <>

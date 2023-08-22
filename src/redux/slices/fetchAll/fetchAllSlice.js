@@ -3,7 +3,7 @@ import { fetchCategory } from "../../thunks/admin/category/categoryThunk";
 import { fetchCategoryVariants } from "../../thunks/admin/variant/variantThunk";
 import { fetchBrands } from "../../thunks/admin/brand/brandThunk";
 import { fetchProductStyles } from "../../thunks/admin/product-style/productStyleThunk";
-import { fetchProducts } from "../../thunks/products/productThunks";
+import { fetchProducts, fetchProductsWithDifferentSeller } from "../../thunks/products/productThunks";
 
 const initialState = {
   products: {
@@ -98,6 +98,19 @@ const fetchAllSlices = createSlice({
         state.products.isError = false;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products.isLoading = false;
+        state.products.data = action.payload;
+      });
+
+    builder
+      .addCase(fetchProductsWithDifferentSeller.pending, (state) => {
+        state.products.isLoading = true;
+      })
+      .addCase(fetchProductsWithDifferentSeller.rejected, (state) => {
+        state.products.isLoading = false;
+        state.products.isError = false;
+      })
+      .addCase(fetchProductsWithDifferentSeller.fulfilled, (state, action) => {
         state.products.isLoading = false;
         state.products.data = action.payload;
       });

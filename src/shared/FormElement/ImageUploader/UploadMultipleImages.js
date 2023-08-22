@@ -1,6 +1,6 @@
 import "./UploadImages.scss";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,6 @@ const UploadMultipleImages = ({
   fieldName,
   validators = [],
   currentProductId = null,
-  initialValue = [],
   className,
   fieldId,
 }) => {
@@ -74,27 +73,28 @@ const UploadMultipleImages = ({
             const input = Array.from(e.target.files);
 
             const inputSliced = input.slice(0, 5);
-            value = [];
+            const updatedMap = new Map(storedImagesMap);
 
-            inputSliced.forEach((url) => {
-              if (!storedImagesMap.has(url.name)) {
-                setStoredImagesMap(
-                  ...storedImagesMap,
-                  storedImagesMap.set(url.name, url)
-                );
+            inputSliced.forEach((file) => {
+              if (!updatedMap.has(file.name)) {
+                updatedMap.set(file.name, file);
               }
             });
-            const values = Array.from(storedImagesMap.values());
+
+            setStoredImagesMap(updatedMap);
+            const values = Array.from(updatedMap.values());
             onChange(values);
+
+            console.log("values", values);
           };
 
           const handleRemoveImage = (file) => {
             const updatedImages = value.filter((f) => f !== file);
-            if (file.name) {
-              storedImagesMap.delete(file.name);
-            } else {
-              storedImagesMap.delete(file[0]);
-            }
+
+            const updatedStoredImagesMap = new Map(storedImagesMap);
+            updatedStoredImagesMap.delete(file.name);
+            setStoredImagesMap(updatedStoredImagesMap);
+
             onChange(updatedImages);
           };
 
@@ -189,4 +189,4 @@ const UploadMultipleImages = ({
   );
 };
 
-export default UploadMultipleImages;
+export default memo(UploadMultipleImages);
