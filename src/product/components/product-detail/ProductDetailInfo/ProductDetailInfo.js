@@ -1,4 +1,3 @@
-import React from "react";
 
 import "./ProductDetailInfo.scss";
 import "../ProductDetail.scss";
