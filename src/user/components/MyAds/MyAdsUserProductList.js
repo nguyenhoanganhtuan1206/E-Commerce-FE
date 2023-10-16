@@ -1,6 +1,6 @@
 import classes from "./MyAdsUserProductList.module.scss";
 
-import { useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -242,4 +242,4 @@ const MyAdsUserProductList = () => {
   }
 };
 
-export default MyAdsUserProductList;
+export default memo(MyAdsUserProductList);

@@ -8,7 +8,6 @@ import {
 } from "@mui/icons-material";
 
 import "./Navbar.scss";
-import AvatarUser from "../../../shared/components/AvatarUser/AvatarUser";
 
 const Navbar = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { memo, useContext } from "react";
+import  { memo, useContext } from "react";
 
 import UserLocationItem from "./UserLocationItem";
 import "./UserLocationItem.scss";

@@ -19,7 +19,11 @@ const HomeProductList = () => {
   const productsState = useSelector((state) => state.fetchAll);
 
   useEffect(() => {
-    if (authContext.isLoggedIn && !authContext.roles.includes("ROLE_ADMIN")) {
+    if (
+      authContext.isLoggedIn &&
+      authContext.roles.length > 0 &&
+      !authContext.roles.includes("ROLE_ADMIN")
+    ) {
       doFetchProductsWithDifferentSeller();
       return;
     }

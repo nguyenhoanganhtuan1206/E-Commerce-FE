@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import classes from "./CartHeader.module.scss";
@@ -6,6 +5,7 @@ import classes from "./CartHeader.module.scss";
 import { ProductImageDisplay, Skeleton } from "../../../shared/components";
 import { ButtonFields } from "../../../shared/FormElement";
 import { useFetchCartByCurrentUserIdQuery } from "../../../redux/apis/cart/cart.api";
+import { Fragment } from "react";
 
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
@@ -38,7 +38,7 @@ const CartHeader = () => {
             <div className={classes.CartList}>
               {fetchCartByCurrentUserId.data.map((cartItem, index) => {
                 return (
-                  <React.Fragment key={index}>
+                  <Fragment key={index}>
                     <div className={classes.CartItem}>
                       <ProductImageDisplay
                         productId={cartItem.product.id}
@@ -65,7 +65,7 @@ const CartHeader = () => {
                         </p>
                       </div>
                     </div>
-                  </React.Fragment>
+                  </Fragment>
                 );
               })}
             </div>

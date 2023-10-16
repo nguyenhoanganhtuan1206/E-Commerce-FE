@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import  { Fragment, memo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import classes from "./CategorizationTable.module.scss";
@@ -24,7 +24,7 @@ const CategorizationTableItem = () => {
   return (
     <>
       {inventoryState.inventories.map((inventory, index, arr) => (
-        <React.Fragment key={index}>
+        <Fragment key={index}>
           <div className={`${classes.categorizationTableBody}`}>
             <div className={classes.categorizationTableBody__item}>
               <input
@@ -155,7 +155,7 @@ const CategorizationTableItem = () => {
               Add more
             </div>
           )}
-        </React.Fragment>
+        </Fragment>
       ))}
     </>
   );

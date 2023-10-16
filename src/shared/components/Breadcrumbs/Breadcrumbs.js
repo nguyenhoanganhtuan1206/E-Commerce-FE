@@ -1,9 +1,9 @@
-import React from "react";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Breadcrumbs.scss";
 import { Link } from "react-router-dom";
+import { Fragment } from "react";
 
 const Breadcrumbs = (props) => {
   const { currentPage, nextPages = [] } = props;
@@ -17,7 +17,7 @@ const Breadcrumbs = (props) => {
           <ul className="bread-crumbs__list">
             {nextPages.map((page, index) => {
               return (
-                <React.Fragment key={index}>
+                <Fragment key={index}>
                   <Link to={page.link} className="bread-crumbs__item">
                     {page.title}
                   </Link>
@@ -25,7 +25,7 @@ const Breadcrumbs = (props) => {
                     icon={faAngleRight}
                     className="bread-crumbs__icon"
                   />
-                </React.Fragment>
+                </Fragment>
               );
             })}
 

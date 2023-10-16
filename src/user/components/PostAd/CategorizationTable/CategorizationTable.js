@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "./CategorizationTable.module.scss";
 
 import { useSelector } from "react-redux";

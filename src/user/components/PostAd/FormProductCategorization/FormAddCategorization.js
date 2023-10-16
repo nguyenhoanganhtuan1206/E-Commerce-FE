@@ -1,5 +1,5 @@
 import classes from "./FormAddCategorization.module.scss";
-import React, { memo } from "react";
+import  { memo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

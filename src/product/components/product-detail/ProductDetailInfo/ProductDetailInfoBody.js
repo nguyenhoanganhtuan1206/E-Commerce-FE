@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import  { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./ProductDetailInfoBody.module.scss";
@@ -233,10 +233,10 @@ const ProductDetailInfoBody = ({ productData = null }) => {
       <p className="product-info__sub-info product-info__text-normal mt-4">
         <span className="product-info__text-normal--bold mr-4">Category:</span>
         {productData.categories.map((categoryName, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             {categoryName}
             {index + 1 !== productData.categories.length && ", "}
-          </React.Fragment>
+          </Fragment>
         ))}
       </p>
 
@@ -250,10 +250,10 @@ const ProductDetailInfoBody = ({ productData = null }) => {
           Product Styles:
         </span>
         {productData.productStyles.map((styleName, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             {styleName}
             {index + 1 !== productData.productStyles.length && ", "}
-          </React.Fragment>
+          </Fragment>
         ))}
       </p>
 

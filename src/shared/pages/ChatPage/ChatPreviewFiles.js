@@ -1,4 +1,4 @@
-import { React, useCallback } from "react";
+import { Fragment, useCallback } from "react";
 
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,9 +65,9 @@ const ChatPreviewFiles = ({
     <>
       {selectedFiles &&
         selectedFiles.map((file, index) => (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             {contentDisplay(file, index)}
-          </React.Fragment>
+          </Fragment>
         ))}
     </>
   );
