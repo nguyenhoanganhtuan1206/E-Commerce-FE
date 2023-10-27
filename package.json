@@ -64,7 +64,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080/",
   "devDependencies": {
     "tailwindcss": "^3.3.1",
     "webpack-cli": "^5.0.1"

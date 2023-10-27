@@ -43,7 +43,7 @@ const SidebarUser = () => {
           </NavLink>
         </li>
 
-        <li className="sidebar-user__item">
+        {/* <li className="sidebar-user__item">
           <NavLink to="/product/new" className="sidebar-user__link">
             <FontAwesomeIcon
               className="sidebar-user__icon"
@@ -51,9 +51,9 @@ const SidebarUser = () => {
             />
             <span>Post An Ad</span>
           </NavLink>
-        </li>
+        </li> */}
 
-        <li className="sidebar-user__item">
+        {/* <li className="sidebar-user__item">
           <NavLink to="/my-ads" className="sidebar-user__link">
             <FontAwesomeIcon
               className="sidebar-user__icon"
@@ -61,7 +61,7 @@ const SidebarUser = () => {
             />
             <span>My Ads</span>
           </NavLink>
-        </li>
+        </li> */}
 
         <li className="sidebar-user__item">
           <NavLink to="/my-cart" className="sidebar-user__link">
