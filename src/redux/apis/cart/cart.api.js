@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 const useCartApis = createApi({
   reducerPath: "cart",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/carts",
+    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/carts",
     fetchFn: async (...args) => {
       return fetch(...args);
     },
