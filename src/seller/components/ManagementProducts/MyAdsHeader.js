@@ -1,4 +1,4 @@
-import classes from "./MyAdsUser.module.scss";
+import classes from "./MyAds.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   MY_ADS_ALL_PRODUCT,
@@ -8,7 +8,7 @@ import {
   switchAdSection,
 } from "../../../redux/slices/seller/myAds/myAdsSlice";
 
-const MyAdsUserHeader = () => {
+const MyAdsHeader = () => {
   const dispatch = useDispatch();
   const myAdsState = useSelector((state) => state.myAds);
 
@@ -50,4 +50,4 @@ const MyAdsUserHeader = () => {
   );
 };
 
-export default MyAdsUserHeader;
+export default MyAdsHeader;

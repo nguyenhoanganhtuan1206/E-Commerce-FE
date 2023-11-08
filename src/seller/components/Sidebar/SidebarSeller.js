@@ -18,14 +18,14 @@ const SidebarSeller = () => {
         <ul>
           <p className="admin-sidebar__center-title">MAIN</p>
 
-          <Link to="/admin">
+          <Link to="/seller/dashboard">
             <li className="admin-sidebar__center-item">
               <DashboardIcon className="icon" />
               <span className="admin-sidebar__center-text">Dashboard</span>
             </li>
           </Link>
 
-          <Link to="/admin/management-products">
+          <Link to="/seller/my-ads">
             <li className="admin-sidebar__center-item">
               <StoreIcon className="icon" />
               <span className="admin-sidebar__center-text">

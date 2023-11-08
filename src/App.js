@@ -10,7 +10,6 @@ import {
   PostAd,
   ChatPageUser,
   FilterProducts,
-  MyAdsPage,
   MyCartPage,
   ProfileUserPage,
   ConfirmEmailPage,
@@ -23,7 +22,7 @@ import {
   ManagementProductPage,
   ManagementSellerPage,
 } from "./admin/pages/";
-import { DashboardSeller } from "./seller/page";
+import { DashboardSeller, MyAdsPage } from "./seller/page";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
@@ -57,12 +56,13 @@ function App() {
         <Route path="/seller/dashboard" element={<DashboardSeller />} />
 
         <Route path="/seller/sign-up" element={<SellerSignUpDetail />} />
+        <Route path="/seller/my-ads" element={<MyAdsPage />} />
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
-          <Route path="/my-ads" element={<MyAdsPage />} />
+          {/* <Route path="/my-ads" element={<MyAdsPage />} /> */}
           <Route path="/profile-user" element={<ProfileUserPage />} />
           <Route path="/product/new" element={<PostAd />} />
           <Route path="/product/:productId/edit" element={<PostAd />} />
