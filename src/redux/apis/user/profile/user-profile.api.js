@@ -23,7 +23,7 @@ const userProfileApis = createApi({
     return {
       fetchProfile: builder.query({
         providesTags: (result, error, user) => {
-          return [{ type: "Profile", id: result.id }];
+          return [{ type: "UserProfile"}];
         },
         query: () => {
           return {
@@ -33,7 +33,7 @@ const userProfileApis = createApi({
       }),
       updateProfile: builder.mutation({
         invalidatesTags: (result, error, user) => {
-          return [{ type: "Profile", id: result.id }];
+          return [{ type: "UserProfile" }];
         },
         query: (data) => {
           return {

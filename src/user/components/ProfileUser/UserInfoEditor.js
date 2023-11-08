@@ -32,17 +32,18 @@ const UserInfoEditor = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, error, data } = useFetchProfileQuery();
+  const { isLoading, data, isError, error } = useFetchProfileQuery();
   const [updateProfile, updateProfileResults] = useUpdateProfileMutation();
 
   useEffect(() => {
-    if (error) {
+    if (isError) {
+      toast.error(error.data.message, { autoClose: 20000 });
       navigate("/");
     }
 
     methods.reset(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [methods, data, error]);
+  }, [methods, data, isError]);
 
   const onSubmit = useCallback(
     async (data) => {
