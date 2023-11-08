@@ -1,6 +1,7 @@
 import "./SidebarUser.scss";
 
 import { NavLink } from "react-router-dom";
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBagShopping,
@@ -53,7 +54,7 @@ const SidebarUser = () => {
           </NavLink>
         </li> */}
 
-        {/* <li className="sidebar-user__item">
+        <li className="sidebar-user__item">
           <NavLink to="/my-ads" className="sidebar-user__link">
             <FontAwesomeIcon
               className="sidebar-user__icon"
@@ -61,7 +62,7 @@ const SidebarUser = () => {
             />
             <span>My Ads</span>
           </NavLink>
-        </li> */}
+        </li>
 
         <li className="sidebar-user__item">
           <NavLink to="/my-cart" className="sidebar-user__link">
@@ -84,6 +85,13 @@ const SidebarUser = () => {
           <NavLink to="/chat-user" className="sidebar-user__link">
             <FontAwesomeIcon className="sidebar-user__icon" icon={faComment} />
             <span>Chat</span>
+          </NavLink>
+        </li>
+
+        <li className="sidebar-user__item">
+          <NavLink to="/seller/dashboard" className="sidebar-user__link">
+            <StorefrontIcon className="sidebar-user__icon" />
+            <span>Channel Seller</span>
           </NavLink>
         </li>
       </ul>
