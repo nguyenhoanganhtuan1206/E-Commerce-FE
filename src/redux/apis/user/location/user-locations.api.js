@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const userLocationsApi = createApi({
   reducerPath: "userLocations",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/locations",
+    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/locations",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
