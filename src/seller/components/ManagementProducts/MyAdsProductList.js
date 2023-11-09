@@ -1,4 +1,4 @@
-import classes from "./MyAdsUserProductList.module.scss";
+import classes from "./MyAdsProductList.module.scss";
 
 import { memo, useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";

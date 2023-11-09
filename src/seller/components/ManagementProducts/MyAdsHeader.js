@@ -1,4 +1,4 @@
-import classes from "./MyAdsUser.module.scss";
+import classes from "./MyAds.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
   MY_ADS_ALL_PRODUCT,
@@ -7,8 +7,10 @@ import {
   MY_ADS_OUT_OF_STOCK,
   switchAdSection,
 } from "../../../redux/slices/seller/myAds/myAdsSlice";
+import { ButtonFields } from "../../../shared/FormElement";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
-const MyAdsUserHeader = () => {
+const MyAdsHeader = () => {
   const dispatch = useDispatch();
   const myAdsState = useSelector((state) => state.myAds);
 
@@ -46,8 +48,13 @@ const MyAdsUserHeader = () => {
           </li>
         ))}
       </ul>
+
+      <ButtonFields to="/seller/new-ads" primary>
+        Post Ad
+        <AddCircleOutlineIcon className={classes.MyAdsHeaderIcon} />
+      </ButtonFields>
     </div>
   );
 };
 
-export default MyAdsUserHeader;
+export default MyAdsHeader;

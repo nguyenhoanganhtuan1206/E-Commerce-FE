@@ -7,10 +7,8 @@ import { AuthContext } from "./context/auth-context";
 import { Home } from "./shared/components";
 import {
   DashboardUserPage,
-  PostAd,
   ChatPageUser,
   FilterProducts,
-  MyAdsPage,
   MyCartPage,
   ProfileUserPage,
   ConfirmEmailPage,
@@ -22,12 +20,14 @@ import {
   ManagementProductPage,
   ManagementSellerPage,
 } from "./admin/pages/";
+import { DashboardSeller, MyAdsPage, SellerSignUpPage } from "./seller/page";
+import { SellerOnBoarding } from "./seller/components";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
-import Demo from "./user/page/Demo/Demo";
 import ProtectRoutes from "./routes/ProtectRoutes";
+import PostAdPage from "./seller/page/PostAdPage/PostAd";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -41,7 +41,6 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/:productId/details" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
-        <Route path="/demo" element={<Demo />} />
         {/* Routes permit all */}
         <Route
           path="/reset-password/confirm-email"
@@ -51,19 +50,30 @@ function App() {
         <Route path="/reset-password/:code" element={<ResetPasswordPage />} />
         {/* Required token */}
 
+        {/* Channel Seller */}
+        <Route path="/seller/dashboard" element={<DashboardSeller />} />
+        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
+
+        <Route path="/seller/sign-up" element={<SellerSignUpPage />} />
+        <Route path="/seller/my-ads" element={<MyAdsPage />} />
+        <Route path="/seller/new-ads" element={<PostAdPage />} />
+        {/* Channel Seller */}
+
         {/* Routes logged in and all roles */}
         <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
-          <Route path="/my-ads" element={<MyAdsPage />} />
+          {/* <Route path="/my-ads" element={<MyAdsPage />} /> */}
           <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/product/new" element={<PostAd />} />
-          <Route path="/product/:productId/edit" element={<PostAd />} />
+          <Route path="/product/:productId/edit" element={<PostAdPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
-          <Route path="/my-cart/seller/:sellerId/order-payment" element={<OrderPaymentPage />} />
+          <Route
+            path="/my-cart/seller/:sellerId/order-payment"
+            element={<OrderPaymentPage />}
+          />
         </Route>
         <Route path="/chat-user" element={<ChatPageUser />} />
-
         {/* Routes logged in and all roles */}
+
         {/* Routes required Admin */}
         <Route
           element={

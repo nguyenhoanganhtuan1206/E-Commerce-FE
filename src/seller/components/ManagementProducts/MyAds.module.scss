@@ -2,11 +2,16 @@
   border: 1px solid var(--color-border);
   border-radius: 5px;
   background-color: #fff;
+  padding: 8px;
 }
 
 /* HEADER */
 .MyAdsHeader {
   border-bottom: 1px solid var(--color-border);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .MyAdsHeaderList {
@@ -52,6 +57,11 @@
     color: var(--color-grey-dark-2);
     margin-left: 1.2rem;
   }
+}
+
+.MyAdsHeaderIcon {
+  font-size: 2rem;
+  margin-left: 0.8rem;
 }
 
 /* HEADER */

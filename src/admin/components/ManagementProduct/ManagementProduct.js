@@ -8,6 +8,7 @@ import { useFetchProductsQuery } from "../../../redux/apis/admin/product/product
 import { Pagination, Skeleton } from "../../../shared/components";
 import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
 import { ButtonFields } from "../../../shared/FormElement";
+import { ErrorPage } from "../../../shared/pages";
 
 const ManagementProduct = () => {
   const listProducts = useFetchProductsQuery();
@@ -31,7 +32,7 @@ const ManagementProduct = () => {
       </div>
     );
   } else if (listProducts.isError) {
-    return <div>Something went wrong</div>;
+    return <ErrorPage />;
   } else {
     return (
       <>
