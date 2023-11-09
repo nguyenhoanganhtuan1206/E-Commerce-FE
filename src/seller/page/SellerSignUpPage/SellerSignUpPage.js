@@ -1,16 +1,16 @@
 import { Breadcrumbs } from "../../../shared/components";
-import { SellerSignUp } from "../../components";
+import { SellerSignUpDetail } from "../../components";
 
-const SellerSignUpDetailPage = () => {
+const SellerSignUpPage = () => {
   return (
     <>
       <Breadcrumbs
         currentPage="Register As Seller"
         nextPages={[{ title: "Home", link: "/" }]}
       />
-      <SellerSignUp />
+      <SellerSignUpDetail />
     </>
   );
 };
 
-export default SellerSignUpDetailPage;
+export default SellerSignUpPage;

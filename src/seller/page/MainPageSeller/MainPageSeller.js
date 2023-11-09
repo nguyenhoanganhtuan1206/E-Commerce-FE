@@ -2,10 +2,13 @@ import { useFetchDetailSellerQuery } from "../../../redux/apis/user/seller/selle
 
 import { ACTIVE } from "../../../enums/status.enums";
 import { ErrorPage } from "../../../shared/pages";
-import { SellerSignUpDetail } from "../../../user/components";
+import { SellerOnBoarding } from "../../components";
+import { SellerSignUpPage } from "../";
 
 const MainPageSeller = (props) => {
   const fetchSellerDetail = useFetchDetailSellerQuery();
+
+  console.log("fetchSellerDetail", fetchSellerDetail.data);
 
   if (fetchSellerDetail.isError) {
     return (
@@ -16,9 +19,11 @@ const MainPageSeller = (props) => {
   if (fetchSellerDetail.data) {
     if (fetchSellerDetail.data.sellerApproval === ACTIVE) {
       return <>{props.children}</>;
+    } else {
+      return <SellerSignUpPage />;
     }
   } else {
-    return <SellerSignUpDetail />;
+    return <SellerOnBoarding />;
   }
 };
 

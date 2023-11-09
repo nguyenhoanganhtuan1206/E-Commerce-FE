@@ -1,4 +1,3 @@
-export { default as PostAd } from "./PostAd/PostAd";
 export { default as DashboardUserPage } from "./DashboardUser/DashboardUserPage";
 export { default as ChatPageUser } from "./ChatPageUser/ChatPageUser";
 export { default as FilterProducts } from "./FilterProducts/FilterProducts";

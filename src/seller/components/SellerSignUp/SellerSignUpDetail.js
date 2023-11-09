@@ -198,15 +198,24 @@ const SellerSignUpDetail = () => {
               </p>
             )}
 
-          <ButtonFields
-            type="button"
-            onClick={() => dispatch(toggleShowConfirmEmail())}
-            disabled={!methods.formState.isValid}
-            primary
-            className="mt-4"
-          >
-            Registration
-          </ButtonFields>
+          <div className="d-flex align-items-center mt-4">
+            <ButtonFields
+              type="button"
+              onClick={() => dispatch(toggleShowConfirmEmail())}
+              disabled={!methods.formState.isValid}
+              primary
+              className="mr-4"
+            >
+              Registration
+            </ButtonFields>
+  
+            <ButtonFields
+              to="/profile-user"
+              borderOnly
+            >
+              Cancel
+            </ButtonFields>
+          </div>
 
           <ModalWarning
             show={sellerState.isShowConfirmEmail}

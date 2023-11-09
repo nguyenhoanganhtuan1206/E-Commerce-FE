@@ -7,7 +7,6 @@ import { AuthContext } from "./context/auth-context";
 import { Home } from "./shared/components";
 import {
   DashboardUserPage,
-  PostAd,
   ChatPageUser,
   FilterProducts,
   MyCartPage,
@@ -21,15 +20,14 @@ import {
   ManagementProductPage,
   ManagementSellerPage,
 } from "./admin/pages/";
-import { DashboardSeller, MyAdsPage } from "./seller/page";
+import { DashboardSeller, MyAdsPage, SellerSignUpPage } from "./seller/page";
+import { SellerOnBoarding } from "./seller/components";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
 import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
-import Demo from "./user/page/Demo/Demo";
 import ProtectRoutes from "./routes/ProtectRoutes";
 import PostAdPage from "./seller/page/PostAdPage/PostAd";
-import SellerSignUpDetailPage from "./seller/page/SellerSignUpPage/SellerSignUpPage";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -43,7 +41,6 @@ function App() {
         <Route path="/register" element={<Registration />} />
         <Route path="/:productId/details" element={<ProductDetail />} />
         <Route path="/categories" element={<FilterProducts />} />
-        <Route path="/demo" element={<Demo />} />
         {/* Routes permit all */}
         <Route
           path="/reset-password/confirm-email"
@@ -55,8 +52,9 @@ function App() {
 
         {/* Channel Seller */}
         <Route path="/seller/dashboard" element={<DashboardSeller />} />
+        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
 
-        <Route path="/seller/sign-up" element={<SellerSignUpDetailPage />} />
+        <Route path="/seller/sign-up" element={<SellerSignUpPage />} />
         <Route path="/seller/my-ads" element={<MyAdsPage />} />
         <Route path="/seller/new-ads" element={<PostAdPage />} />
         {/* Channel Seller */}
