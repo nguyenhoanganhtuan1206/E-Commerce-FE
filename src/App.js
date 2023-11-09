@@ -16,7 +16,6 @@ import {
   ResetPasswordPage,
   OrderPaymentPage,
 } from "./user/page";
-import { SellerSignUpDetail } from "./user/components";
 import {
   AdminHome,
   ManagementProductPage,
@@ -29,6 +28,8 @@ import Login from "./user/components/auth/Login";
 import Registration from "./user/components/auth/Registration";
 import Demo from "./user/page/Demo/Demo";
 import ProtectRoutes from "./routes/ProtectRoutes";
+import PostAdPage from "./seller/page/PostAdPage/PostAd";
+import SellerSignUpDetailPage from "./seller/page/SellerSignUpPage/SellerSignUpPage";
 
 function App() {
   const authContext = useContext(AuthContext);
@@ -55,8 +56,9 @@ function App() {
         {/* Channel Seller */}
         <Route path="/seller/dashboard" element={<DashboardSeller />} />
 
-        <Route path="/seller/sign-up" element={<SellerSignUpDetail />} />
+        <Route path="/seller/sign-up" element={<SellerSignUpDetailPage />} />
         <Route path="/seller/my-ads" element={<MyAdsPage />} />
+        <Route path="/seller/new-ads" element={<PostAdPage />} />
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}
@@ -64,8 +66,7 @@ function App() {
           <Route path="/dashboard-user" element={<DashboardUserPage />} />
           {/* <Route path="/my-ads" element={<MyAdsPage />} /> */}
           <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/product/new" element={<PostAd />} />
-          <Route path="/product/:productId/edit" element={<PostAd />} />
+          <Route path="/product/:productId/edit" element={<PostAdPage />} />
           <Route path="/my-cart" element={<MyCartPage />} />
           <Route
             path="/my-cart/seller/:sellerId/order-payment"

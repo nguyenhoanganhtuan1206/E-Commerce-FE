@@ -1,0 +1,17 @@
+.form-create__categorization {
+  border: 2px solid var(--color-border);
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+
+  &-icon {
+    font-size: 1.6rem;
+    margin-right: 1rem;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    border: 2px solid var(--color-primary-2);
+    cursor: pointer;
+  }
+}

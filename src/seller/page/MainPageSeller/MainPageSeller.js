@@ -7,16 +7,18 @@ import { SellerSignUpDetail } from "../../../user/components";
 const MainPageSeller = (props) => {
   const fetchSellerDetail = useFetchDetailSellerQuery();
 
-  if (fetchSellerDetail.data) {
-    if (fetchSellerDetail.data.sellerApproval === ACTIVE) {
-      return <>{props.children}</>;
-    } else {
-      return <SellerSignUpDetail />;
-    }
-  } else {
+  if (fetchSellerDetail.isError) {
     return (
       <ErrorPage messageError="Something went wrong while processing to register as seller! Please try again." />
     );
+  }
+
+  if (fetchSellerDetail.data) {
+    if (fetchSellerDetail.data.sellerApproval === ACTIVE) {
+      return <>{props.children}</>;
+    }
+  } else {
+    return <SellerSignUpDetail />;
   }
 };
 

@@ -7,6 +7,8 @@ import {
   MY_ADS_OUT_OF_STOCK,
   switchAdSection,
 } from "../../../redux/slices/seller/myAds/myAdsSlice";
+import { ButtonFields } from "../../../shared/FormElement";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const MyAdsHeader = () => {
   const dispatch = useDispatch();
@@ -46,6 +48,11 @@ const MyAdsHeader = () => {
           </li>
         ))}
       </ul>
+
+      <ButtonFields to="/seller/new-ads" primary>
+        Post Ad
+        <AddCircleOutlineIcon className={classes.MyAdsHeaderIcon} />
+      </ButtonFields>
     </div>
   );
 };
