@@ -1,28 +1,26 @@
-import { useCallback, useState } from "react";
 import classes from "./Table.module.scss";
-import usePaginate from "../../hooks/usePaginate";
-import Pagination from "../Pagination/Pagination";
-import { useSelector } from "react-redux";
 
-const Table = ({ data = [], children }) => {
-
-
+const Table = ({ headers = [], tbody = null, bordered, children }) => {
   return (
     <div className={`${classes.ProductListTable} table-responsive`}>
-      <table className={`table`}>
+      <table className={`table ${bordered && "table-bordered"}`}>
         <thead className={classes.ProductListHeader}>
           <tr>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Categorization</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Actions</th>
+            {headers.map((header, index) => {
+              console.log(header);
+              return (
+                <th key={index} class="col-3">
+                  {header}
+                </th>
+              );
+            })}
           </tr>
         </thead>
 
-        <tbody>{children}</tbody>
+        <tbody>{tbody}</tbody>
       </table>
+
+      {children}
     </div>
   );
 };

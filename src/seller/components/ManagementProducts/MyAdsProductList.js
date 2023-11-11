@@ -9,7 +9,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenAlt } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 
-import { ModalWarning, Skeleton, Pagination } from "../../../shared/components";
+import {
+  ModalWarning,
+  Skeleton,
+  Pagination,
+  Table,
+} from "../../../shared/components";
 import {
   useDeleteProductMutation,
   useFetchProductWithApprovalQuery,
@@ -122,6 +127,69 @@ const MyAdsUserProductList = () => {
       });
   };
 
+  const headers = [
+    "Product Name",
+    "Category",
+    "Categorization",
+    "Price",
+    "Quantity",
+    "Actions",
+  ];
+
+  const tableBodyContent =
+    storage.length > 0 &&
+    storage.map((data, index) => (
+      <tr key={index}>
+        <td>{data.name}</td>
+        <td>
+          {data.categories.map((category, index) => (
+            <p key={index}>{category}</p>
+          ))}
+        </td>
+        <td>
+          {Object.entries(data.inventories)
+            .sort((a, b) => a[1].colorValue - b[1].colorValue)
+            .map((inventory, index) => (
+              <p key={index}>
+                {inventory[1].colorValue},{inventory[1].sizeValue}
+              </p>
+            ))}
+        </td>
+        <td>
+          {data.inventories.length > 0
+            ? data.inventories.map((inventory, index) => (
+                <p key={index}>${inventory.price.toFixed(2)}</p>
+              ))
+            : `$${data.price.toFixed(2)}`}
+        </td>
+
+        <td>
+          {data.inventories.length > 0
+            ? data.inventories.map((inventory, index) => (
+                <p key={index}>{inventory.quantity}</p>
+              ))
+            : data.quantity}
+        </td>
+
+        <td>
+          <FontAwesomeIcon
+            className={classes.ProductListIcon}
+            icon={faPenAlt}
+            onClick={() => handleRedirectEditorForm(data.id)}
+          />
+
+          <FontAwesomeIcon
+            className={classes.ProductListIcon}
+            icon={faTrashAlt}
+            onClick={() => {
+              setProductId(data.id);
+              dispatch(toggleShowDeleteProduct());
+            }}
+          />
+        </td>
+      </tr>
+    ));
+
   if (isFetchingData) {
     return <Skeleton times={5} style={{ height: "7rem", width: "100%" }} />;
   } else if (fetchProducts.error) {
@@ -129,76 +197,7 @@ const MyAdsUserProductList = () => {
   } else {
     return (
       <>
-        <div className={`${classes.ProductListTable} table-responsive`}>
-          <table className={`table`}>
-            <thead className={classes.ProductListHeader}>
-              <tr>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Categorization</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {storage.length > 0 &&
-                storage.map((data, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{data.name}</td>
-                      <td>
-                        {data.categories.map((category, index) => (
-                          <p key={index}>{category}</p>
-                        ))}
-                      </td>
-                      <td>
-                        {Object.entries(data.inventories)
-                          .sort((a, b) => a[1].colorValue - b[1].colorValue)
-                          .map((inventory, index) => (
-                            <p key={index}>
-                              {inventory[1].colorValue},{inventory[1].sizeValue}
-                            </p>
-                          ))}
-                      </td>
-                      <td>
-                        {data.inventories.length > 0
-                          ? data.inventories.map((inventory, index) => (
-                              <p key={index}>${inventory.price.toFixed(2)}</p>
-                            ))
-                          : `$${data.price.toFixed(2)}`}
-                      </td>
-
-                      <td>
-                        {data.inventories.length > 0
-                          ? data.inventories.map((inventory, index) => (
-                              <p key={index}>{inventory.quantity}</p>
-                            ))
-                          : data.quantity}
-                      </td>
-
-                      <td className="d-flex align-items-center">
-                        <FontAwesomeIcon
-                          className={classes.ProductListIcon}
-                          icon={faPenAlt}
-                          onClick={() => handleRedirectEditorForm(data.id)}
-                        />
-
-                        <FontAwesomeIcon
-                          className={classes.ProductListIcon}
-                          icon={faTrashAlt}
-                          onClick={() => {
-                            setProductId(data.id);
-                            dispatch(toggleShowDeleteProduct());
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+        <Table headers={headers} tbody={tableBodyContent} bordered>
           <Pagination
             capacityPage={capacityPage}
             totalData={fetchProducts.data.length}
@@ -236,7 +235,7 @@ const MyAdsUserProductList = () => {
             Are you sure you want to delete this location?
           </ModalWarning>
           {/* MODAL DELETE */}
-        </div>
+        </Table>
       </>
     );
   }

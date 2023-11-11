@@ -20,7 +20,12 @@ import {
   ManagementProductPage,
   ManagementSellerPage,
 } from "./admin/pages/";
-import { DashboardSeller, MyAdsPage, SellerSignUpPage } from "./seller/page";
+import {
+  DashboardSeller,
+  ManagementOrdersPage,
+  MyAdsPage,
+  SellerSignUpPage,
+} from "./seller/page";
 import { SellerOnBoarding } from "./seller/components";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
@@ -52,11 +57,14 @@ function App() {
 
         {/* Channel Seller */}
         <Route path="/seller/dashboard" element={<DashboardSeller />} />
-        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
 
+        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
         <Route path="/seller/sign-up" element={<SellerSignUpPage />} />
+
         <Route path="/seller/my-ads" element={<MyAdsPage />} />
         <Route path="/seller/new-ads" element={<PostAdPage />} />
+
+        <Route path="/seller/orders" element={<ManagementOrdersPage />} />
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}

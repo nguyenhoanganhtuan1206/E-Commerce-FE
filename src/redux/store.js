@@ -24,6 +24,7 @@ import { useCartApis } from "./apis/cart/cart.api";
 import { cartReducers } from "./slices/cart/cartSlice";
 import { commonProductReducer } from "./slices/product/commonProductSlice";
 import { usePaymentOrder } from "./apis/user/paymentOrder/paymentOrder.api";
+import { managementOrdersReducers } from "./slices/seller/management-orders/managementOrdersSlides";
 
 enableMapSet();
 
@@ -42,6 +43,7 @@ const store = configureStore({
     inventoryDetail: inventoryDetailReducer,
     cartSlice: cartReducers,
     commonProduct: commonProductReducer,
+    managementOrders: managementOrdersReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
