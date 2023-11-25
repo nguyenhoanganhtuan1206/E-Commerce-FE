@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const useSellerRegisterApi = createApi({
   reducerPath: "sellerApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/",
+    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
