@@ -8,8 +8,6 @@ import { SellerSignUpPage } from "../";
 const MainPageSeller = (props) => {
   const fetchSellerDetail = useFetchDetailSellerQuery();
 
-  console.log("fetchSellerDetail", fetchSellerDetail.data);
-
   if (fetchSellerDetail.isError) {
     return (
       <ErrorPage messageError="Something went wrong while processing to register as seller! Please try again." />

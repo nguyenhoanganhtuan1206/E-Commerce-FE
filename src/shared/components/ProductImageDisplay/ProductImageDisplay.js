@@ -20,11 +20,15 @@ const ProductImageDisplay = ({ productId = null, className }) => {
   }, [handleFetchProfile, productId]);
 
   return (
-    <img
-      src={Array.from(imagesProduct.values())[0]}
-      alt={Array.from(imagesProduct.values())[1]}
-      className={className}
-    />
+    <>
+      {imagesProduct.values() && (
+        <img
+          src={Array.from(imagesProduct.values())[0]}
+          alt={Array.from(imagesProduct.values())[1]}
+          className={className}
+        />
+      )}
+    </>
   );
 };
 

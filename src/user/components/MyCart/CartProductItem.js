@@ -41,7 +41,7 @@ const CartProductItem = ({ cartItem }) => {
       return;
     }
 
-    doIncreaseQuantity(cartItem.id)
+    doIncreaseQuantity(cartItem.cartProductInventory.id)
       .unwrap()
       .then()
       .catch((error) => toast.error(error.data.message));
@@ -52,14 +52,14 @@ const CartProductItem = ({ cartItem }) => {
       return;
     }
 
-    doDecreaseQuantity(cartItem.id)
+    doDecreaseQuantity(cartItem.cartProductInventory.id)
       .unwrap()
       .then()
       .catch((error) => toast.error(error.data.message));
   };
 
   const handleDeleteCart = () => {
-    doDeleteCart(cartItem.id)
+    doDeleteCart(cartItem.cartProductInventory.id)
       .unwrap()
       .then(() => {
         toast.success("Deleted this product successfully!");
@@ -127,7 +127,7 @@ const CartProductItem = ({ cartItem }) => {
       </div>
 
       <ButtonQuantity
-        currentQuantity={cartItem.quantity}
+        currentQuantity={cartItem.cartProductInventory.quantity}
         maxQuantity={maxQuantity}
         onIncreaseQuantity={handleIncreaseQuantity}
         onDecreaseQuantity={handleDecreaseQuantity}
@@ -137,7 +137,7 @@ const CartProductItem = ({ cartItem }) => {
         }
       />
 
-      <p className="cart__product-item__text mycart-text--bold">{`$${cartItem.totalPrice.toFixed(
+      <p className="cart__product-item__text mycart-text--bold">{`$${cartItem.cartProductInventory.totalPrice.toFixed(
         2
       )}`}</p>
       <FontAwesomeIcon

@@ -1,4 +1,4 @@
-import  { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import classes from "./ProductDetailInfoBody.module.scss";
@@ -29,7 +29,7 @@ import {
   toggleIncreaseQuantity,
 } from "../../../../redux/slices/cart/cartSlice";
 
-const ProductDetailInfoBody = ({ productData = null }) => {
+const ProductDetailInfoBody = ({ sellerId = null, productData = null }) => {
   const navigate = useNavigate();
   const authContext = useContext(AuthContext);
 
@@ -151,11 +151,19 @@ const ProductDetailInfoBody = ({ productData = null }) => {
       return;
     }
 
+    if (sellerId === null) {
+      toast.error("Something went wrong error! Please try again.");
+      return;
+    }
+
     if (productData.inventory) {
-      addToCart({
+      const payload = {
+        sellerId,
         inventoryId: inventoryDetailState.inventoryDetailData.id,
         quantity: quantityCartState.quantity,
-      })
+      };
+
+      addToCart(payload)
         .unwrap()
         .then(() => {
           toast.success("Added this product to your cart successfully", {
@@ -170,10 +178,13 @@ const ProductDetailInfoBody = ({ productData = null }) => {
         .catch((error) => toast.error(error.data.message));
       setIsEmptyCart(false);
     } else {
-      addToCart({
+      const payload = {
+        sellerId,
         productId: productData.id,
         quantity: quantityCartState.quantity,
-      })
+      };
+
+      addToCart(payload)
         .unwrap()
         .then(() => {
           toast.success("Added this product to your cart successfully", {
@@ -264,60 +275,70 @@ const ProductDetailInfoBody = ({ productData = null }) => {
               <span className="product-info__text-normal--bold mr-4">
                 {productData.inventory.colorName}:
               </span>
-              {productData.inventory.colorValues.map((color, index) => (
-                <TagProduct
-                  key={index}
-                  isActive={
-                    statusColorValue &&
-                    inventoryDetailState.colorValueSelected === color
-                      ? true
-                      : false
-                  }
-                  onClick={() => {
-                    if (
-                      !statusSizeValue ||
-                      inventoryDetailState.colorValuesData.includes(color)
-                    ) {
-                      handleSelectColorValue(color);
-                    }
-                  }}
-                  name={color}
-                  disabled={
-                    statusSizeValue &&
-                    !inventoryDetailState.colorValuesData.includes(color)
-                  }
-                />
-              ))}
+              {productData.inventory.colorValues.map((color, index) => {
+                return (
+                  <Fragment key={index}>
+                    {color && (
+                      <TagProduct
+                        isActive={
+                          statusColorValue &&
+                          inventoryDetailState.colorValueSelected === color
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          if (
+                            !statusSizeValue ||
+                            inventoryDetailState.colorValuesData.includes(color)
+                          ) {
+                            handleSelectColorValue(color);
+                          }
+                        }}
+                        name={color}
+                        disabled={
+                          statusSizeValue &&
+                          !inventoryDetailState.colorValuesData.includes(color)
+                        }
+                      />
+                    )}
+                  </Fragment>
+                );
+              })}
             </div>
 
             <div className="product-info__sub-info product-info__text-normal mt-2">
               <span className="product-info__text-normal--bold mr-4">
                 {productData.inventory.sizeName}:
               </span>
-              {productData.inventory.sizeValues.map((size, index) => (
-                <TagProduct
-                  key={index}
-                  isActive={
-                    statusSizeValue &&
-                    inventoryDetailState.sizeValueSelected === size
-                      ? true
-                      : false
-                  }
-                  onClick={() => {
-                    if (
-                      !statusColorValue ||
-                      inventoryDetailState.sizeValuesData.includes(size)
-                    ) {
-                      handleSelectSizeValue(size);
-                    }
-                  }}
-                  name={size}
-                  disabled={
-                    statusColorValue &&
-                    !inventoryDetailState.sizeValuesData.includes(size)
-                  }
-                />
-              ))}
+              {productData.inventory.sizeValues.map((size, index) => {
+                return (
+                  <Fragment key={index}>
+                    {size && (
+                      <TagProduct
+                        isActive={
+                          statusSizeValue &&
+                          inventoryDetailState.sizeValueSelected === size
+                            ? true
+                            : false
+                        }
+                        onClick={() => {
+                          if (
+                            !statusColorValue ||
+                            inventoryDetailState.sizeValuesData.includes(size)
+                          ) {
+                            handleSelectSizeValue(size);
+                          }
+                        }}
+                        name={size}
+                        disabled={
+                          statusColorValue &&
+                          !inventoryDetailState.sizeValuesData.includes(size)
+                        }
+                      />
+                    )}
+                  </Fragment>
+                );
+              })}
             </div>
           </>
         )}

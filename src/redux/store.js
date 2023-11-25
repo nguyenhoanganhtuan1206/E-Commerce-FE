@@ -25,6 +25,7 @@ import { cartReducers } from "./slices/cart/cartSlice";
 import { commonProductReducer } from "./slices/product/commonProductSlice";
 import { usePaymentOrder } from "./apis/user/paymentOrder/paymentOrder.api";
 import { managementOrdersReducers } from "./slices/seller/management-orders/managementOrdersSlides";
+import { useCartProductInventoryApis } from "./apis/cart_product_inventory/cart_product_inventory.api";
 
 enableMapSet();
 
@@ -55,6 +56,7 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
+    [useCartProductInventoryApis.reducerPath]: useCartProductInventoryApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false })
@@ -67,6 +69,7 @@ const store = configureStore({
       .concat(useProductStyleApis.middleware)
       .concat(useProductApis.middleware)
       .concat(usePaymentOrder.middleware)
+      .concat(useCartProductInventoryApis.middleware)
       .concat(useCartApis.middleware);
   },
 });

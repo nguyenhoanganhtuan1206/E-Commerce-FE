@@ -68,17 +68,15 @@ function App() {
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}
-        <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
-          <Route path="/dashboard-user" element={<DashboardUserPage />} />
-          {/* <Route path="/my-ads" element={<MyAdsPage />} /> */}
-          <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/product/:productId/edit" element={<PostAdPage />} />
-          <Route path="/my-cart" element={<MyCartPage />} />
-          <Route
-            path="/my-cart/seller/:sellerId/order-payment"
-            element={<OrderPaymentPage />}
-          />
-        </Route>
+        <Route path="/dashboard-user" element={<DashboardUserPage />} />
+        <Route path="/my-orders" element={<MyAdsPage />} />
+        <Route path="/profile-user" element={<ProfileUserPage />} />
+        <Route path="/product/:productId/edit" element={<PostAdPage />} />
+        <Route path="/my-cart" element={<MyCartPage />} />
+        <Route
+          path="/my-cart/:cartId/order-payment/:sellerId/seller"
+          element={<OrderPaymentPage />}
+        />
         <Route path="/chat-user" element={<ChatPageUser />} />
         {/* Routes logged in and all roles */}
 
@@ -105,8 +103,15 @@ function App() {
           />
         </Route>
 
+        <Route path="error-page" element={<ErrorPage />} />
+
         {/* Routes required Admin */}
-        <Route path="*" element={<ErrorPage />} />
+        <Route
+          path="*"
+          element={
+            <ErrorPage messageError="This page is not existed. Please try again!" />
+          }
+        />
       </Routes>
 
       <ToastContainer
