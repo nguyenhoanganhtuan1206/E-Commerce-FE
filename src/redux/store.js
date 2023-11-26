@@ -26,6 +26,8 @@ import { commonProductReducer } from "./slices/product/commonProductSlice";
 import { usePaymentOrder } from "./apis/user/paymentOrder/paymentOrder.api";
 import { managementOrdersReducers } from "./slices/seller/management-orders/managementOrdersSlides";
 import { useCartProductInventoryApis } from "./apis/cart_product_inventory/cart_product_inventory.api";
+import { myOrderReducers } from "./slices/user/myOrders/myOrdersSlices";
+import { useMyOrdersApi } from "./apis/user/orders/my-orders.api";
 
 enableMapSet();
 
@@ -45,6 +47,7 @@ const store = configureStore({
     cartSlice: cartReducers,
     commonProduct: commonProductReducer,
     managementOrders: managementOrdersReducers,
+    myOrders: myOrderReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
@@ -56,6 +59,7 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
+    [useMyOrdersApi.reducerPath]: useCartApis.reducer,
     [useCartProductInventoryApis.reducerPath]: useCartProductInventoryApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
@@ -70,6 +74,7 @@ const store = configureStore({
       .concat(useProductApis.middleware)
       .concat(usePaymentOrder.middleware)
       .concat(useCartProductInventoryApis.middleware)
+      .concat(useMyOrdersApi.middleware)
       .concat(useCartApis.middleware);
   },
 });

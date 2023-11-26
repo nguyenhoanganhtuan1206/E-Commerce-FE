@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import pause from "../../../../utils/pause";
 
-const usePaymentOrder = createApi({
-  reducerPath: "paymentOrder",
+const useMyOrdersApi = createApi({
+  reducerPath: "myOrders",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/payment-order",
+    baseUrl: "http://localhost:8080/api/v1/orders",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);
@@ -21,14 +21,13 @@ const usePaymentOrder = createApi({
   }),
   endpoints: (builder) => {
     return {
-      createPayment: builder.mutation({
-        invalidatesTags: () => {
-          return [{ type: "PaymentOrder" }];
+      fetchOrders: builder.query({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "MyOrders" }];
         },
         query: (payload) => {
           return {
-            method: "POST",
-            body: payload,
+            method: "GET",
           };
         },
       }),
@@ -36,5 +35,5 @@ const usePaymentOrder = createApi({
   },
 });
 
-export const { useCreatePaymentMutation } = usePaymentOrder;
-export { usePaymentOrder };
+export const { useFetchOrdersQuery } = useMyOrdersApi;
+export { useMyOrdersApi };

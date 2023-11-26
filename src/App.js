@@ -14,6 +14,7 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   OrderPaymentPage,
+  MyOrderPage,
 } from "./user/page";
 import {
   AdminHome,
@@ -69,7 +70,7 @@ function App() {
 
         {/* Routes logged in and all roles */}
         <Route path="/dashboard-user" element={<DashboardUserPage />} />
-        <Route path="/my-orders" element={<MyAdsPage />} />
+        <Route path="/my-orders" element={<MyOrderPage />} />
         <Route path="/profile-user" element={<ProfileUserPage />} />
         <Route path="/product/:productId/edit" element={<PostAdPage />} />
         <Route path="/my-cart" element={<MyCartPage />} />

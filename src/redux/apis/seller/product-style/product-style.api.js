@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const useProductStyleApis = createApi({
   reducerPath: "productStyles",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/product-styles",
+    baseUrl: "http://localhost:8080/api/v1/product-styles",
     fetchFn: async (...args) => {
       await pause(500);
       return fetch(...args);

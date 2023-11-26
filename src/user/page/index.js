@@ -6,3 +6,4 @@ export { default as ProfileUserPage } from "./ProfileUserPage/ProfileUserPage";
 export { default as ConfirmEmailPage } from "./ForgetPasswordPage/ConfirmEmailPage";
 export { default as ResetPasswordPage } from "./ForgetPasswordPage/ResetPasswordPage";
 export { default as OrderPaymentPage } from "./OrderPaymentPage/OrderPaymentPage";
+export { default as MyOrderPage } from "./MyOrderPage/MyOrderPage";

@@ -9,3 +9,4 @@ export { default as FormResetPassword } from "./ForgetPassword/FormResetPassword
 export { default as UserInfoEditor } from "./ProfileUser/UserInfoEditor";
 export { default as CartHeader } from "./CartHeader/CartHeader";
 export { default as OrderPayment } from "./OrderPayment/OrderPayment";
+export { default as MyOrders } from "./MyOrders/MyOrders";
