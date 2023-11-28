@@ -25,8 +25,30 @@ const useMyOrdersApi = createApi({
         invalidatesTags: (result, error, args) => {
           return [{ type: "MyOrders" }];
         },
-        query: (payload) => {
+        query: () => {
           return {
+            method: "GET",
+          };
+        },
+      }),
+      fetchOrdersCompleted: builder.query({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "MyOrders" }];
+        },
+        query: () => {
+          return {
+            url: "completed",
+            method: "GET",
+          };
+        },
+      }),
+      fetchOrdersWaitingPayment: builder.query({
+        invalidatesTags: (result, error, args) => {
+          return [{ type: "MyOrders" }];
+        },
+        query: () => {
+          return {
+            url: "waiting-for-payment",
             method: "GET",
           };
         },
@@ -35,5 +57,9 @@ const useMyOrdersApi = createApi({
   },
 });
 
-export const { useFetchOrdersQuery } = useMyOrdersApi;
+export const {
+  useFetchOrdersQuery,
+  useFetchOrdersWaitingPaymentQuery,
+  useFetchOrdersCompletedQuery,
+} = useMyOrdersApi;
 export { useMyOrdersApi };

@@ -8,23 +8,23 @@ import {
 
 const MyOrdersMenuTabs = () => {
   const dispatch = useDispatch();
-  const orderTabsState = useSelector((state) => state.myOrders);
+  const myOrderTabsState = useSelector((state) => state.myOrderSlices);
 
   const tabsHeaderList = [
     {
-      tab: MY_ORDER_TABS.ALL_ORDER,
+      tab: MY_ORDER_TABS.ALL_ORDERS,
       label: "All Orders",
-      badge: 0,
+      badge: myOrderTabsState.numbersAllOrders,
     },
     {
-      tab: MY_ORDER_TABS.AWAITING_FOR_PAYMENT,
+      tab: MY_ORDER_TABS.COMPLETED,
+      label: "Completed",
+      badge: myOrderTabsState.numbersCompleted,
+    },
+    {
+      tab: MY_ORDER_TABS.WAITING_FOR_PAYMENT,
       label: "Waiting For Payment",
-      badge: 0,
-    },
-    {
-      tab: MY_ORDER_TABS.AWAITING_FOR_DELIVERY,
-      label: "Awaiting For Delivery",
-      badge: 0,
+      badge: myOrderTabsState.numbersWaitingPayment,
     },
   ];
 
@@ -36,7 +36,7 @@ const MyOrdersMenuTabs = () => {
     <TabsHeader
       tabsHeaderList={tabsHeaderList}
       onSwitchTab={onSwitchTab}
-      currentTab={orderTabsState.myCurrentTab}
+      currentTab={myOrderTabsState.myCurrentTab}
     />
   );
 };

@@ -18,3 +18,4 @@ export { default as TagProduct } from "./TagProduct/TagProduct";
 export { default as ButtonQuantity } from "./ButtonQuantity/ButtonQuantity";
 export { default as ProductImageDisplay } from "./ProductImageDisplay/ProductImageDisplay";
 export { default as TabsHeader } from "./TabsHeader/TabsHeader";
+export { default as CartListItem } from "./ListItemsGroup/CartListItems";

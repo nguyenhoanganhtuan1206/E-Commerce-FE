@@ -7,8 +7,6 @@ import CartProductItem from "./CartProductItem";
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
 
 const MyCartGroupItems = ({ sellerInfo = null, carts = [] }) => {
-  console.log("carts", carts);
-
   return (
     <>
       {sellerInfo && (

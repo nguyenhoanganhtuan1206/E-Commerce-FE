@@ -18,7 +18,7 @@ import { multipleSelectReducer } from "./slices/FormElement/MultipleSelect/multi
 import { productCategorizationReducer } from "./slices/seller/product-categorization/productCategorizationSlice";
 import { inventoryReducer } from "./slices/seller/inventory/inventorySlice";
 import { myAdsReducers } from "./slices/seller/myAds/myAdsSlice";
-import { commonSliceReducer } from "./slices/commonSlices.js/commoneSlice";
+import { commonSliceReducer } from "./slices/shared/CommonSlices/commonSlice";
 import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice";
 import { useCartApis } from "./apis/cart/cart.api";
 import { cartReducers } from "./slices/cart/cartSlice";
@@ -47,7 +47,7 @@ const store = configureStore({
     cartSlice: cartReducers,
     commonProduct: commonProductReducer,
     managementOrders: managementOrdersReducers,
-    myOrders: myOrderReducers,
+    myOrderSlices: myOrderReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
@@ -59,8 +59,9 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
-    [useMyOrdersApi.reducerPath]: useCartApis.reducer,
-    [useCartProductInventoryApis.reducerPath]: useCartProductInventoryApis.reducer,
+    [useMyOrdersApi.reducerPath]: useMyOrdersApi.reducer,
+    [useCartProductInventoryApis.reducerPath]:
+      useCartProductInventoryApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false })
