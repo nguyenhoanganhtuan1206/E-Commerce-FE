@@ -6,16 +6,16 @@ import "./MyCartGroupItems.scss";
 import CartProductItem from "./CartProductItem";
 import ButtonFields from "../../../shared/FormElement/ButtonFields/ButtonFields";
 
-const MyCartGroupItems = ({ sellerId = null, carts = [] }) => {
+const MyCartGroupItems = ({ sellerInfo = null, carts = [] }) => {
   return (
     <>
-      {sellerId && (
+      {sellerInfo && (
         <div className="mycart__group">
           <div className="mycart__group-header">
             <p className="mycart-text--bold m-0">
               Product Owner:
               <span className="mycart-text--bold ml-3">
-                {carts[0].seller.sellerName}
+                {sellerInfo.sellerName}
               </span>
             </p>
           </div>
@@ -27,17 +27,16 @@ const MyCartGroupItems = ({ sellerId = null, carts = [] }) => {
           </div>
 
           <div className="mycart__group-footer">
-            <ButtonFields to={`seller/${sellerId}/order-payment`} className="mycart__payment-btn">
+            <ButtonFields
+              to={`/my-cart/${carts[0].id}/order-payment/${sellerInfo.id}/seller`}
+              className="mycart__payment-btn"
+            >
               Order Payment
             </ButtonFields>
 
             <p className="mycart__group-total-price">
               Total Price:
-              <span>
-                {`$${carts
-                  .reduce((total, item) => total + item.totalPrice, 0)
-                  .toFixed(2)}`}
-              </span>
+              <span>{`$${carts[0].totalPrice.toFixed(2)}`}</span>
             </p>
           </div>
         </div>

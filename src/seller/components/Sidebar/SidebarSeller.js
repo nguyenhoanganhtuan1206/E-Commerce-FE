@@ -34,12 +34,14 @@ const SidebarSeller = () => {
             </li>
           </Link>
 
-          <li className="admin-sidebar__center-item">
-            <CreditCardIcon className="icon" />
-            <span className="admin-sidebar__center-text">
-              Management Orders
-            </span>
-          </li>
+          <Link to="/seller/orders">
+            <li className="admin-sidebar__center-item">
+              <CreditCardIcon className="icon" />
+              <span className="admin-sidebar__center-text">
+                Management Orders
+              </span>
+            </li>
+          </Link>
 
           <li className="admin-sidebar__center-item">
             <LocalShippingIcon className="icon" />
@@ -52,7 +54,7 @@ const SidebarSeller = () => {
             <span className="admin-sidebar__center-text">Notifications</span>
           </li>
         </ul>
-      </div>    
+      </div>
     </div>
   );
 };

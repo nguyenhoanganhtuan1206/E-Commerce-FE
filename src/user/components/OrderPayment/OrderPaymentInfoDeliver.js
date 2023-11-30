@@ -6,7 +6,6 @@ import classes from "./OrderPaymentInfoDeliver.module.scss";
 import ModalChangeAddressOrderPayment from "./ModalChangeAddressOrderPayment";
 import {
   toggleShowModalChangeAddress,
-  updateProfileUserDelivery,
 } from "../../../redux/slices/cart/cartSlice";
 import { useFetchLocationsQuery } from "../../../redux/apis/user/location/user-locations.api";
 import { CardPaymentMethod } from "../../../shared/FormElement";
@@ -20,27 +19,10 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
   const orderPaymentSliceState = useSelector((state) => state.cartSlice);
   const fetchLocationByUserId = useFetchLocationsQuery(userInfo.id);
 
-  useEffect(() => {
-    if (fetchLocationByUserId.data && userInfo) {
-      const location = fetchLocationByUserId.data
-        .filter((locationItem) => locationItem.defaultLocation)
-        .map(
-          (filteredLocation) =>
-            `${filteredLocation.province}, ${filteredLocation.district}, ${filteredLocation.commune}`
-        )
-        .join(", ");
-
-      const payload = {
-        username: userInfo.username,
-        address: userInfo.address,
-        location,
-        phoneNumber: userInfo.phoneNumber,
-        emailAddress: userInfo.email,
-      };
-
-      dispatch(updateProfileUserDelivery(payload));
-    }
-  }, [dispatch, fetchLocationByUserId.data, userInfo]);
+  const defaultLocationCondition =
+    !fetchLocationByUserId.isFetching &&
+    fetchLocationByUserId.data &&
+    fetchLocationByUserId.data.length > 0;
 
   return (
     <>
@@ -64,7 +46,18 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
 
         <div className={classes.UserDetail__Group}>
           <h3 className={classes.UserDetail__Title}>Address (*)</h3>
-          <span>{userInfo.address}</span>
+          {defaultLocationCondition ? (
+            fetchLocationByUserId.data
+              .filter((locationItem) => locationItem.defaultLocation)
+              .map((filteredLocation) => {
+                return <span>{filteredLocation.address}</span>;
+              })
+          ) : (
+            <span>
+              Please choose your default location or add a new location as
+              section below.
+            </span>
+          )}
         </div>
 
         <div className={classes.UserDetail__Group}>
@@ -72,12 +65,14 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
           {!fetchLocationByUserId.isFetching &&
             fetchLocationByUserId.data
               .filter((locationItem) => locationItem.defaultLocation)
-              .map((filteredLocation, index) => (
-                <span key={index}>
-                  {filteredLocation.province}, {filteredLocation.district},{" "}
-                  {filteredLocation.commune}
-                </span>
-              ))}
+              .map((filteredLocation, index) => {
+                return (
+                  <span key={index}>
+                    {filteredLocation.province}, {filteredLocation.district},{" "}
+                    {filteredLocation.commune}
+                  </span>
+                );
+              })}
           <span
             onClick={() => dispatch(toggleShowModalChangeAddress(userInfo.id))}
             className="ml-3"
@@ -87,7 +82,7 @@ const OrderPaymentInfoDeliver = ({ userInfo }) => {
               fontWeight: "600",
             }}
           >
-            Change Address
+            {defaultLocationCondition ? "Change Address" : "Add Address"}
           </span>
         </div>
       </div>

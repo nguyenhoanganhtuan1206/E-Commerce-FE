@@ -1,10 +1,18 @@
 import { ButtonFields } from "../../FormElement";
+import { Modal } from "../../components";
 import classes from "./ErrorPage.module.scss";
 import SearchOffIcon from "@mui/icons-material/SearchOff";
 
 const ErrorPage = ({ messageError, errorIcon }) => {
   return (
-    <div className={`${classes.ErrorPage} container`}>
+    <Modal
+      show
+      footer={
+        <ButtonFields to="/" primary>
+          Home Page
+        </ButtonFields>
+      }
+    >
       <div className={`${classes.ErrorPageContainer}`}>
         {errorIcon ? (
           errorIcon
@@ -17,12 +25,8 @@ const ErrorPage = ({ messageError, errorIcon }) => {
             ? messageError
             : "Something went wrong! Please try again."}
         </p>
-
-        <ButtonFields to="/" primary>
-          Home Page
-        </ButtonFields>
       </div>
-    </div>
+    </Modal>
   );
 };
 

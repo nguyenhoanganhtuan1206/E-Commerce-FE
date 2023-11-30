@@ -175,7 +175,7 @@ const FormPostAd = () => {
             );
             dispatch(handleResetStep());
             dispatch(resetInventoryForm());
-            navigate("/my-ads");
+            navigate("/seller/my-ads");
           })
           .catch((error) => {
             toast.error(error.data.message);
@@ -196,7 +196,7 @@ const FormPostAd = () => {
             toast.success("Updated product successfully!", { autoClose: 2000 });
             dispatch(handleResetStep());
             dispatch(resetInventoryForm());
-            navigate("/my-ads");
+            navigate("/seller/my-ads");
           })
           .catch((error) => {
             toast.error(

@@ -1,0 +1,18 @@
+@import "../../../shared/sass/abstracts/_mixins";
+
+.MyOrderProductItemIcon {
+  @include circle(3rem, 3rem, var(--color-grey-light-3), var(--color-primary-2));
+  padding: 6px;
+  color: var(--color-grey-light-3);
+  box-shadow: var(--shadow-dark-slightly);
+}
+
+.MyOrderProductItemTextCard {
+  margin: 0 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  background-color: var(--color-primary-2);
+  color: #fff;
+  padding: 2px 4px;
+  border-radius: 6px;
+}

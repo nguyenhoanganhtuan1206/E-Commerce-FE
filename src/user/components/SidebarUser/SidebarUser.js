@@ -8,7 +8,6 @@ import {
   faBookmark,
   faComment,
   faHome,
-  faPlusCircle,
   faShoppingBasket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -55,12 +54,12 @@ const SidebarUser = () => {
         </li> */}
 
         <li className="sidebar-user__item">
-          <NavLink to="/my-ads" className="sidebar-user__link">
+          <NavLink to="/my-orders" className="sidebar-user__link">
             <FontAwesomeIcon
               className="sidebar-user__icon"
               icon={faBagShopping}
             />
-            <span>My Ads</span>
+            <span>My Orders</span>
           </NavLink>
         </li>
 

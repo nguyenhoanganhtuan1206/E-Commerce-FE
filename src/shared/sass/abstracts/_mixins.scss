@@ -10,8 +10,8 @@
   $border-color: var(--color-border),
   $background-color: transparent
 ) {
-  height: $height-value;
-  width: $width-value;
+  height: $height-value !important;
+  width: $width-value !important;
   border: 1px solid $border-color;
   background-color: $background-color;
   display: flex;

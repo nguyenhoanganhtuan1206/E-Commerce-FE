@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 const useCartApis = createApi({
   reducerPath: "cart",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/carts",
+    baseUrl: "http://localhost:8080/api/v1/carts",
     fetchFn: async (...args) => {
       return fetch(...args);
     },
@@ -23,11 +23,11 @@ const useCartApis = createApi({
         invalidatesTags: () => {
           return [{ type: "CartProduct" }];
         },
-        query: (data) => {
+        query: (payload) => {
           return {
-            url: "add-to-cart",
+            url: `purchase`,
             method: "POST",
-            body: data,
+            body: payload,
           };
         },
       }),
@@ -81,7 +81,7 @@ const useCartApis = createApi({
         },
         query: (sellerId) => {
           return {
-            url: `${sellerId}/user/cart-details`,
+            url: `${sellerId}/cart-details`,
             method: "GET",
           };
         },

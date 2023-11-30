@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import useThunk from "../../../shared/hooks/useThunk";
-import {
-  fetchProductDetailById,
-} from "../../../redux/thunks/seller/product/productThunk";
+import { fetchProductDetailById } from "../../../redux/thunks/seller/product/productThunk";
 import { Breadcrumbs, LoadingSpinner } from "../../../shared/components";
 import SwiperSlider from "../../../shared/components/SwiperSlider/SwiperSlider";
 import { Header } from "../../../shared/Layouts";
@@ -30,7 +28,7 @@ const ProductDetail = () => {
   const productDetailState = useSelector((state) => state.commonProduct);
 
   const [doFetchProductDetailById] = useThunk(fetchProductDetailById);
-
+  
   useEffect(() => {
     if (params.productId) {
       doFetchProductDetailById(params.productId);
@@ -61,6 +59,9 @@ const ProductDetail = () => {
                   <div className="col-6">
                     <div className="product-detail__info">
                       <ProductDetailInfo
+                        sellerId={
+                          productDetailState.productDetailData.seller.id
+                        }
                         productData={productDetailState.productDetailData}
                       />
                     </div>

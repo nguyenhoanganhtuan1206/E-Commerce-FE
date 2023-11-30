@@ -1,4 +1,3 @@
-
 import "./ProductDetailInfo.scss";
 import "../ProductDetail.scss";
 
@@ -37,7 +36,10 @@ const ProductDetailInfo = (props) => {
         </p>
       </div>
 
-      <ProductDetailInfoBody productData={props.productData} />
+      <ProductDetailInfoBody
+        sellerId={props.sellerId}
+        productData={props.productData}
+      />
     </div>
   );
 };

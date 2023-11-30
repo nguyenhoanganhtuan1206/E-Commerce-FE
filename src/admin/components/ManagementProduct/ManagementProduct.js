@@ -6,7 +6,7 @@ import usePaginate from "../../../shared/hooks/usePaginate";
 import ModalProductDetail from "./ModalProductDetail";
 import { useFetchProductsQuery } from "../../../redux/apis/admin/product/product.api";
 import { Pagination, Skeleton } from "../../../shared/components";
-import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
+import { toggleShowModalUpdate } from "../../../redux/slices/shared/CommonSlices/commonSlice";
 import { ButtonFields } from "../../../shared/FormElement";
 import { ErrorPage } from "../../../shared/pages";
 

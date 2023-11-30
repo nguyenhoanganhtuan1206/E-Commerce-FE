@@ -10,7 +10,7 @@ import useThunk from "../../../shared/hooks/useThunk";
 import { fetchProductById } from "../../../redux/thunks/seller/product/productThunk";
 import { Modal, TagProduct } from "../../../shared/components";
 import { ButtonFields, InputFields } from "../../../shared/FormElement";
-import { toggleShowModalUpdate } from "../../../redux/slices/commonSlices.js/commoneSlice";
+import { toggleShowModalUpdate } from "../../../redux/slices/shared/CommonSlices/commonSlice";
 import CardPaymentMethodPattern from "../../../shared/FormElement/CardPaymentMethod/CardPaymentMethodPattern";
 import { useFetchFilesFirebase } from "../../../firebase/image-product/firebase-service";
 import {
@@ -166,7 +166,9 @@ const ModalProductDetail = () => {
             </div>
 
             <div className="modal-seller__detail-group">
-              <h3 className="modal-seller__detail-title mr-3">Product Styles :</h3>
+              <h3 className="modal-seller__detail-title mr-3">
+                Product Styles :
+              </h3>
               {productDetailState.productData.productStyles.map(
                 (productStyle, index) => (
                   <TagProduct key={index} name={productStyle} />

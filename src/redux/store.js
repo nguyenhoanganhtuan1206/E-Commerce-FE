@@ -18,12 +18,16 @@ import { multipleSelectReducer } from "./slices/FormElement/MultipleSelect/multi
 import { productCategorizationReducer } from "./slices/seller/product-categorization/productCategorizationSlice";
 import { inventoryReducer } from "./slices/seller/inventory/inventorySlice";
 import { myAdsReducers } from "./slices/seller/myAds/myAdsSlice";
-import { commonSliceReducer } from "./slices/commonSlices.js/commoneSlice";
+import { commonSliceReducer } from "./slices/shared/CommonSlices/commonSlice";
 import { inventoryDetailReducer } from "./slices/inventory/inventoryDetailSlice";
 import { useCartApis } from "./apis/cart/cart.api";
 import { cartReducers } from "./slices/cart/cartSlice";
 import { commonProductReducer } from "./slices/product/commonProductSlice";
 import { usePaymentOrder } from "./apis/user/paymentOrder/paymentOrder.api";
+import { managementOrdersReducers } from "./slices/seller/management-orders/managementOrdersSlides";
+import { useCartProductInventoryApis } from "./apis/cart_product_inventory/cart_product_inventory.api";
+import { myOrderReducers } from "./slices/user/myOrders/myOrdersSlices";
+import { useMyOrdersApi } from "./apis/user/orders/my-orders.api";
 
 enableMapSet();
 
@@ -42,6 +46,8 @@ const store = configureStore({
     inventoryDetail: inventoryDetailReducer,
     cartSlice: cartReducers,
     commonProduct: commonProductReducer,
+    managementOrders: managementOrdersReducers,
+    myOrderSlices: myOrderReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,
     [userProfileApis.reducerPath]: userProfileApis.reducer,
@@ -53,6 +59,9 @@ const store = configureStore({
     [useProductApis.reducerPath]: useProductApis.reducer,
     [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
+    [useMyOrdersApi.reducerPath]: useMyOrdersApi.reducer,
+    [useCartProductInventoryApis.reducerPath]:
+      useCartProductInventoryApis.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware({ serializableCheck: false })
@@ -65,6 +74,8 @@ const store = configureStore({
       .concat(useProductStyleApis.middleware)
       .concat(useProductApis.middleware)
       .concat(usePaymentOrder.middleware)
+      .concat(useCartProductInventoryApis.middleware)
+      .concat(useMyOrdersApi.middleware)
       .concat(useCartApis.middleware);
   },
 });

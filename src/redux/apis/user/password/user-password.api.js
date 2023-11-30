@@ -4,7 +4,7 @@ import pause from "../../../../utils/pause";
 const userPasswordApis = createApi({
   reducerPath: "userPassword",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e-commerce-dz5k.onrender.com/api/v1/auth",
+    baseUrl: "http://localhost:8080/api/v1/auth",
     fetchFn: async (...args) => {
       await pause(600);
       return fetch(...args);

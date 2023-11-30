@@ -9,6 +9,7 @@ import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 import {
   ButtonQuantity,
+  CartListItem,
   LoadingSpinner,
   ModalWarning,
 } from "../../../shared/components";
@@ -41,7 +42,7 @@ const CartProductItem = ({ cartItem }) => {
       return;
     }
 
-    doIncreaseQuantity(cartItem.id)
+    doIncreaseQuantity(cartItem.cartProductInventory.id)
       .unwrap()
       .then()
       .catch((error) => toast.error(error.data.message));
@@ -52,14 +53,14 @@ const CartProductItem = ({ cartItem }) => {
       return;
     }
 
-    doDecreaseQuantity(cartItem.id)
+    doDecreaseQuantity(cartItem.cartProductInventory.id)
       .unwrap()
       .then()
       .catch((error) => toast.error(error.data.message));
   };
 
   const handleDeleteCart = () => {
-    doDeleteCart(cartItem.id)
+    doDeleteCart(cartItem.cartProductInventory.id)
       .unwrap()
       .then(() => {
         toast.success("Deleted this product successfully!");
@@ -78,104 +79,77 @@ const CartProductItem = ({ cartItem }) => {
           res.imagesProduct.forEach((item) => {
             map.set(item.fileName, item.url);
           });
-          setImagesProduct(map);
+
+          setImagesProduct(
+            map && map.size > 0 ? Array.from(map.values())[0] : []
+          );
         })
         .finally(() => setIsLoadingImage(false));
     }
   }, [cartItem.product.id, handleFetchProfile]);
 
   return (
-    <div className="cart__item">
-      <div className="cart__item-group">
-        {isLoadingImage && <LoadingSpinner noOverlay />}
+    <>
+      {isLoadingImage && <LoadingSpinner />}
 
-        {!isLoadingImage && (
-          <div className="cart__item-box">
-            <img
-              className="cart__item-box__img"
-              src={Array.from(imagesProduct.values())[0]}
-              alt={cartItem.product.name}
-            />
-          </div>
-        )}
+      {!isLoadingImage && (
+        <CartListItem
+          isLoadingImage={isLoadingImage}
+          cartItem={cartItem}
+          imagesProduct={imagesProduct}
+        >
+          <ButtonQuantity
+            currentQuantity={cartItem.cartProductInventory.quantity}
+            maxQuantity={maxQuantity}
+            onIncreaseQuantity={handleIncreaseQuantity}
+            onDecreaseQuantity={handleDecreaseQuantity}
+            disabled={
+              doIncreaseQuantityResults.isLoading ||
+              doDecreaseQuantityResults.isLoading
+            }
+          />
 
-        <div className="cart__item-info">
-          <p className="mycart-text__name">{cartItem.product.name}</p>
+          <p className="cart__product-item__text mycart-text--bold">{`$${cartItem.cartProductInventory.totalPrice.toFixed(
+            2
+          )}`}</p>
+          <FontAwesomeIcon
+            onClick={() => setIsShowModalDelete(true)}
+            icon={faClose}
+            className="cart__item-close"
+          />
 
-          <p className="mycart-text--light mycart-text--small">
-            Category:
-            {cartItem.product.categories.map((category, index) => (
-              <span key={index} className="mycart-text--bold ml-2">
-                {category.categoryName}
-                {index + 1 !== cartItem.product.categories.length && ", "}
-              </span>
-            ))}
-          </p>
-
-          {cartItem.product.inventory ? (
-            <p className="mycart-text--light mycart-text--small">
-              Categorization:
-              <span className="mycart-text--bold ml-2">
-                {cartItem.product.inventory.colorValue},{" "}
-                {cartItem.product.inventory.sizeValue}
-              </span>
-            </p>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
-
-      <ButtonQuantity
-        currentQuantity={cartItem.quantity}
-        maxQuantity={maxQuantity}
-        onIncreaseQuantity={handleIncreaseQuantity}
-        onDecreaseQuantity={handleDecreaseQuantity}
-        disabled={
-          doIncreaseQuantityResults.isLoading ||
-          doDecreaseQuantityResults.isLoading
-        }
-      />
-
-      <p className="cart__product-item__text mycart-text--bold">{`$${cartItem.totalPrice.toFixed(
-        2
-      )}`}</p>
-      <FontAwesomeIcon
-        onClick={() => setIsShowModalDelete(true)}
-        icon={faClose}
-        className="cart__item-close"
-      />
-
-      {/* MODAL DELETE */}
-      <ModalWarning
-        show={isShowModalDelete}
-        onCancel={() => setIsShowModalDelete(false)}
-        headerWarning="Delete Your Cart"
-        footer={
-          <div className="d-flex align-items-center justify-content-between">
-            <ButtonFields
-              type="button"
-              onClick={() => setIsShowModalDelete(false)}
-              borderOnly
-              className="seller-form__btn"
-            >
-              Close
-            </ButtonFields>
-            <ButtonFields
-              onClick={handleDeleteCart}
-              type="button"
-              subPrimary
-              className="seller-form__btn"
-            >
-              Confirm Delete
-            </ButtonFields>
-          </div>
-        }
-      >
-        Are you sure you want to delete this product?
-      </ModalWarning>
-      {/* MODAL DELETE */}
-    </div>
+          {/* MODAL DELETE */}
+          <ModalWarning
+            show={isShowModalDelete}
+            onCancel={() => setIsShowModalDelete(false)}
+            headerWarning="Delete Your Cart"
+            footer={
+              <div className="d-flex align-items-center justify-content-between">
+                <ButtonFields
+                  type="button"
+                  onClick={() => setIsShowModalDelete(false)}
+                  borderOnly
+                  className="seller-form__btn"
+                >
+                  Close
+                </ButtonFields>
+                <ButtonFields
+                  onClick={handleDeleteCart}
+                  type="button"
+                  subPrimary
+                  className="seller-form__btn"
+                >
+                  Confirm Delete
+                </ButtonFields>
+              </div>
+            }
+          >
+            Are you sure you want to delete this product?
+          </ModalWarning>
+          {/* MODAL DELETE */}
+        </CartListItem>
+      )}
+    </>
   );
 };
 

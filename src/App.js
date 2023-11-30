@@ -14,13 +14,19 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   OrderPaymentPage,
+  MyOrderPage,
 } from "./user/page";
 import {
   AdminHome,
   ManagementProductPage,
   ManagementSellerPage,
 } from "./admin/pages/";
-import { DashboardSeller, MyAdsPage, SellerSignUpPage } from "./seller/page";
+import {
+  DashboardSeller,
+  ManagementOrdersPage,
+  MyAdsPage,
+  SellerSignUpPage,
+} from "./seller/page";
 import { SellerOnBoarding } from "./seller/components";
 import { ProductDetail } from "./product/page";
 import { ErrorPage } from "./shared/pages";
@@ -52,25 +58,26 @@ function App() {
 
         {/* Channel Seller */}
         <Route path="/seller/dashboard" element={<DashboardSeller />} />
-        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
 
+        <Route path="/seller/onboarding" element={<SellerOnBoarding />} />
         <Route path="/seller/sign-up" element={<SellerSignUpPage />} />
+
         <Route path="/seller/my-ads" element={<MyAdsPage />} />
         <Route path="/seller/new-ads" element={<PostAdPage />} />
+
+        <Route path="/seller/orders" element={<ManagementOrdersPage />} />
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}
-        <Route element={<ProtectRoutes isAllowed={authContext.isLoggedIn} />}>
-          <Route path="/dashboard-user" element={<DashboardUserPage />} />
-          {/* <Route path="/my-ads" element={<MyAdsPage />} /> */}
-          <Route path="/profile-user" element={<ProfileUserPage />} />
-          <Route path="/product/:productId/edit" element={<PostAdPage />} />
-          <Route path="/my-cart" element={<MyCartPage />} />
-          <Route
-            path="/my-cart/seller/:sellerId/order-payment"
-            element={<OrderPaymentPage />}
-          />
-        </Route>
+        <Route path="/dashboard-user" element={<DashboardUserPage />} />
+        <Route path="/my-orders" element={<MyOrderPage />} />
+        <Route path="/profile-user" element={<ProfileUserPage />} />
+        <Route path="/product/:productId/edit" element={<PostAdPage />} />
+        <Route path="/my-cart" element={<MyCartPage />} />
+        <Route
+          path="/my-cart/:cartId/order-payment/:sellerId/seller"
+          element={<OrderPaymentPage />}
+        />
         <Route path="/chat-user" element={<ChatPageUser />} />
         {/* Routes logged in and all roles */}
 
@@ -97,8 +104,15 @@ function App() {
           />
         </Route>
 
+        <Route path="error-page" element={<ErrorPage />} />
+
         {/* Routes required Admin */}
-        <Route path="*" element={<ErrorPage />} />
+        <Route
+          path="*"
+          element={
+            <ErrorPage messageError="This page is not existed. Please try again!" />
+          }
+        />
       </Routes>
 
       <ToastContainer
