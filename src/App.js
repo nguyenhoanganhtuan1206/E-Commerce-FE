@@ -25,6 +25,7 @@ import {
   DashboardSeller,
   ManagementOrdersPage,
   MyAdsPage,
+  OrderDetailsPage,
   SellerSignUpPage,
 } from "./seller/page";
 import { SellerOnBoarding } from "./seller/components";
@@ -66,6 +67,10 @@ function App() {
         <Route path="/seller/new-ads" element={<PostAdPage />} />
 
         <Route path="/seller/orders" element={<ManagementOrdersPage />} />
+        <Route
+          path="/seller/orders/:orderId/details"
+          element={<OrderDetailsPage />}
+        />
         {/* Channel Seller */}
 
         {/* Routes logged in and all roles */}

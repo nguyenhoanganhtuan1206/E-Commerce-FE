@@ -19,6 +19,8 @@ const CardPaymentMethod = ({
   subTitle,
   initialValue = false,
   multiple = false,
+  className,
+  disabled,
 }) => {
   const paymentMethodsState = useSelector((state) => state.addProduct);
   const dispatch = useDispatch();
@@ -26,7 +28,7 @@ const CardPaymentMethod = ({
     ? paymentMethodsState.paymentMethods.includes(fieldName)
     : paymentMethodsState.paymentMethod === fieldName;
 
-  const cardPaymentMethodClasses = `card__payment-method ${
+  const cardPaymentMethodClasses = `${className} card__payment-method ${
     isPaymentMethodActive ? "card__payment-method--active" : ""
   }`;
 
@@ -52,6 +54,7 @@ const CardPaymentMethod = ({
         <input
           type="checkbox"
           id={fieldName}
+          disabled={disabled}
           name={fieldName}
           defaultChecked={initialValue}
           onChange={(e) => {

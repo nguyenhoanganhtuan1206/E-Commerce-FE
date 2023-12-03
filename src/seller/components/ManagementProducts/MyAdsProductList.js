@@ -25,6 +25,7 @@ import {
 import usePaginate from "../../../shared/hooks/usePaginate";
 import { toggleShowDeleteProduct } from "../../../redux/slices/seller/sellerSlice";
 import { ButtonFields } from "../../../shared/FormElement";
+import { ErrorPage } from "../../../shared/pages";
 import {
   MY_ADS_ALL_PRODUCT,
   MY_ADS_APPROVAL,
@@ -193,7 +194,7 @@ const MyAdsUserProductList = () => {
   if (isFetchingData) {
     return <Skeleton times={5} style={{ height: "7rem", width: "100%" }} />;
   } else if (fetchProducts.error) {
-    return <div>Something went wrong</div>;
+    return <ErrorPage />;
   } else {
     return (
       <>

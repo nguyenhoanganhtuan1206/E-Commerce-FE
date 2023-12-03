@@ -7,12 +7,7 @@ const Table = ({ headers = [], tbody = null, bordered, children }) => {
         <thead className={classes.ProductListHeader}>
           <tr>
             {headers.map((header, index) => {
-              console.log(header);
-              return (
-                <th key={index} class="col-3">
-                  {header}
-                </th>
-              );
+              return <th key={index}>{header}</th>;
             })}
           </tr>
         </thead>

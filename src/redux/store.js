@@ -28,6 +28,7 @@ import { managementOrdersReducers } from "./slices/seller/management-orders/mana
 import { useCartProductInventoryApis } from "./apis/cart_product_inventory/cart_product_inventory.api";
 import { myOrderReducers } from "./slices/user/myOrders/myOrdersSlices";
 import { useMyOrdersApi } from "./apis/user/orders/my-orders.api";
+import { useOrderApis } from "./apis/seller/orders/orders.api";
 
 enableMapSet();
 
@@ -60,6 +61,7 @@ const store = configureStore({
     [usePaymentOrder.reducerPath]: usePaymentOrder.reducer,
     [useCartApis.reducerPath]: useCartApis.reducer,
     [useMyOrdersApi.reducerPath]: useMyOrdersApi.reducer,
+    [useOrderApis.reducerPath]: useOrderApis.reducer,
     [useCartProductInventoryApis.reducerPath]:
       useCartProductInventoryApis.reducer,
   },
@@ -76,6 +78,7 @@ const store = configureStore({
       .concat(usePaymentOrder.middleware)
       .concat(useCartProductInventoryApis.middleware)
       .concat(useMyOrdersApi.middleware)
+      .concat(useOrderApis.middleware)
       .concat(useCartApis.middleware);
   },
 });

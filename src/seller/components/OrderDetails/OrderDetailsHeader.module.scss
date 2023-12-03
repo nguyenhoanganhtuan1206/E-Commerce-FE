@@ -1,0 +1,32 @@
+.OrderDetailsHeader {
+  &__Title {
+    display: flex;
+    align-items: center;
+    font-size: 2.2rem;
+    border-bottom: 1px solid var(--color-border);
+    padding: 12px 18px;
+
+    p {
+      margin: 0;
+      color: var(--color-primary);
+      font-weight: 600;
+      margin-left: 8px;
+    }
+  }
+
+  &__Container {
+    padding: 12px 18px;
+  }
+
+  &__Group {
+    display: flex;
+    font-size: 1.4rem;
+    color: var(--color-primary-2);
+  }
+
+  &__Text {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-left: 8px;
+  }
+}
