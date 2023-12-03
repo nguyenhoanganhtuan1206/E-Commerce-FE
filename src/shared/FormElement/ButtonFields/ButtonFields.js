@@ -16,6 +16,7 @@ const ButtonFields = (props) => {
     onClick,
     children,
     disabled,
+    style,
   } = props;
 
   const classes = `btn 
@@ -49,6 +50,7 @@ const ButtonFields = (props) => {
       type={type}
       onClick={onClick}
       disabled={disabled || isLoading}
+      style={style}
     >
       {props.children}
       <span className={`${isLoading && "btn--loading"}`}></span>

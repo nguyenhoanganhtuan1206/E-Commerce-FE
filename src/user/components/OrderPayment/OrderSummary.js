@@ -35,16 +35,16 @@ const OrderSummary = ({ cart = null }) => {
   const listCartProductInventories = useFetchByCartIdQuery(params.cartId);
 
   const calculateTotalPriceOrder = () => {
-    if (cart === null) {
+    if (!cart[0]) {
       toast.error(MESSAGE_ERROR);
       return;
     }
 
-    if (cart.totalPrice >= 300) {
-      return cart.totalPrice;
+    if (cart[0].totalPrice >= 300) {
+      return cart[0].totalPrice;
     }
 
-    return cart.totalPrice + 20;
+    return cart[0].totalPrice + 20;
   };
 
   const handleCheckoutCart = () => {
@@ -96,6 +96,7 @@ const OrderSummary = ({ cart = null }) => {
 
         <ul className={classes.OrderList}>
           {cart.map((cartItem, index) => {
+            console.log("cartItem", cartItem);
             return (
               <li key={index} className={classes.OrderItem}>
                 <div className={classes.OrderItem__Group}>
