@@ -29,6 +29,7 @@ import { useCartProductInventoryApis } from "./apis/cart_product_inventory/cart_
 import { myOrderReducers } from "./slices/user/myOrders/myOrdersSlices";
 import { useMyOrdersApi } from "./apis/user/orders/my-orders.api";
 import { useOrderApis } from "./apis/seller/orders/orders.api";
+import { filterProductsReducers } from "./slices/user/filterProduct/filterProductSlice";
 
 enableMapSet();
 
@@ -48,6 +49,7 @@ const store = configureStore({
     cartSlice: cartReducers,
     commonProduct: commonProductReducer,
     managementOrders: managementOrdersReducers,
+    filterProducts: filterProductsReducers,
     myOrderSlices: myOrderReducers,
     [authApis.reducerPath]: authApis.reducer,
     [userPasswordApis.reducerPath]: userPasswordApis.reducer,

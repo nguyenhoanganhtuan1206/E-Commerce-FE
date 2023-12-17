@@ -1,6 +1,6 @@
 import "./LoadingSpinner.scss";
 
-const LoadingSpinner = ({ option1, option2, noOverlay }) => {
+const LoadingSpinner = ({ option1, option2, noOverlay = false }) => {
   return (
     <>
       {noOverlay && (

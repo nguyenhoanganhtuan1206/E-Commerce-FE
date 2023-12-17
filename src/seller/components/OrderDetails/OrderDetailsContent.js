@@ -1,6 +1,10 @@
 import { Fragment } from "react";
 
 const OrderDetailsContent = ({ orderInfo = [] }) => {
+  const filterInventory = (inventories = [], inventoryId = null) => {
+    return inventories.filter((item) => item.id === inventoryId);
+  };
+
   return (
     <>
       {orderInfo && (
@@ -29,24 +33,27 @@ const OrderDetailsContent = ({ orderInfo = [] }) => {
                     </td>
 
                     <td>
-                      {orderDetail.product.inventories.length > 0
-                        ? orderDetail.product.inventories.map(
-                            (inventory, index) => {
-                              return (
-                                <Fragment key={index}>
-                                  <p>
-                                    {inventory.colorName},{" "}
-                                    {inventory.colorValue}
-                                  </p>
+                      <p>
+                        {filterInventory(
+                          orderDetail.product.inventories,
+                          orderDetail.cartProductInventory.inventoryId
+                        ).map((item) => (
+                          <Fragment key={item.id}>
+                            {item.colorName}, {item.colorValue}
+                          </Fragment>
+                        ))}
+                      </p>
 
-                                  <p>
-                                    {inventory.sizeName}, {inventory.sizeValue}
-                                  </p>
-                                </Fragment>
-                              );
-                            }
-                          )
-                        : "None"}
+                      <p>
+                        {filterInventory(
+                          orderDetail.product.inventories,
+                          orderDetail.cartProductInventory.inventoryId
+                        ).map((item) => (
+                          <Fragment key={item.id}>
+                            {item.sizeName}, {item.sizeValue}
+                          </Fragment>
+                        ))}
+                      </p>
                     </td>
                     <td>
                       {orderDetail.cartProductInventory.quantity} / ${" "}

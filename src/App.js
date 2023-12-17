@@ -47,7 +47,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
         <Route path="/:productId/details" element={<ProductDetail />} />
-        <Route path="/categories" element={<FilterProducts />} />
+        <Route path="/search" element={<FilterProducts />} />
         {/* Routes permit all */}
         <Route
           path="/reset-password/confirm-email"

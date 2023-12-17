@@ -3,7 +3,12 @@ import { fetchCategory } from "../../thunks/admin/category/categoryThunk";
 import { fetchCategoryVariants } from "../../thunks/admin/variant/variantThunk";
 import { fetchBrands } from "../../thunks/admin/brand/brandThunk";
 import { fetchProductStyles } from "../../thunks/admin/product-style/productStyleThunk";
-import { fetchProducts, fetchProductsWithDifferentSeller } from "../../thunks/products/productThunks";
+import {
+  fetchProducts,
+  fetchProductsWithDifferentSeller,
+} from "../../thunks/products/productThunks";
+import { fetchCategories } from "../../thunks/categories/categoriesThunk";
+import { fetchProductByName } from "../../thunks/user/filterProducts/filterProductThunk";
 
 const initialState = {
   products: {
@@ -113,6 +118,19 @@ const fetchAllSlices = createSlice({
       .addCase(fetchProductsWithDifferentSeller.fulfilled, (state, action) => {
         state.products.isLoading = false;
         state.products.data = action.payload;
+      });
+
+    builder
+      .addCase(fetchCategories.pending, (state) => {
+        state.categories.isLoading = true;
+      })
+      .addCase(fetchCategories.rejected, (state) => {
+        state.categories.isLoading = false;
+        state.categories.isError = false;
+      })
+      .addCase(fetchCategories.fulfilled, (state, action) => {
+        state.categories.isLoading = false;
+        state.categories.data = action.payload;
       });
   },
 });

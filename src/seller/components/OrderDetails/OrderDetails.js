@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 import { useFetchOrderDetailsQuery } from "../../../redux/apis/seller/orders/orders.api";
 import { ErrorPage } from "../../../shared/pages";
-import InvoiceOrder from "../../../shared/components/InvoiceOrder/InvoiceOrder";
 import OrderDetailsHeader from "./OrderDetailsHeader";
 import OrderDetailsContent from "./OrderDetailsContent";
 import OrderUserDetails from "./OrderUserDetails";

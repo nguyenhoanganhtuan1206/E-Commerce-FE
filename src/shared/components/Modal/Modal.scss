@@ -1,3 +1,7 @@
+:root {
+  --max-height-modal-alert: 550px;
+}
+
 .modal-alert {
   z-index: 100;
   position: fixed;
@@ -5,9 +9,13 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 60rem;
+  max-height: var(--max-height-modal-alert);
+  height: fit-content;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 5px;
+
+  overflow-y: auto;
 
   /* Handle animation for Modal */
   opacity: 0;

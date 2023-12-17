@@ -86,8 +86,6 @@ const ModalProductDetail = () => {
     }
   };
 
-  console.log("productDetailState.productData", productDetailState.productData);
-
   return (
     <>
       <Modal

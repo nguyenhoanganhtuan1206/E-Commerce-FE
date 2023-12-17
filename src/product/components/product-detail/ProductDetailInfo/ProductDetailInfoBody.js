@@ -353,14 +353,16 @@ const ProductDetailInfoBody = ({ sellerId = null, productData = null }) => {
             onDecreaseQuantity={handleDecreaseQuantity}
           />
 
-          <span className="ml-3">
-            {inventoryDetailState.inventoryDetailData
-              ? inventoryDetailState.inventoryDetailData.quantity
-              : !!productData.inventory
-              ? productData.inventory.quantity
-              : productData.quantity}{" "}
-            available products
-          </span>
+          {inventoryDetailState.inventoryDetailData && (
+            <span className="ml-3">
+              {inventoryDetailState.inventoryDetailData
+                ? inventoryDetailState.inventoryDetailData.quantity
+                : !!productData.inventory
+                ? productData.inventory.quantity
+                : productData.quantity}{" "}
+              available products
+            </span>
+          )}
         </div>
 
         {isEmptyCart && (
@@ -370,7 +372,7 @@ const ProductDetailInfoBody = ({ sellerId = null, productData = null }) => {
         )}
       </div>
 
-      <div className="d-flex">
+      <div>
         <ButtonFields
           onClick={handleAddProductToCart}
           className="product-info__btn"
@@ -380,16 +382,16 @@ const ProductDetailInfoBody = ({ sellerId = null, productData = null }) => {
         >
           Add To Cart
         </ButtonFields>
+      </div>
 
-        <ButtonFields
+      {/* <ButtonFields
           className="product-info__btn"
           primary
           fullWidth
           borderOnly
         >
           <FontAwesomeIcon icon={faBookmark} />
-        </ButtonFields>
-      </div>
+        </ButtonFields> */}
     </div>
   );
 };

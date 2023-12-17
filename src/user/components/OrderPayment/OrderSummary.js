@@ -1,13 +1,15 @@
 import classes from "./OrderSummary.module.scss";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 import { useCreatePaymentMutation } from "../../../redux/apis/user/paymentOrder/paymentOrder.api";
 import { useFetchByCartIdQuery } from "../../../redux/apis/cart_product_inventory/cart_product_inventory.api";
+import { ErrorPage } from "../../../shared/pages";
 import {
   LoadingSpinner,
   ProductImageDisplay,
@@ -17,13 +19,13 @@ import {
   PAYMENT_WITH_COD,
   PAYMENT_WITH_PAYPAL,
 } from "../../../shared/FormElement/CardPaymentMethod/CardPaymentMethod";
-import { ErrorPage } from "../../../shared/pages";
-import { useNavigate, useParams } from "react-router-dom";
+import { InventoryHelper } from "../../../helper/InventoryHelper.ts";
 
 const MESSAGE_ERROR =
   "Something went wrong while processing to payment. Please try again!";
 
-const OrderSummary = ({ cart = null }) => {
+const OrderSummary = ({ carts = null }) => {
+  console.log("cart", carts);
   const params = useParams();
   const navigate = useNavigate();
 
@@ -34,17 +36,19 @@ const OrderSummary = ({ cart = null }) => {
     useCreatePaymentMutation();
   const listCartProductInventories = useFetchByCartIdQuery(params.cartId);
 
+  let isHaveInventory = false;
+
   const calculateTotalPriceOrder = () => {
-    if (!cart[0]) {
+    if (!carts[0]) {
       toast.error(MESSAGE_ERROR);
       return;
     }
 
-    if (cart[0].totalPrice >= 300) {
-      return cart[0].totalPrice;
+    if (carts[0].totalPrice >= 300) {
+      return carts[0].totalPrice;
     }
 
-    return cart[0].totalPrice + 20;
+    return carts[0].totalPrice + 20;
   };
 
   const handleCheckoutCart = () => {
@@ -83,6 +87,79 @@ const OrderSummary = ({ cart = null }) => {
     }
   };
 
+  const displayCartDetail = () => {
+    return carts.map((cartItem, index) => {
+      if (cartItem.cartProductInventory.inventoryId) {
+        isHaveInventory = true;
+      }
+
+      return (
+        <>
+          <li key={index} className={classes.OrderItem}>
+            <div className={classes.OrderItem__Group}>
+              <ProductImageDisplay
+                productId={cartItem.product.id}
+                className={classes.OrderItem__Image}
+              />
+
+              <div className={classes.OrderItem__Detail}>
+                <h3 className={classes.ProductName}>{cartItem.product.name}</h3>
+                {cartItem.product.inventory && (
+                  <div className="d-flex flex-column">
+                    {isHaveInventory && (
+                      <span>
+                        {InventoryHelper.filterInventory(
+                          cartItem.product.inventories,
+                          cartItem.cartProductInventory.inventoryId
+                        ).map((inventoryItem, index) => {
+                          return (
+                            <Fragment key={index}>
+                              {inventoryItem.colorValue},{" "}
+                              {inventoryItem.sizeValue}
+                            </Fragment>
+                          );
+                        })}
+                      </span>
+                    )}
+
+                    <div className="d-flex align-items-center">
+                      {cartItem.product.categories.map((category, index) => (
+                        <span key={index} style={{ flex: "0" }}>
+                          {category.categoryName}
+                          {index + 1 !== cartItem.product.categories.length &&
+                            ", "}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <span className={classes.OrderItem__Quantity}>
+                {cartItem.cartProductInventory.quantity} x{" "}
+                {isHaveInventory
+                  ? InventoryHelper.filterInventory(
+                      cartItem.product.inventories,
+                      cartItem.cartProductInventory.inventoryId
+                    ).map((inventoryItem, index) => {
+                      return (
+                        <Fragment key={index}>
+                          {`$${inventoryItem.price.toFixed(2)}`}
+                        </Fragment>
+                      );
+                    })
+                  : `$${cartItem.product.price.toFixed(2)} `}
+              </span>
+            </div>
+
+            <span className="font-weight-bold">{`$${cartItem.cartProductInventory.totalPrice.toFixed(
+              2
+            )}`}</span>
+          </li>
+        </>
+      );
+    });
+  };
+
   if (listCartProductInventories.isLoading) {
     return <LoadingSpinner option2 />;
   } else if (listCartProductInventories.isError) {
@@ -95,54 +172,12 @@ const OrderSummary = ({ cart = null }) => {
         </div>
 
         <ul className={classes.OrderList}>
-          {cart.map((cartItem, index) => {
-            console.log("cartItem", cartItem);
+          {displayCartDetail()}
+          {/* {carts.map((cartItem, index) => {
             return (
-              <li key={index} className={classes.OrderItem}>
-                <div className={classes.OrderItem__Group}>
-                  <ProductImageDisplay
-                    productId={cartItem.product.id}
-                    className={classes.OrderItem__Image}
-                  />
-
-                  <div className={classes.OrderItem__Detail}>
-                    <h3 className={classes.ProductName}>
-                      {cartItem.product.name}
-                    </h3>
-                    {cartItem.product.inventory && (
-                      <div className="d-flex flex-column">
-                        <span>
-                          {cartItem.product.inventory.colorValue},{" "}
-                          {cartItem.product.inventory.sizeValue}
-                        </span>
-
-                        <div className="d-flex align-items-center">
-                          {cartItem.product.categories.map(
-                            (category, index) => (
-                              <span key={index} style={{ flex: "0" }}>
-                                {category.categoryName}
-                                {index + 1 !==
-                                  cartItem.product.categories.length && ", "}
-                              </span>
-                            )
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                  <span className={classes.OrderItem__Quantity}>
-                    {cartItem.cartProductInventory.quantity} x{" "}
-                    {cartItem.product.inventory
-                      ? `$${cartItem.product.inventory.price.toFixed(2)}`
-                      : `$${cartItem.product.price.toFixed(2)}`}
-                  </span>
-                </div>
-                <span className="font-weight-bold">{`$${cartItem.totalPrice.toFixed(
-                  2
-                )}`}</span>
-              </li>
+            
             );
-          })}
+          })} */}
         </ul>
 
         <div className={classes.SummaryItem}>

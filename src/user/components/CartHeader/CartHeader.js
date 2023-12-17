@@ -10,6 +10,55 @@ import { Fragment } from "react";
 const CartHeader = () => {
   const fetchCartByCurrentUserId = useFetchCartByCurrentUserIdQuery();
 
+  const filterInventory = (inventories = [], inventoryId = null) => {
+    return inventories.filter((item) => item.id === inventoryId);
+  };
+
+  let isHaveInventory = false;
+  const displayCartDetail = () => {
+    return fetchCartByCurrentUserId.data.map((cartItem, index) => {
+      if (cartItem.cartProductInventory.inventoryId) {
+        isHaveInventory = true;
+      }
+
+      return (
+        <Fragment key={index}>
+          <div className={classes.CartItem}>
+            <ProductImageDisplay
+              productId={cartItem.product.id}
+              className={classes.CartImageProductHeader}
+            />
+
+            <div className={classes.CartInfo}>
+              <Link className={classes.CartName}>{cartItem.product.name}</Link>
+
+              {isHaveInventory && (
+                <p className={classes.CartInfoText}>
+                  {filterInventory(
+                    cartItem.product.inventories,
+                    cartItem.cartProductInventory.inventoryId
+                  ).map((inventoryItem, index) => (
+                    <Fragment key={index}>
+                      {inventoryItem.colorValue}, {inventoryItem.sizeValue} x
+                      {` $${inventoryItem.price.toFixed(2)}`}
+                    </Fragment>
+                  ))}
+                </p>
+              )}
+
+              {!isHaveInventory && (
+                <p className={classes.CartInfoText}>
+                  {cartItem.quantity} x{" "}
+                  {`$${cartItem.product.price.toFixed(2)}`}
+                </p>
+              )}
+            </div>
+          </div>
+        </Fragment>
+      );
+    });
+  };
+
   if (fetchCartByCurrentUserId.isFetching) {
     return <Skeleton times={3} height="4rem" />;
   } else if (
@@ -35,40 +84,7 @@ const CartHeader = () => {
               <p className={classes.HeaderText}>View Cart</p>
             </header>
 
-            <div className={classes.CartList}>
-              {fetchCartByCurrentUserId.data.map((cartItem, index) => {
-                return (
-                  <Fragment key={index}>
-                    <div className={classes.CartItem}>
-                      <ProductImageDisplay
-                        productId={cartItem.product.id}
-                        className={classes.CartImageProductHeader}
-                      />
-
-                      <div className={classes.CartInfo}>
-                        <Link className={classes.CartName}>
-                          {cartItem.product.name}
-                        </Link>
-
-                        {cartItem.product.inventory && (
-                          <p className={classes.CartInfoText}>
-                            {cartItem.product.inventory.colorValue},{" "}
-                            {cartItem.product.inventory.sizeValue}
-                          </p>
-                        )}
-
-                        <p className={classes.CartInfoText}>
-                          {cartItem.quantity} x{" "}
-                          {cartItem.product.inventory
-                            ? `$${cartItem.product.inventory.price.toFixed(2)}`
-                            : `$${cartItem.product.price.toFixed(2)}`}
-                        </p>
-                      </div>
-                    </div>
-                  </Fragment>
-                );
-              })}
-            </div>
+            <div className={classes.CartList}>{displayCartDetail()}</div>
 
             <div className={classes.CartBottom}>
               <div className={classes.CartTotal}>

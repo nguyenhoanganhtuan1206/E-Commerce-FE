@@ -28,7 +28,7 @@ const OrderPayment = () => {
               <div className="col-5">
                 {fetchCartsBySellerId.data && (
                   <div className={classes.OrderPaymentSide}>
-                    <OrderSummary cart={fetchCartsBySellerId.data} />
+                    <OrderSummary carts={fetchCartsBySellerId.data} />
                   </div>
                 )}
               </div>
