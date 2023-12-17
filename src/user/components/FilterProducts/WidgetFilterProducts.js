@@ -44,6 +44,7 @@ const WidgetFilterProducts = () => {
               <input
                 className="widget-filters__input"
                 placeholder="Search Here..."
+                defaultValue={filterProductState.searchTempInput}
                 onChange={(e) => handleUpdateSearchInput(e)}
               />
               <FontAwesomeIcon
@@ -84,22 +85,6 @@ const WidgetFilterProducts = () => {
                   </li>
                 </Fragment>
               ))}
-            </ul>
-          </div>
-
-          <div className="widget-filters__components">
-            <h3 className="widget-filters__heading">Price Range</h3>
-
-            <ul className="widget-filters__list">
-              <li className="widget-filters__item widget-filters__item--active">
-                All Prices
-              </li>
-
-              <li className="widget-filters__item">$10 - $50</li>
-
-              <li className="widget-filters__item">$10 - $50</li>
-
-              <li className="widget-filters__item">$10 - $50</li>
             </ul>
           </div>
         </div>
