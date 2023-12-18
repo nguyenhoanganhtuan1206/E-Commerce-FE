@@ -13,6 +13,7 @@ import {
   Table,
 } from "../../../shared/components";
 import {
+  CANCELING,
   DELIVERED,
   SHIPPING,
   WAITING_CONFIRM,
@@ -20,6 +21,7 @@ import {
 } from "../../../enums/deliveryState.enum";
 import { formatDateTime } from "../../../shared/util/format-date";
 import {
+  CANCELING_STATUS,
   DELIVERED_STATUS,
   SHIPPING_STATUS,
   WAITING_CONFIRM_STATUS,
@@ -102,6 +104,8 @@ const OrdersList = () => {
                   return WAITING_PICKUP_STATUS;
                 case SHIPPING:
                   return SHIPPING_STATUS;
+                case CANCELING:
+                  return CANCELING_STATUS;
                 default:
                   return "Something went wrong!!";
               }

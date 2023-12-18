@@ -1,4 +1,3 @@
-
 const CartListItem = ({ imagesProduct = null, cartItem = null, children }) => {
   return (
     <div className="cart__item">

@@ -86,18 +86,6 @@ const CartHeader = () => {
 
             <div className={classes.CartList}>{displayCartDetail()}</div>
 
-            <div className={classes.CartBottom}>
-              <div className={classes.CartTotal}>
-                <span>Total</span>
-
-                <p>
-                  {`$${fetchCartByCurrentUserId.data
-                    .reduce((total, item) => total + item.totalPrice, 0)
-                    .toFixed(2)}`}
-                </p>
-              </div>
-            </div>
-
             <ButtonFields to="/my-cart" primary>
               Checkout
             </ButtonFields>

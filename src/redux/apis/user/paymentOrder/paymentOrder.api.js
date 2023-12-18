@@ -21,7 +21,7 @@ const usePaymentOrder = createApi({
   }),
   endpoints: (builder) => {
     return {
-      createPayment: builder.mutation({
+    createPayment: builder.mutation({
         invalidatesTags: () => {
           return [{ type: "PaymentOrder" }];
         },
@@ -32,9 +32,37 @@ const usePaymentOrder = createApi({
           };
         },
       }),
+      cancelOrder: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "PaymentOrder" }];
+        },
+        query: (payload) => {
+          return {
+            url: "cancel-order",
+            method: "PUT",
+            body: payload,
+          };
+        },
+      }),
+      updateDeliveryStatus: builder.mutation({
+        invalidatesTags: () => {
+          return [{ type: "PaymentOrder" }];
+        },
+        query: (payload) => {
+          return {
+            url: "delivery-status",
+            method: "PUT",
+            body: payload,
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useCreatePaymentMutation } = usePaymentOrder;
+export const {
+  useCreatePaymentMutation,
+  useCancelOrderMutation,
+  useUpdateDeliveryStatusMutation,
+} = usePaymentOrder;
 export { usePaymentOrder };

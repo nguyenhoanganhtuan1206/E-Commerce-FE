@@ -2,9 +2,10 @@ import classes from "./MyOrderProductItem.module.scss";
 import MyOrderProductItem from "./MyOrderProductItem";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import { ButtonFields } from "../../../shared/FormElement";
+import { toast } from "react-toastify";
+import { ButtonFields, InputFields } from "../../../shared/FormElement";
 import { PAID, UNPAID } from "../../../enums/paymentOrder.enum";
-import { CardText } from "../../../shared/components";
+import { CardText, ModalWarning } from "../../../shared/components";
 import {
   DELIVERED,
   SHIPPING,
@@ -17,8 +18,35 @@ import {
   WAITING_CONFIRM_STATUS,
   WAITING_PICKUP_STATUS,
 } from "../../../utils/deliveryStatusText";
+import { useState } from "react";
+import { useCancelOrderMutation } from "../../../redux/apis/user/paymentOrder/paymentOrder.api";
+import { FormProvider, useForm } from "react-hook-form";
+import {
+  VALIDATOR_MAXLENGTH,
+  VALIDATOR_REQUIRED,
+} from "../../../shared/util/validators";
 
 const MyOrderGroupItems = ({ sellerInfo = null, carts = [] }) => {
+  const methods = useForm();
+  const [isShowModalCancel, setIsShowModalCancel] = useState(false);
+
+  const [cancelOrder, cancelOrderResults] = useCancelOrderMutation();
+
+  const handleCancelOrder = (data) => {
+    cancelOrder({
+      id: carts[0].paymentOrder.id,
+      reason: data.reasonOfCancel,
+    })
+      .then(() => {
+        toast.success("Your cancel request sent to seller!");
+        methods.reset();
+        setIsShowModalCancel(false);
+      })
+      .catch((error) => {
+        toast.error(error.data.message);
+      });
+  };
+
   return (
     <>
       {sellerInfo && (
@@ -45,6 +73,16 @@ const MyOrderGroupItems = ({ sellerInfo = null, carts = [] }) => {
                   </ButtonFields>
                 )}
 
+                {carts[0].paymentOrder.deliveryStatus !== DELIVERED && (
+                  <ButtonFields
+                    onClick={() => setIsShowModalCancel(true)}
+                    subPrimary
+                    className="ml-3"
+                  >
+                    Cancel Order
+                  </ButtonFields>
+                )}
+
                 {carts[0].paymentOrder.paymentStatus === PAID && (
                   <ButtonFields disabled className="mycart__payment-btn">
                     Paid
@@ -55,7 +93,9 @@ const MyOrderGroupItems = ({ sellerInfo = null, carts = [] }) => {
                   className="d-flex align-items-center"
                   style={{ marginLeft: "14px" }}
                 >
-                  <LocalShippingIcon className={classes.MyOrderProductItemIconF} />
+                  <LocalShippingIcon
+                    className={classes.MyOrderProductItemIconF}
+                  />
 
                   <CardText>
                     {(() => {
@@ -84,6 +124,74 @@ const MyOrderGroupItems = ({ sellerInfo = null, carts = [] }) => {
           </div>
         </div>
       )}
+
+      {/* MODAL DELETE */}
+      <ModalWarning
+        show={isShowModalCancel}
+        onCancel={() => setIsShowModalCancel(false)}
+        headerWarning="Cancel Order Product"
+        footer={
+          <div className="d-flex align-items-center justify-content-between">
+            <ButtonFields
+              type="button"
+              onClick={() => setIsShowModalCancel(false)}
+              borderOnly
+              className="seller-form__btn"
+            >
+              Close
+            </ButtonFields>
+            <ButtonFields
+              onClick={methods.handleSubmit(handleCancelOrder)}
+              type="button"
+              isLoading={cancelOrderResults.isLoading}
+              subPrimary
+              className="seller-form__btn"
+            >
+              Confirm Cancel
+            </ButtonFields>
+          </div>
+        }
+      >
+        <FormProvider {...methods}>
+          <p>Seller Information</p>
+          <div className="modal-seller__detail-group">
+            <h3 className="modal-seller__detail-title">Seller Name:</h3>
+            <span className="modal-seller__detail-text">
+              {sellerInfo.sellerName}
+            </span>
+          </div>
+
+          <div className="modal-seller__detail-group">
+            <h3 className="modal-seller__detail-title">Seller Email:</h3>
+            <span className="modal-seller__detail-text">
+              {sellerInfo.emailSeller}
+            </span>
+          </div>
+
+          <InputFields
+            fieldName="reasonOfCancel"
+            validators={[
+              VALIDATOR_REQUIRED("Feedback cannot be empty"),
+              VALIDATOR_MAXLENGTH(
+                1000,
+                "Feedback must be less than 1000 characters"
+              ),
+            ]}
+            placeholder="Enter your content feedback"
+            type="textarea"
+            label="Reason for cancel (*)"
+            cols="5"
+            rows="10"
+            htmlFor="reasonOfCancel"
+          />
+        </FormProvider>
+
+        <p style={{ fontSize: "1.4rem", fontStyle: "italic" }}>
+          (*) Your request has been submitted to the seller. Please await their
+          confirmation.
+        </p>
+      </ModalWarning>
+      {/* MODAL DELETE */}
     </>
   );
 };

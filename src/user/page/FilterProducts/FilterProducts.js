@@ -15,7 +15,7 @@ const FilterProducts = () => {
   useEffect(() => {
     const fetchProductsByTemp = async () => {
       try {
-        if (filterProductState.searchTempInput) {
+        if (filterProductState.searchTempInput || filterProductState.searchCategory) {
           const response = await fetchProducts({
             productName: filterProductState.searchTempInput,
             categoryName: filterProductState.searchCategory,
